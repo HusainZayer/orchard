@@ -1284,6 +1284,22 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wk-list b{font-size:14.5px;font-weight:600}
 .wk-list span{font-size:12.5px;color:var(--muted)}
 @media (max-width:719px){ .wk-stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* more menu */
+.nav .morebtn{display:inline-flex;align-items:center;gap:6px}
+.nav .morebtn[aria-expanded="true"]{color:var(--ink);background:var(--page)}
+.moremenu{position:fixed;z-index:60;width:360px;max-width:calc(100vw - 24px);padding:6px;border-radius:20px;background:var(--page);box-shadow:0 12px 40px rgba(21,23,28,.16),0 0 0 1px var(--line);display:flex;flex-direction:column;gap:2px;animation:mmIn .14s ease-out}
+.moremenu.sheet{left:12px;right:12px;width:auto;max-width:none;bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+@keyframes mmIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.moremenu{animation:none}}
+.mm-i{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px}
+.mm-i:hover,.mm-i:focus-visible{background:var(--tile)}
+.mm-i:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.mm-i[aria-current="page"]{background:color-mix(in srgb,var(--accent) 9%,var(--page))}
+.mm-ic{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--tile);color:var(--ink)}
+.mm-t{display:flex;flex-direction:column;gap:1px;min-width:0}
+.mm-t b{font-size:14.5px;font-weight:600}
+.mm-t span{font-size:12.5px;color:var(--muted)}
 </style>
 
 <div id="site">
@@ -1298,8 +1314,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button type="button" data-go="home">Home</button>
       <button type="button" data-go="updates">News</button>
       <button type="button" data-go="devices">Devices</button>
-      <button type="button" data-go="events">Events</button>
       <button type="button" data-go="apps">Duo apps</button>
+      <button type="button" data-go="more" class="morebtn" aria-haspopup="menu" aria-expanded="false">More <svg width="10" height="10" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </nav>
     <label class="msearch" for="msq">
       <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -1318,8 +1334,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <button type="button" data-go="home"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Home</button>
   <button type="button" data-go="updates"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>News</button>
   <button type="button" data-go="devices"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Devices</button>
-  <button type="button" data-go="events"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Events</button>
   <button type="button" data-go="apps"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="4" width="8" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Duo apps</button>
+  <button type="button" data-go="more" class="morebtn" aria-haspopup="menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="18.5" cy="12" r="1.7" fill="currentColor"/></svg>More</button>
 </nav>
 </div>
 
@@ -3739,7 +3755,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     if (animate && !reduce){ page.classList.remove('turn'); void page.offsetWidth; page.classList.add('turn'); }
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
-  var NAVOF = {buy:'devices', week:'updates', calendar:'events', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'events', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'home'};
+  var NAVOF = {buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
   function setNav(){
     var cur = NAVOF[S.view];
     document.querySelectorAll('[data-go]').forEach(function(b){ if (b.getAttribute('data-go') === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
@@ -3888,9 +3904,44 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     }).catch(function(){ /* already reported */ });
   }
 
+  /* ================= MORE MENU ================= */
+  var MOREI = [
+    ['This week in Apple', 'Launches, software and news in one recap', 'week', function(){ S.week = null; go('week'); }],
+    ['Buy now or wait', 'How recent each product is, and what’s next', 'buy', function(){ go('buy'); }],
+    ['Events', 'Keynotes and launches since 2016', 'events', function(){ S.event = null; go('events'); }],
+    ['Calendar', 'Every Apple date in the year', 'calendar', function(){ S.caly = null; go('calendar'); }],
+    ['Rumor tracker', 'Open rumors, marked when settled', 'rumors', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
+    ['Software', 'Releases, betas and the pipeline', 'software', function(){ S.feed = 'releases'; go('updates'); setHash('news-releases'); }],
+    ['About Orchard', 'How the site works and how scores are made', 'about', function(){ go('about'); }]
+  ];
+  var MOREIC = {week:HUBIC.week, buy:HUBIC.buy, events:HUBIC.events, calendar:HUBIC.calendar, rumors:HUBIC.rumors, software:HUBIC.software, about:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/>'};
+  function closeMore(refocus){ var m = $('moremenu'); if (!m) return; m.remove(); document.querySelectorAll('.morebtn').forEach(function(b){ b.setAttribute('aria-expanded', 'false'); }); if (refocus && closeMore.btn) closeMore.btn.focus(); }
+  function toggleMore(btn){
+    if ($('moremenu')){ closeMore(true); return; }
+    closeMore.btn = btn;
+    var cur = S.view === 'updates' ? (S.feed === 'rumors' ? 'rumors' : S.feed === 'releases' || S.feed === 'all' ? 'software' : '') : S.view;
+    var menu = el('div', {id:'moremenu', 'class':'moremenu' + (isPhone() ? ' sheet' : ''), role:'menu', 'aria-label':'More sections'});
+    MOREI.forEach(function(it){ menu.appendChild(el('button', {type:'button', role:'menuitem', 'class':'mm-i', 'aria-current':it[2] === cur ? 'page' : null, on:{click:function(){ closeMore(false); it[3](); }}}, [
+      el('span', {'class':'mm-ic', html:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MOREIC[it[2]] + '</svg>'}),
+      el('span', {'class':'mm-t'}, [el('b', {text:it[0]}), el('span', {text:it[1]})])])); });
+    document.body.appendChild(menu);
+    if (!isPhone()){ var r = btn.getBoundingClientRect(); menu.style.top = Math.round(r.bottom + 8) + 'px'; menu.style.right = Math.max(12, Math.round(window.innerWidth - r.right)) + 'px'; }
+    btn.setAttribute('aria-expanded', 'true');
+    var items = menu.querySelectorAll('.mm-i'); if (items[0]) items[0].focus();
+    menu.addEventListener('keydown', function(e){ var a = Array.prototype.indexOf.call(items, document.activeElement);
+      if (e.key === 'ArrowDown'){ e.preventDefault(); items[(a + 1) % items.length].focus(); }
+      else if (e.key === 'ArrowUp'){ e.preventDefault(); items[(a - 1 + items.length) % items.length].focus(); }
+      else if (e.key === 'Home'){ e.preventDefault(); items[0].focus(); } else if (e.key === 'End'){ e.preventDefault(); items[items.length - 1].focus(); }
+      else if (e.key === 'Escape' || e.key === 'Tab'){ if (e.key === 'Escape') e.preventDefault(); closeMore(e.key === 'Escape'); } });
+  }
+  document.addEventListener('click', function(e){ var m = $('moremenu'); if (m && !m.contains(e.target) && !(e.target.closest && e.target.closest('.morebtn'))) closeMore(false); }, true);
+  window.addEventListener('resize', function(){ closeMore(false); });
+  window.addEventListener('hashchange', function(){ closeMore(false); });
+
   /* ================= BOOT ================= */
   document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click', function(){
     var v = b.getAttribute('data-go');
+    if (v === 'more'){ toggleMore(b); return; }
     if (v === S.view && !S.ctx && !navStack.length && !document.body.classList.contains('sheet-open')){ scrollTopAll(); return; }
     go(v, v === 'apps' ? {reset:true} : {});
   }); });
