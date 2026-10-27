@@ -19,8 +19,8 @@ head = f'''<!doctype html>
 <meta property="og:title" content="Orchard">
 <meta property="og:description" content="{DESC}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#14110D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F2F0EB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 {chr(10).join(fonts)}
 <style>{RESET}</style>
