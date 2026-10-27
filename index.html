@@ -1259,6 +1259,49 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .chk-out.ok{color:var(--accent);font-weight:500}
 .chk-out.no{color:var(--warn);font-weight:500}
 @media (max-width:719px){ .lnx{min-height:150px} }
+
+/* buy now or wait */
+.buy{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.buy li{border-top:1px solid var(--line)}
+.buy-row{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%;padding:14px 4px}
+.buy-row:hover{background:color-mix(in srgb,var(--ln) 6%,transparent)}
+.buy-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.buy-t{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.buy-n{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.buy-n b{font-size:15.5px;font-weight:600}
+.buy-n .lnic{width:26px;height:26px}
+.buy-p{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.buy-m{font-size:13px;color:var(--muted)}
+.buy-w{font-size:13px;color:var(--ink)}
+.buy-bar{display:block;height:4px;border-radius:4px;background:var(--tile);max-width:260px;overflow:hidden}
+.buy-bar i{display:block;height:100%;background:var(--ln)}
+.buy-l{flex:none;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.buy-l.buy{background:color-mix(in srgb,#1f9d55 16%,transparent);color:#17803f}
+.buy-l.fine{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.buy-l.caution{background:color-mix(in srgb,var(--warn) 18%,transparent);color:color-mix(in srgb,var(--warn) 80%,var(--ink))}
+.buy-l.wait{background:color-mix(in srgb,#d0342c 15%,transparent);color:#b3261e}
+.buy-l.older{background:var(--tile);color:var(--muted)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .buy-l.buy{color:#5fd38d} :root:not([data-theme="light"]) .buy-l.wait{color:#ff8a80} }
+:root[data-theme="dark"] .buy-l.buy{color:#5fd38d}
+:root[data-theme="dark"] .buy-l.wait{color:#ff8a80}
+.buy-key{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.buy-key li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;font-size:13.5px;color:var(--muted)}
+.buy-key b{font-family:var(--mono);font-size:12px;color:var(--ink)}
+/* week */
+.wk-stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.wk-stats li{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:var(--r-lg);background:var(--tile)}
+.wk-stats b{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.wk-stats span{font-size:12px;color:var(--muted);line-height:1.3}
+.wk-nav{display:flex;gap:8px;flex-wrap:wrap}
+.wk-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.wk-list li{border-top:1px solid var(--line)}
+.wk-list button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;width:100%;padding:10px 8px;border-radius:12px}
+.wk-list button:hover{background:var(--tile)}
+.wk-list button[aria-current="true"]{background:color-mix(in srgb,var(--accent) 9%,var(--page))}
+.wk-list button:focus-visible{outline:2px solid var(--accent)}
+.wk-list b{font-size:14.5px;font-weight:600}
+.wk-list span{font-size:12.5px;color:var(--muted)}
+@media (max-width:719px){ .wk-stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
 </style>
 
 <div id="site">
@@ -1590,6 +1633,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     events:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/>',
     calendar:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 13.5h2M11 13.5h2M14.5 13.5h2M7.5 16.5h2M11 16.5h2"/>',
     software:'<path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5M13.4 5.5l-2.8 13"/>',
+    week:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h9M7.5 17h5"/>',
+    buy:'<path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/>',
     reviews:'<path d="M12 4.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/>'
   };
   function homeParts(){
@@ -1629,8 +1674,10 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var when = function(d){ var n = evDays(d); return n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'; };
     var macNow = latestRel('macOS', 'release');
     var doors = [
-      ['news', 'News', nWeek + ' stories this week', 'apple', function(){ S.feed = 'news'; go('updates'); setHash('news'); }],
+      ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
+      ['news', 'News', 'Every story, newest first', 'apple', function(){ S.feed = 'news'; go('updates'); setHash('news'); }],
       ['rumors', 'Rumors', nRum + ' open, marked when settled', 'iphone', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
+      ['buy', 'Buy now or wait', (function(){ var b = buyItems(), w = b.filter(function(x){ return x.lab === 'wait' || x.lab === 'caution'; }).length; return w + ' of ' + b.length + ' products: hold off for now'; })(), 'mac', function(){ go('buy'); }],
       ['lines', 'Product lines', LINES.length + ' lines with prices, history and compare', 'mac', function(){ S.dtab = 'lines'; go('devices'); setHash('devices'); }],
       ['duo', 'iPhone Duo apps', opt + ' optimized · ' + com + ' coming', 'duo', function(){ go('apps', {reset:true}); }],
       ['events', 'Events', nextEv ? nextEv.name + ' ' + when(nextEv.date) : 'Past keynotes and recaps', 'apple', function(){ if (nextEv){ S.event = nextEv.id; go('events'); setHash(nextEv.id); } else go('events'); }],
@@ -2332,7 +2379,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     return out;
   }
   function newsRail(){
-    var out = [];
+    var out = [el('button', {type:'button', 'class':'hubd', style:lnStyle('apple'), on:{click:function(){ S.week = null; go('week'); }}}, [el('span', {'class':'lnic', html:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + HUBIC.week + '</svg>'}), el('span', {'class':'hubd-t'}, [el('b', {text:'This week in Apple'}), el('span', {text:'The week’s launches, software and news in one recap'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})])];
     var rum = (state.news || []).filter(function(n){ return n.kind === 'rumor' && n.status === 'pending' && !n.lowConfidence; }).sort(function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || b.date.localeCompare(a.date); }).slice(0, 5);
     if (S.feed !== 'rumors' && rum.length) out.push(el('section', {'class':'sec', style:'gap:8px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Rumors to watch'}), el('button', {type:'button', 'class':'link', text:'Tracker', on:{click:function(){ S.feed = 'rumors'; setHash('news-rumors'); render(false); scrollTopAll(); }}})]), storyList(rum)]));
     var nd = []; (state.events || []).forEach(function(e){ if (e.date >= TODAY) nd.push({d:e.date, t:e.name, sub:(e.rumored ? 'Apple event · details expected' : 'Apple event') + (e.time ? ' · ' + e.time : ''), fn:function(){ S.event = e.id; go('events'); setHash(e.id); }}); });
@@ -2726,7 +2773,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   function lineupLine(name){ var hit = null; LINES.forEach(function(k){ if (!hit && !isCatalog(k) && LNRX[k] && LNRX[k].test(name) && !(k === 'mac' && /iPad/.test(name))) hit = k; }); return hit || 'apple'; }
   function lineupModel(k, name){
     var base = String(name).replace(/\s*\(.*$/, '').trim(), ms = lineModels(k).filter(function(o){ return o.g.date <= TODAY; }).reverse();
-    return ms.filter(function(o){ var n = o.m.name.replace(/\s*\(.*$/, ''); return o.m.name === name || n === base || n.indexOf(base + ' ') === 0; })[0] || null;
+    var fk = famKey(name);
+    return ms.filter(function(o){ return o.m.name === name || o.m.name.replace(/\s*\(.*$/, '') === base; })[0] || ms.filter(function(o){ return famKey(o.m.name) === fk; })[0] || ms.filter(function(o){ return o.m.name.indexOf(base + ' ') === 0; })[0] || null;
   }
   function openGroup(k, g){ S.dtab = 'history'; S.dline = k; S.dgroup = g.id; go('devices'); setHash(g.id); }
   function lineStatus(k){
@@ -2749,7 +2797,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         el('span', {'class':'lnx-latest'}, [f.catalog ? null : el('small', {text:last ? 'Latest · ' + MONTHS[+last.date.slice(5, 7) - 1].slice(0, 3) + ' ' + last.date.slice(0, 4) : ''}), el('span', {text:latest}), r ? el('em', {text:r + (r === 1 ? ' open rumor' : ' open rumors')}) : null]),
         el('span', {'class':'lnx-foot', text:f.from ? 'From $' + f.from.toLocaleString('en-US') : f.now.length + ' on sale'})]));
     });
-    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Apple’s product lines'}), el('p', {'class':'lede', text:'Pick a line for what’s on sale, prices, rumors, news, known issues, software support and its full history.'}), devTabs()]), grid];
+    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Apple’s product lines'}), el('p', {'class':'lede', text:'Pick a line for what’s on sale, prices, rumors, news, known issues, software support and its full history.'}), devTabs()]), grid,
+      el('button', {type:'button', 'class':'hubd', style:lnStyle('mac'), on:{click:function(){ go('buy'); }}}, [el('span', {'class':'lnic', html:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + HUBIC.buy + '</svg>'}), el('span', {'class':'hubd-t'}, [el('b', {text:'Buy now or wait?'}), el('span', {text:'How recent each product is, and what’s coming'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})])];
     /* lineup at a glance */
     var D = state.devices || {};
     var lu = el('div', {'class':'lu'});
@@ -2760,6 +2809,103 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var right = [el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Lineup at a glance'}), el('span', {'class':'muted', style:'font-size:12.5px', text:'US starting prices' + (D.lineupAsOf ? ' · ' + shortDate(D.lineupAsOf) : '')})]), lu,
       el('p', {'class':'muted', style:'margin:0;font-size:13px;line-height:1.5', text:'Tags marked Rumor are reports, not confirmed by Apple. Prices change at launches; this list is updated after each one.'})]),
       devSources(true)];
+    if (isPhone()) return {left:left.concat(right), right:[]};
+    return {left:left, right:right};
+  }
+
+  /* ================= BUY NOW OR WAIT (Orchard analysis) ================= */
+  function famKey(name){ return String(name).replace(/^Apple Watch /, '').replace(/\s*\(.*?\)/g, '').replace(/\b\d+(\.\d+)?-inch\b/g, '').replace(/\d+(st|nd|rd|th)? generation/gi, '').replace(/\s*with wireless case/i, '').replace(/\d+/g, '#').replace(/ ?#/g, '').replace(/\s+/g, ' ').trim().toLowerCase(); }
+  var BUYL = {buy:['Buy now', 'Recently updated. A new model is unlikely soon.'], fine:['Fine to buy', 'Mid-cycle. Nothing points to an update soon.'], caution:['Caution', 'Getting close to its usual update time, or reports point to one.'], wait:['Wait', 'A new model is announced or in stores very soon.'], older:['Older model', 'Still sold, but a newer model exists. Buy it for the lower price.']};
+  function buyItems(){
+    var D = state.devices || {}, out = [];
+    var evs = (state.events || []).filter(function(e){ return e.date >= TODAY && e.rumored; });
+    (D.lineup || []).forEach(function(c){ c[1].forEach(function(x){
+      var k = lineupLine(x[0]); if (k === 'apple') return;
+      var fam = famKey(x[0]), all = lineModels(k).filter(function(o){ return famKey(o.m.name) === fam; });
+      var dates = []; all.forEach(function(o){ if (dates.indexOf(o.g.date) < 0) dates.push(o.g.date); }); dates.sort();
+      var past = dates.filter(function(d){ return d <= TODAY; }), fut = dates.filter(function(d){ return d > TODAY; });
+      var mo = lineupModel(k, x[0]), last = mo ? mo.g.date : past[past.length - 1];
+      var gaps = []; for (var i = 1; i < past.length; i++){ var g = Math.round((Date.parse(past[i]) - Date.parse(past[i - 1])) / 864e5); if (g > 60) gaps.push(g); }
+      gaps.sort(function(a, b){ return a - b; });
+      var cyc = gaps.length ? gaps[Math.floor(gaps.length / 2)] : null, days = last ? Math.round((Date.parse(TODAY) - Date.parse(last)) / 864e5) : null;
+      var sp = splitPrice(x[1]), why = [], lab;
+      var ev = evs.filter(function(e){ return e.items.some(function(it){ return (' ' + famKey(it[0])).slice(-fam.length - 1) === ' ' + fam; }); })[0];
+      var newer = past.length && last && last < past[past.length - 1];
+      var isNew = /pre-order|launches|\bnew\b/i.test(sp.note + ' ' + x[0]);
+      if (fut.length && isNew){ lab = 'buy'; why.push('This is the new model: ' + (/pre-order/i.test(sp.note) ? 'pre-orders open, ' : '') + 'in stores ' + fmtDate(fut[0]) + '.'); last = null; days = null; }
+      else if (fut.length){ lab = 'wait'; why.push('A new model is due in stores ' + fmtDate(fut[0]) + '.'); }
+      else if (!last){ lab = 'fine'; why.push('No release history in Orchard yet.'); }
+      else if (newer){ lab = 'older'; why.push('A newer model came out ' + fmtDate(past[past.length - 1]) + '.'); }
+      else if (/expected/i.test(sp.note) || ev){ lab = 'caution'; why.push(ev ? 'Reported as expected at ' + ev.name + ' on ' + fmtDate(ev.date) + ' (rumor).' : 'Reports say an update is expected soon (rumor).'); }
+      else if (cyc && days != null){ var r = days / cyc; lab = r < 0.4 ? 'buy' : r < 0.85 ? 'fine' : 'caution'; if (lab === 'caution') why.push('Past updates came about every ' + Math.round(cyc / 30.4) + ' months; this one is ' + Math.round(days / 30.4) + ' months old.'); }
+      else if (days != null && days > 730){ lab = 'caution'; why.push('Over ' + Math.floor(days / 365) + ' years since its last update.'); }
+      else lab = days != null && days < 365 ? 'buy' : 'fine';
+      out.push({k:k, name:x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)'), price:sp.price, last:last, days:days, cyc:cyc, n:past.length, lab:lab, why:why, mo:mo});
+    }); });
+    return out;
+  }
+  function buyView(){
+    var items = buyItems(), F = S.buyf || 'all';
+    var seg = el('div', {'class':'ffilter dfilter', role:'group', 'aria-label':'Product line'});
+    [['all','All']].concat(LINES.filter(function(k){ return items.some(function(x){ return x.k === k; }); }).map(function(k){ return [k, LINEDEF[k].n]; })).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip sm', 'aria-pressed':String(F === o[0]), text:o[1], on:{click:function(){ S.buyf = o[0]; render(false); }}})); });
+    var shown = items.filter(function(x){ return F === 'all' || x.k === F; });
+    var ul = el('ul', {'class':'buy'});
+    shown.forEach(function(x){
+      var meta = [x.last ? 'Released ' + fmtDate(x.last) + ' · ' + (x.days < 61 ? x.days + ' days ago' : Math.round(x.days / 30.4) + ' months ago') : null, x.cyc ? 'usually every ' + Math.round(x.cyc / 30.4) + ' months' : x.n === 1 ? 'first of its kind, no cycle yet' : null].filter(Boolean).join(' · ');
+      var bar = x.cyc && x.days != null ? el('span', {'class':'buy-bar', 'aria-hidden':'true'}, [el('i', {style:'width:' + Math.min(100, Math.round(x.days / x.cyc * 100)) + '%'})]) : null;
+      ul.appendChild(el('li', null, [el('button', {type:'button', 'class':'buy-row', style:lnStyle(x.k), on:{click:function(){ if (x.mo) openGroup(x.k, x.mo.g); else openLine(x.k); }}}, [
+        el('span', {'class':'buy-t'}, [el('span', {'class':'buy-n'}, [lnIcon(x.k, 16), el('b', {text:x.name}), x.price ? el('span', {'class':'buy-p', text:x.price}) : null]), el('span', {'class':'buy-m', text:meta}), bar, x.why.length ? el('span', {'class':'buy-w', text:x.why.join(' ')}) : null]),
+        el('span', {'class':'buy-l ' + x.lab, text:BUYL[x.lab][0]})])]));
+    });
+    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Buy now or wait?'}), el('p', {'class':'lede', text:'For everything Apple sells today: how long since it was updated, how often Apple usually updates it, and what reports say is next.'}), el('span', {'class':'odata-h'}, [odata('Orchard analysis'), el('span', {'class':'muted', style:'font-size:12.5px', text:'Updated ' + fmtDate(state.updated || TODAY)})]), seg]), ul];
+    var cnt = {}; items.forEach(function(x){ cnt[x.lab] = (cnt[x.lab] || 0) + 1; });
+    var key = el('ul', {'class':'buy-key'}); ['buy','fine','caution','wait','older'].forEach(function(l){ key.appendChild(el('li', null, [el('span', {'class':'buy-l ' + l, text:BUYL[l][0]}), el('span', {text:BUYL[l][1]}), el('b', {text:String(cnt[l] || 0)})])); });
+    var waitL = items.filter(function(x){ return x.lab === 'wait' || x.lab === 'caution'; });
+    var right = [el('section', {'class':'sec', style:'gap:10px'}, [el('h2', {'class':'h-md', text:'What the labels mean'}), key]),
+      waitL.length ? el('section', {'class':'sec', style:'gap:8px'}, [el('h2', {'class':'h-md', text:'Hold off on these'}), el('ul', {'class':'srows'}, waitL.map(function(x){ return el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:function(){ openLine(x.k); }}}, [lnIcon(x.k, 17), el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:BUYL[x.lab][0] + (x.why[0] ? ' · ' + x.why[0] : '')}), el('b', {text:x.name})])])]); }))]) : null,
+      el('div', {'class':'note quiet'}, [el('div', null, [el('b', {text:'How this works'}), el('p', {text:'Orchard compares each product’s age with the gaps between its past releases in our device history, then checks announced launches, Apple events and rumors. Apple doesn’t announce its plans, so treat this as a guide. Rumors are labelled as rumors. Prices are US starting prices as of ' + fmtDate((state.devices || {}).lineupAsOf || TODAY) + '.'})])])];
+    if (isPhone()) return {left:left.concat(right), right:[]};
+    return {left:left, right:right};
+  }
+
+  /* ================= THIS WEEK IN APPLE ================= */
+  function weekStart(d){ var t = new Date(d + 'T12:00:00Z'), dow = (t.getUTCDay() + 6) % 7; t.setUTCDate(t.getUTCDate() - dow); return t.toISOString().slice(0, 10); }
+  function addDays(d, n){ var t = new Date(d + 'T12:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); }
+  var MSHORT = {jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, oct:9, nov:10, dec:11};
+  function settledOn(n){ var m = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*(?: (\d{4}))?/.exec(n.statusNote || ''); if (!m) return null; var y = m[3] || n.date.slice(0, 4); var d = y + '-' + String(MSHORT[m[2].toLowerCase()] + 1).padStart(2, '0') + '-' + String(+m[1]).padStart(2, '0'); if (d < n.date) d = (+y + 1) + d.slice(4); return d; }
+  function weekData(ws){
+    var we = addDays(ws, 6), inW = function(d){ return d && d >= ws && d <= we && d <= TODAY; };
+    var news = allStories().filter(function(x){ return inW(x.date); });
+    var launches = []; LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (inW(g.date)) launches.push({k:k, g:g}); }); });
+    var events = (state.events || []).filter(function(e){ return inW(e.date); });
+    var rels = state.releases.filter(function(r){ return inW(r.date) && (r.channel === 'release' || r.channel === 'rc'); }).sort(function(a, b){ return b.date.localeCompare(a.date); });
+    var settled = (state.news || []).filter(function(n){ return n.kind === 'rumor' && n.status && n.status !== 'pending' && inW(settledOn(n)); });
+    var duo = duoEvents().filter(function(e){ return inW(e.d); });
+    return {ws:ws, we:we, news:news, launches:launches, events:events, rels:rels, settled:settled, duo:duo};
+  }
+  function pl(n, one, many){ return n + ' ' + (n === 1 ? one : many); }
+  function weekLabel(ws){ var we = addDays(ws, 6); return +ws.slice(8) + (ws.slice(5, 7) !== we.slice(5, 7) ? ' ' + MONTHS[+ws.slice(5, 7) - 1].slice(0, 3) : '') + ' – ' + +we.slice(8) + ' ' + MONTHS[+we.slice(5, 7) - 1].slice(0, 3) + ' ' + we.slice(0, 4); }
+  function openWeek(ws){ S.week = ws; go('week'); setHash(ws === weekStart(TODAY) ? 'week' : 'week-' + ws); }
+  function weekView(){
+    var cur = weekStart(TODAY), ws = S.week && S.week <= cur ? weekStart(S.week) : cur, W = weekData(ws);
+    var rank = function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || b.date.localeCompare(a.date); };
+    var top = W.news.filter(function(x){ return x.kind === 'news'; }).sort(rank), rum = W.news.filter(function(x){ return x.kind === 'rumor'; }).sort(rank), rev = W.news.filter(function(x){ return x.kind === 'review' || x.kind === 'issue'; }).sort(rank);
+    var stats = el('ul', {'class':'wk-stats'}, [[W.news.length, W.news.length === 1 ? 'story' : 'stories'], [W.launches.length + W.events.length, 'launches and events'], [W.rels.length, W.rels.length === 1 ? 'software release' : 'software releases'], [W.duo.length, W.duo.length === 1 ? 'Duo app update' : 'Duo app updates']].map(function(x){ return el('li', null, [el('b', {text:String(x[0])}), el('span', {text:x[1]})]); }));
+    var nav = el('div', {'class':'wk-nav'}, [el('button', {type:'button', 'class':'btn sm', text:'← Previous week', on:{click:function(){ openWeek(addDays(ws, -7)); }}}), ws < cur ? el('button', {type:'button', 'class':'btn sm', text:'Next week →', on:{click:function(){ openWeek(addDays(ws, 7)); }}}) : null]);
+    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:ws === cur ? 'This week · so far' : 'Week in review'}), el('h1', {'class':'display h-lg', text:'This week in Apple'}), el('p', {'class':'lede', text:weekLabel(ws)}), stats, nav])];
+    var sec = function(t, kids){ return kids ? el('section', {'class':'sec', style:'gap:8px'}, [el('h2', {'class':'h-md', text:t})].concat(kids)) : null; };
+    if (W.launches.length || W.events.length) left.push(sec('Launches and events', [el('ul', {'class':'srows'}, W.events.map(function(e){ return el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:function(){ S.event = e.id; go('events'); setHash(e.id); }}}, [el('span', {'class':'lnic', style:lnStyle('apple'), html:PALIC.event}), el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:'Event · ' + shortDate(e.date)}), el('b', {text:e.name})])])]); }).concat(W.launches.map(function(o){ return el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:function(){ openGroup(o.k, o.g); }}}, [lnIcon(o.k, 17), el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:'In stores · ' + shortDate(o.g.date)}), el('b', {text:o.g.title})])])]); })))]));
+    if (top.length) left.push(sec('Top news', [storyList(top.slice(0, 8))]));
+    if (W.rels.length) left.push(sec('Software', [el('ul', {'class':'dv-line'}, W.rels.map(function(r){ return el('li', null, [el('span', {text:r.platform + ' ' + r.version.replace('Golden Gate ', '') + (r.channel === 'rc' ? ' RC' : '')}), el('b', {text:shortDate(r.date)})]); }))]));
+    if (W.settled.length) left.push(sec('Rumors settled', [storyList(W.settled)]));
+    if (rum.length) left.push(sec('New rumors', [storyList(rum.slice(0, 6))]));
+    if (rev.length) left.push(sec('Reviews and issues', [storyList(rev.slice(0, 6))]));
+    if (W.duo.length){ var dl = el('ul', {'class':'tl'}); W.duo.slice().sort(function(a, b){ return sv(b.a) - sv(a.a); }).slice(0, 6).forEach(function(e){ dl.appendChild(el('li', null, [el('button', {type:'button', on:{click:function(){ openApp(e.a.id); }}}, [tile(e.a, 36), el('span', {style:'min-width:0'}, [el('span', {'class':'tl-top'}, [el('b', {text:e.a.name}), e.v ? el('span', {'class':'tl-v', text:'v' + String(e.v).replace(/^v/i, '')}) : null]), el('span', {'class':'tl-line', text:e.line || ''})]), gauge(e.a, 24)])])); });
+      left.push(sec('iPhone Duo apps', [el('p', {'class':'muted', style:'margin:0;font-size:14px', text:W.duo.length + (W.duo.length === 1 ? ' app' : ' apps') + ' shipped or confirmed an iPhone Duo update. The best-scoring ones:'}), dl, el('button', {type:'button', 'class':'link', style:'align-self:flex-start', text:'Full timeline →', on:{click:function(){ S.feed = 'apps'; go('updates'); setHash('news-apps'); }}})])); }
+    if (!W.news.length && !W.rels.length && !W.launches.length && !W.duo.length) left.push(el('p', {'class':'muted', text:'Nothing recorded for this week yet.'}));
+    var weeks = [], w = cur; for (var i = 0; i < 12; i++){ var d = weekData(w); weeks.push(d); w = addDays(w, -7); }
+    var wl = el('ul', {'class':'wk-list'}, weeks.map(function(d){ return el('li', null, [el('button', {type:'button', 'aria-current':String(d.ws === ws), on:{click:function(){ openWeek(d.ws); }}}, [el('b', {text:d.ws === cur ? 'This week' : weekLabel(d.ws)}), el('span', {text:pl(d.news.length, 'story', 'stories') + ' · ' + pl(d.rels.length, 'release', 'releases') + (d.launches.length + d.events.length ? ' · ' + pl(d.launches.length + d.events.length, 'launch', 'launches') : '')})])]); }));
+    var right = [el('section', {'class':'sec', style:'gap:8px'}, [el('h2', {'class':'h-md', text:'Recent weeks'}), wl]), el('p', {'class':'muted', style:'margin:0;font-size:13px;line-height:1.5', text:'Built automatically from Orchard’s news, releases, device history and Duo app timeline. Each story links to its sources.'})];
     if (isPhone()) return {left:left.concat(right), right:[]};
     return {left:left, right:right};
   }
@@ -2812,9 +2958,10 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   /* ================= COMMAND PALETTE (Cmd-K) ================= */
   var palRecent = lsGet('orchard-recent', []);
   function palPages(){
-    return [['Home','home'],['News','news'],['Rumor tracker','rumors'],['Reviews','reviews'],['Known issues','issues'],['Software releases','releases'],['Devices','devices'],['Compare devices','devcmp'],['Events','events'],['Year calendar','calendar'],['Duo apps','apps'],['Collections','collections']].map(function(p){
+    return [['Home','home'],['This week in Apple','week'],['Buy now or wait','buy'],['News','news'],['Rumor tracker','rumors'],['Reviews','reviews'],['Known issues','issues'],['Software releases','releases'],['Devices','devices'],['Compare devices','devcmp'],['Events','events'],['Year calendar','calendar'],['Duo apps','apps'],['Collections','collections']].map(function(p){
       return {key:'page:' + p[1], t:p[0] === 'Home' ? 'Home page' : p[0], k:'Page', ic:'page', s:p[0], fn:function(){
-        if (p[1] === 'home' || p[1] === 'events' || p[1] === 'collections' || p[1] === 'calendar') go(p[1]);
+        if (p[1] === 'week'){ S.week = null; go('week'); }
+        else if (p[1] === 'home' || p[1] === 'events' || p[1] === 'collections' || p[1] === 'calendar' || p[1] === 'buy') go(p[1]);
         else if (p[1] === 'apps') go('apps', {reset:true});
         else if (p[1] === 'devices'){ S.dtab = 'lines'; go('devices'); }
         else if (p[1] === 'devcmp'){ S.dtab = 'compare'; go('devices'); setHash('devices-compare'); }
@@ -3610,7 +3757,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     if (animate && !reduce){ page.classList.remove('turn'); void page.offsetWidth; page.classList.add('turn'); }
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
-  var NAVOF = {calendar:'events', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'events', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'home'};
+  var NAVOF = {buy:'devices', week:'updates', calendar:'events', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'events', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'home'};
   function setNav(){
     var cur = NAVOF[S.view];
     document.querySelectorAll('[data-go]').forEach(function(b){ if (b.getAttribute('data-go') === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
@@ -3647,12 +3794,13 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         R = appRight(S.app ? findApp(S.app) : null); phoneApp = !!S.app;
       }
     } else {
-      var res = v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
+      var res = v === 'buy' ? buyView() : v === 'week' ? weekView() : v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
       if (!res) return;
       L = res.left; R = res.right;
     }
     var key = v + '|' + (S.ctx ? S.ctx.kind + (S.ctx.id||'') : '') + (v === 'story' ? S.story : v === 'line' ? S.line : '');
     if (v === 'calendar') key += S.caly;
+    if (v === 'week') key += S.week;
     var anim = animate !== false && key !== lastKey; lastKey = key;
     var Lp = $('L'), Rp = $('R');
     var keepL = v === 'apps' && animate === 'right';
@@ -3802,6 +3950,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     else if (/^g-/.test(h) && state.devices && state.devices.groups.some(function(g){ return g.id === h; })){ S.view = 'devices'; S.dtab = 'history'; S.dgroup = h; render(true); }
     else if (state.devices && state.devices.lines && Object.keys(state.devices.lines).some(function(k){ if (state.devices.lines[k].some(function(g){ return g.id === h; })){ S.dline = k; return true; } return false; })){ S.view = 'devices'; S.dtab = 'history'; S.dgroup = h; render(true); }
     else if (/^s-/.test(h) && findStory(h.slice(2))){ S.view = 'story'; S.story = h.slice(2); render(true); }
+    else if (h === 'buy'){ S.view = 'buy'; render(true); }
+    else if (/^week(-\d{4}-\d{2}-\d{2})?$/.test(h)){ S.view = 'week'; S.week = h.length > 4 ? h.slice(5) : null; render(true); }
     else if (/^calendar(-\d{4})?$/.test(h)){ S.view = 'calendar'; S.caly = h.split('-')[1] || null; render(true); }
     else if (/^line-/.test(h) && LINES.indexOf(h.slice(5)) >= 0){ S.view = 'line'; S.line = h.slice(5); render(true); }
     else if (h === 'news'){ S.view = 'updates'; S.feed = 'news'; render(true); }
