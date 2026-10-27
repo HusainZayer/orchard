@@ -9,12 +9,12 @@
 <meta property="og:title" content="Orchard">
 <meta property="og:description" content="News, rumors, devices, events and iPhone Duo apps, each with its source, plus a rumor tracker that keeps score. An independent site about Apple, not affiliated with Apple.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#F3F4F6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0B0C0F" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14110D" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Onest:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -1353,16 +1353,229 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .feed .rn-src a{font-size:12px;color:var(--muted)}
 .feed p.rn-sum{color:var(--ink)}
 .feed p.rn-src{font-size:12px;margin-top:6px}
+
+/* =====================================================================
+   ORCHARD EDITORIAL: design language v3
+   Paper and ink, a serif voice for headlines, one red accent, rules
+   instead of boxes. The site reads like a printed tech section.
+   ===================================================================== */
+:root{
+  --bg:#F5F0E6; --page:#F5F0E6; --paper-2:#EFE8DB; --ink:#18140E; --muted:#5F574A; --faint:#7B7264; --line:#DDD3C1; --rule:#18140E;
+  --tile:#EDE5D6; --tile-2:#E4DAC8; --accent:#B3141E; --accent-ink:#FFFFFF; --accent-soft:#F4DAD5; --warn:#8A5A00; --warn-soft:#F6E7CB;
+  --shadow:none; --crease:transparent; --crease-hi:transparent;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --display:var(--serif); --sans:"Onest",-apple-system,"Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-xl:6px; --r-lg:6px; --r-md:5px; --r-sm:4px; --navh:50px; --duo-band:#EDE3F3; --duo-band-ink:#5A2FA0;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14110D; --page:#14110D; --paper-2:#1B1712; --ink:#EFE7D8; --muted:#ACA292; --faint:#918877; --line:#332C23; --rule:#EFE7D8;
+  --tile:#1E1A14; --tile-2:#29231B; --accent:#FF6A5C; --accent-ink:#1A0705; --accent-soft:#3A1612; --warn:#E3A84E; --warn-soft:#2B1F0D; --duo-band:#231A2C; --duo-band-ink:#CDB6FF}}
+:root[data-theme="dark"]{
+  --bg:#14110D; --page:#14110D; --paper-2:#1B1712; --ink:#EFE7D8; --muted:#ACA292; --faint:#918877; --line:#332C23; --rule:#EFE7D8;
+  --tile:#1E1A14; --tile-2:#29231B; --accent:#FF6A5C; --accent-ink:#1A0705; --accent-soft:#3A1612; --warn:#E3A84E; --warn-soft:#2B1F0D; --duo-band:#231A2C; --duo-band-ink:#CDB6FF}
+html,body{height:auto}
+body{background:var(--bg);font-family:var(--sans);font-size:16px}
+::selection{background:var(--accent);color:var(--accent-ink)}
+:focus-visible{border-radius:2px}
+
+/* ---------- masthead ---------- */
+#site{height:auto}
+.app{display:block;height:auto;max-width:1280px;margin:0 auto;padding:0 40px 72px}
+.mast{position:sticky;top:-138px;z-index:20;display:block;height:auto;background:var(--bg);padding:0}
+.mast-top{display:flex;align-items:center;justify-content:space-between;gap:16px;height:46px;border-bottom:1px solid var(--line)}
+.dateline{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dateline b{color:var(--accent);font-weight:700}
+.mast-tools{display:flex;align-items:center;gap:10px}
+.mast-brand{height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.logo{font-family:var(--serif);font-weight:600;font-size:46px;letter-spacing:-.035em;line-height:1;text-transform:none;gap:12px}
+.logo svg{width:34px;height:34px}
+.mast-tag{margin:0;font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--muted)}
+.mast-nav{position:relative;display:flex;align-items:center;justify-content:center;height:var(--navh);border-top:1px solid var(--rule);border-bottom:3px double var(--rule)}
+.mini-logo{all:unset;position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.03em;opacity:0;pointer-events:none;transition:opacity .2s}
+.mini-logo svg{width:20px;height:20px}
+.mast.stuck .mini-logo{opacity:1;pointer-events:auto}
+.nav{margin:0;background:none;box-shadow:none;padding:0;gap:6px;border-radius:0}
+.nav button{padding:14px 14px 12px;border-radius:0;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:none;box-shadow:none;border-bottom:2px solid transparent}
+.nav button:hover{color:var(--accent)}
+.nav button[aria-current="page"]{background:none;color:var(--accent);box-shadow:none;border-bottom-color:var(--accent)}
+.nav .morebtn[aria-expanded="true"]{background:none;color:var(--accent)}
+.nav button.has-new::after{top:10px;right:4px;background:var(--accent)}
+.msearch{height:32px;width:240px;padding:0 2px;border-radius:0;background:none;box-shadow:none;border-bottom:1px solid var(--line)}
+.msearch input{font-size:13.5px}
+.kbtn kbd{background:none;border:1px solid var(--line);border-radius:3px}
+.themebtn{background:none;box-shadow:none;border:1px solid var(--line);border-radius:50%;width:32px;height:32px}
+
+/* ---------- page grid: main column and rail ---------- */
+.spread{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:0;background:none;border-radius:0;box-shadow:none;overflow:visible;min-height:0}
+.hinge{display:none}
+.page{overflow:visible;background:none;border-radius:0;min-width:0}
+.page.left{padding-right:44px}
+.page.right{position:sticky;top:var(--navh);align-self:start;max-height:calc(100vh - var(--navh));overflow-y:auto;padding-left:44px;border-left:1px solid var(--line);scrollbar-width:thin}
+.pin{padding:36px 0 72px;gap:44px;max-width:none}
+body[data-view="apps"] .spread,body[data-view="events"] .spread,body[data-view="compare"] .spread{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+body[data-view="devices"] .spread{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+
+/* ---------- type ---------- */
+.display{font-family:var(--serif);font-weight:600;letter-spacing:-.022em;line-height:1.02;font-variation-settings:"opsz" 72}
+.h-xl{font-size:clamp(46px,5.2vw,76px)}
+.h-lg{font-size:clamp(36px,3.6vw,54px)}
+.h-md{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:-.012em;line-height:1.12;font-variation-settings:"opsz" 36}
+.lede{font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--muted);font-variation-settings:"opsz" 18}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.eyebrow i{background:var(--accent)}
+.muted{color:var(--muted)}
+/* section heads carry a heavy rule, like a newspaper */
+.pin > .sec > .sec-head:first-child,.pin > .sec > h2.h-md:first-child,.pin > section > .sec-head:first-child,.pin > section > h2.h-md:first-child{border-top:2px solid var(--rule);padding-top:12px}
+.sec-head{align-items:baseline}
+.sec-head .link,.link{color:var(--accent)}
+.odata{border-radius:3px;background:none;border:1px solid var(--line)}
+
+/* ---------- controls ---------- */
+.btn{border-radius:4px;background:none;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font-weight:600}
+.btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);box-shadow:none}
+.btn.primary:hover{background:var(--accent);color:var(--accent-ink)}
+.ffilter:not(.dfilter){background:none;border-radius:0;padding:0;gap:22px;border-bottom:1px solid var(--line);box-shadow:none;align-self:stretch}
+.ffilter:not(.dfilter) .chip{background:none;border-radius:0;padding:9px 0 8px;margin-bottom:-1px;border-bottom:2px solid transparent;box-shadow:none;color:var(--muted);font-weight:600;font-size:13.5px}
+.ffilter:not(.dfilter) .chip:hover{color:var(--ink)}
+.ffilter:not(.dfilter) .chip[aria-pressed="true"]{background:none;color:var(--ink);border-bottom-color:var(--accent);box-shadow:none}
+@media (min-width:720px){ body[data-view="home"] .msearch{visibility:visible} }
+.row{border-radius:0}
+.row[aria-current="true"]{background:color-mix(in srgb,var(--accent) 6%,transparent);box-shadow:inset 3px 0 0 var(--accent)}
+.ahero{border-radius:0!important;background:none!important;border-top:2px solid var(--rule);border-bottom:1px solid var(--line);padding-left:0!important;padding-right:0!important}
+.showcase-d,.duo-band{border-radius:0!important;background:none!important;box-shadow:inset 0 0 0 1px var(--line)}
+.showcase-d summary{color:var(--ink)}
+.ln-hero .lnic.big{background:none;box-shadow:inset 0 0 0 1px var(--line);border-radius:4px}
+.lnswitch button[aria-current="page"]{background:none;box-shadow:inset 0 -2px 0 var(--accent);border-radius:0;color:var(--ink)}
+.lnswitch button{border-radius:0}
+.hub-s,.seg{border-radius:0}
+.ffilter.dfilter{gap:6px;border-bottom:0}
+.ffilter.dfilter .chip{padding:5px 11px;border:1px solid var(--line);border-radius:999px;margin:0;font-size:12.5px}
+.ffilter.dfilter .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip{border-radius:999px}
+.ctrl,select.ctrl,input.ctrl{border-radius:4px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line)}
+.tag{border-radius:3px;font-weight:600;letter-spacing:.02em}
+.pill{border-radius:3px}
+.newb{border-radius:3px;background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- stories ---------- */
+.srows li{border-top:1px solid var(--line)}
+.srow{padding:13px 0}
+.srow-t b{font-family:var(--serif);font-weight:600;font-size:18.5px;line-height:1.22;letter-spacing:-.005em;font-variation-settings:"opsz" 24}
+.srow-k{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--muted)}
+.srow .lnic{background:none;box-shadow:none}
+.lnic{border-radius:4px}
+.ncard{background:none!important;box-shadow:none!important;border-radius:0;border-top:1px solid var(--line);padding:16px 0 0}
+.ncard .nc-top{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.ncard .nc-top .lnic{display:none}
+.ncard .nc-top > span:not(.nc-src):not(.newb){color:var(--accent)}
+.ncard .nc-h{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.15;letter-spacing:-.01em}
+.ncard .nc-body{font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--muted)}
+.ncard.lead{border-top:0;padding:0}
+.ncard.lead .nc-h{font-size:clamp(36px,3.8vw,56px);line-height:1.02;letter-spacing:-.025em;font-variation-settings:"opsz" 72}
+.ncard.lead .nc-body{font-size:19px;color:var(--ink);-webkit-line-clamp:unset;display:block}
+.nc-see span{color:var(--accent);font-weight:600}
+.cover{margin:0 0 18px;border-radius:2px;overflow:hidden;background:color-mix(in srgb,var(--ln,var(--accent)) 12%,var(--bg));border:1px solid var(--line)}
+.cover svg{display:block;width:100%;height:auto}
+
+/* ---------- home ---------- */
+.hero{display:none}
+.hub{gap:0}
+.hub li{border-top:1px solid var(--line)}
+.hubd{background:none!important;border-radius:0;padding:16px 0}
+.hubd:hover .hubd-t b{color:var(--accent)}
+.hubd .lnic,.hubd .mm-ic{background:none}
+.hubd-t b{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em}
+
+/* ---------- cards and lists ---------- */
+.lnbig,.lnx{background:none!important;border-radius:0;box-shadow:inset 0 0 0 1px var(--line)}
+.lnbig:hover,.lnx:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.lnx b{font-family:var(--serif);font-size:23px!important;font-weight:600;letter-spacing:-.015em}
+.lnx-foot{border-top-color:var(--line)}
+.ln-card{background:none!important;border-radius:0;box-shadow:inset 0 0 0 1px var(--line)}
+button.ln-card:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.ln-card b{font-family:var(--serif);font-size:18px}
+.ev-card{background:none!important;border-radius:0;box-shadow:none!important;border-top:1px solid var(--line);padding:16px 0}
+.ev-card[aria-current="true"]{box-shadow:inset 3px 0 0 var(--accent)!important;padding-left:14px;background:color-mix(in srgb,var(--accent) 5%,transparent)!important}
+.ev-date{background:none!important;border-radius:0;border-right:1px solid var(--line)}
+.ev-date b{font-family:var(--serif)}
+.ev-name{font-family:var(--serif);font-size:22px;font-weight:600}
+.alist li,.feed li{border-top-color:var(--line)}
+.feed b{font-family:var(--serif);font-size:19px}
+.lu-cat button{border-left-width:2px}
+.buy-row b,.buy-n b{font-family:var(--serif);font-size:18px}
+.wk-stats li{background:none;border-radius:0;box-shadow:inset 0 0 0 1px var(--line)}
+.wk-stats b{font-family:var(--serif);font-size:34px}
+.wk-list button,.mm-i{border-radius:0}
+.note,.note.quiet{border-radius:0;background:none;box-shadow:none;border:1px solid var(--line);border-left:3px solid var(--accent)}
+.chk{border-radius:0;background:none;box-shadow:inset 0 0 0 1px var(--line)}
+.ctry-note{border-radius:0;background:var(--paper-2)}
+.cmp-table thead th{background:var(--bg)}
+.cmp-table tr.dv-diff td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.facts dt{color:var(--muted)}
+.facts dd{font-family:var(--serif);font-size:16px}
+.tile{border-radius:22%}
+.asearch{border-radius:4px;background:none;box-shadow:inset 0 0 0 1px var(--line)}
+.alist .arow,.arow{border-radius:0}
+.moremenu{border-radius:4px;background:var(--bg);box-shadow:0 18px 50px rgba(24,20,14,.18),0 0 0 1px var(--line)}
+.mm-ic{background:none;box-shadow:inset 0 0 0 1px var(--line)}
+.mm-t b{font-family:var(--serif);font-size:16.5px}
+.toast{border-radius:4px}
+.foot{font-family:var(--serif);font-style:italic}
+
+/* ---------- story page ---------- */
+.st-body,.story-body{font-family:var(--serif);font-size:20px;line-height:1.6}
+
+/* ---------- phone ---------- */
+@media (max-width:719px){
+  .app{max-width:none;padding:0 0 calc(76px + env(safe-area-inset-bottom,0px))}
+  .mast{position:sticky;top:0;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"brand tools";align-items:center;height:58px;padding:0 max(16px,env(safe-area-inset-left,0px));border-bottom:3px double var(--rule)}
+  .mast-top{display:contents}
+  .dateline{display:none}
+  .mast-tools{grid-area:tools;justify-content:flex-end;min-width:0}
+  .mast-brand{grid-area:brand;height:auto;align-items:flex-start}
+  .mast-tag,.mast-nav{display:none}
+  .logo{font-size:27px;gap:8px}
+  .logo svg{width:22px;height:22px}
+  .msearch{width:auto;max-width:180px;flex:1 1 auto}
+  .spread{display:block}
+  .page.left{padding-right:0}
+  .page.right{position:static;max-height:none;overflow:visible;padding-left:0;border-left:0}
+  .pin{padding:24px max(16px,env(safe-area-inset-left,0px)) 40px}
+  .page.right .pin{border-top:3px double var(--rule)}
+  .tabbar{background:var(--bg);border-top:1px solid var(--rule);box-shadow:none}
+  .tabbar button{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .tabbar button[aria-current="page"]{color:var(--accent)}
+  .ncard.lead .nc-h{font-size:34px}
+  .lede{font-size:18px}
+}
+.cover{background:var(--paper-2)}
+.buy-l.fine,.rn-f{background:color-mix(in srgb,#2D5B8C 14%,transparent);color:#2D5B8C}
+:root[data-theme="dark"] .buy-l.fine,:root[data-theme="dark"] .rn-f{color:#8DB4E2}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .buy-l.fine,:root:not([data-theme="light"]) .rn-f{color:#8DB4E2} }
+.tag.new{background:var(--accent);color:var(--accent-ink)}
 </style>
 
 <div id="site">
 <div class="app">
-  <header class="mast">
+  <header class="mast" id="mast">
+    <div class="mast-top"><span class="dateline" id="dateline"></span><span class="mast-tools">
+    <span class="admin-pill" id="admin-pill" hidden title="Only you see the editing controls">Admin</span>
+    <label class="msearch" for="msq">
+      <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input id="msq" type="search" placeholder="Search apps, news, events" autocomplete="off" aria-label="Search apps, news and events">
+      <button class="kbtn" id="kbtn" type="button" aria-label="Search everything" title="Search everything (Cmd K)"><kbd>⌘K</kbd></button>
+    </label>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Switch theme"></button>
+    </span></div>
+    <div class="mast-brand">
     <button class="logo" type="button" id="logo" aria-label="Orchard home">
       <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="7.5" style="fill:var(--c-duo)"/><circle cx="32" cy="12" r="7.5" style="fill:var(--c-iphone)"/><circle cx="49.3" cy="22" r="7.5" style="fill:var(--c-ipad)"/><circle cx="49.3" cy="42" r="7.5" style="fill:var(--c-mac)"/><circle cx="32" cy="52" r="7.5" style="fill:var(--c-watch)"/><circle cx="14.7" cy="42" r="7.5" style="fill:var(--c-airpods)"/><circle cx="14.7" cy="22" r="7.5" style="fill:var(--c-home)"/></svg>
       orchard
     </button>
-    <span class="admin-pill" id="admin-pill" hidden title="Only you see the editing controls">Admin</span>
+      <p class="mast-tag">Everything Apple, neatly in rows</p>
+    </div>
+    <div class="mast-nav"><button class="mini-logo" type="button" id="logo2" aria-label="Orchard home" tabindex="-1"><svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="7.5" style="fill:var(--c-duo)"/><circle cx="32" cy="12" r="7.5" style="fill:var(--c-iphone)"/><circle cx="49.3" cy="22" r="7.5" style="fill:var(--c-ipad)"/><circle cx="49.3" cy="42" r="7.5" style="fill:var(--c-mac)"/><circle cx="32" cy="52" r="7.5" style="fill:var(--c-watch)"/><circle cx="14.7" cy="42" r="7.5" style="fill:var(--c-airpods)"/><circle cx="14.7" cy="22" r="7.5" style="fill:var(--c-home)"/></svg>orchard</button>
     <nav class="nav" aria-label="Sections">
       <button type="button" data-go="home">Home</button>
       <button type="button" data-go="updates">News</button>
@@ -1370,17 +1583,12 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button type="button" data-go="apps">Duo apps</button>
       <button type="button" data-go="more" class="morebtn" aria-haspopup="menu" aria-expanded="false">More <svg width="10" height="10" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </nav>
-    <label class="msearch" for="msq">
-      <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <input id="msq" type="search" placeholder="Search apps, news, events" autocomplete="off" aria-label="Search apps, news and events">
-      <button class="kbtn" id="kbtn" type="button" aria-label="Search everything" title="Search everything (Cmd K)"><kbd>⌘K</kbd></button>
-    </label>
-    <button class="themebtn" id="themebtn" type="button" aria-label="Switch theme"></button>
+    </div>
   </header>
   <main class="spread" id="spread">
-    <section class="page left" id="L" aria-label="Left page"></section>
+    <section class="page left" id="L" aria-label="Main column"></section>
     <div class="hinge" aria-hidden="true"></div>
-    <section class="page right" id="R" aria-label="Right page"></section>
+    <section class="page right" id="R" aria-label="Side column"></section>
   </main>
 </div>
 <nav class="tabbar" aria-label="Sections">
@@ -1399,7 +1607,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   var CSS = document.getElementById('page-style').textContent;
   var APP = document.getElementById('app').textContent;
   var RESET = ':root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}';
-  var FONTS = 'https://fonts.googleapis.com/css2?family=Onest:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap';
+  var FONTS = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Onest:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap';
   var state = {apps:[], posts:[], releases:[], collections:[]};
   try { state = JSON.parse(document.getElementById('state').textContent); } catch(e){}
   ['apps','posts','releases','collections'].forEach(function(k){ state[k] = state[k] || []; });
@@ -1764,8 +1972,9 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   function homeOrder(keys){ var P = HP || (HP = homeParts()); return keys.map(function(k){ return P[k]; }).filter(Boolean); }
   function homeLeft(){
     HP = homeParts();
-    if (isPhone()) return homeOrder(['hero','lead','top','more','saved','foot']);
-    return homeOrder(['hero','lead','top','foot']);
+    var h1 = el('h1', {'class':'vh', text:'Orchard: everything Apple, neatly in rows'});
+    if (isPhone()) return [h1].concat(homeOrder(['lead','top','more','saved','foot']));
+    return [h1].concat(homeOrder(['lead','top','foot']));
   }
   function homeRight(){
     if (isPhone()) return [];
@@ -2697,9 +2906,23 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   /* ================= NEWS FRONT PAGE ================= */
   function dayLabel(d){ var diff = Math.round((Date.parse(TODAY) - Date.parse(d)) / 864e5); return diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : diff < 0 ? 'Coming up · ' + fmtDate(d) : fmtDate(d); }
+  /* cover art drawn in code: a halftone field in the line colour and the line's glyph, unique per story */
+  function hashStr(t){ var h = 2166136261; for (var i = 0; i < t.length; i++){ h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function coverArt(k, seed){
+    var h = hashStr(seed || k), W = 640, H = 280, fx = 120 + (h % 400), fy = 40 + ((h >> 9) % 200), dots = '', step = 16;
+    for (var y = step / 2; y < H; y += step) for (var x = step / 2; x < W; x += step){ var d = Math.hypot(x - fx, y - fy) / 300, r = Math.max(0, 6.2 * (1 - d)); if (r > .5) dots += '<circle cx="' + x + '" cy="' + y + '" r="' + r.toFixed(1) + '"/>'; }
+    var gx = ((h >> 4) % 2) ? 400 : 60, ic = LINEDEF[lnKey(k)].ic;
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><g fill="var(--ink)" opacity=".2">' + dots + '</g>' +
+      '<circle cx="' + fx + '" cy="' + fy + '" r="' + (58 + (h % 30)) + '" fill="var(--accent)" opacity=".92"/>' +
+      '<rect x="0" y="' + (H - 10) + '" width="' + W + '" height="10" fill="var(--ln,var(--accent))" opacity=".85"/>' +
+      '<g transform="translate(' + gx + ',30) scale(9.2)" fill="var(--bg)" stroke="var(--ink)" stroke-width=".22" stroke-linecap="round" stroke-linejoin="round">' + ic + '</g>' +
+      '<line x1="0" y1="' + (H - .5) + '" x2="' + W + '" y2="' + (H - .5) + '" stroke="var(--ink)" stroke-width="1"/></svg>';
+    return el('figure', {'class':'cover', style:lnStyle(k), html:svg});
+  }
   function newsCard(x, lead){
     var lk = primaryLn(x.dev), see = (x.see || []).filter(function(s){ return seeTarget(s[1]); });
     return el('article', {'class':'ncard' + (lead ? ' lead' : ''), style:lnStyle(lk)}, [
+      lead ? coverArt(lk, x.id) : null,
       el('div', {'class':'nc-top'}, [lnIcon(lk, lead ? 20 : 16), el('span', {text:LINEDEF[lnKey(lk)].n}), newBadge(x), el('span', {'class':'nc-src', text:x.source || ''})]),
       el(lead ? 'h3' : 'h4', {'class':lead ? 'display nc-h' : 'nc-h'}, [el('button', {type:'button', 'class':'nc-open', text:x.title, on:{click:function(){ openStory(x.id); }}})]),
       el('p', {'class':'nc-body', text:x.body}),
@@ -3838,7 +4061,16 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
   var NAVOF = {buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
+  function dateline(){
+    var d = $('dateline'); if (!d) return;
+    var iosNow = latestRel('iOS', 'release'), nextEv = (state.events || []).filter(function(e){ return e.date >= TODAY; }).sort(function(a, b){ return a.date.localeCompare(b.date); })[0];
+    var dn = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(TODAY + 'T12:00:00').getDay()];
+    d.textContent = '';
+    [dn + ' ' + +TODAY.slice(8) + ' ' + MONTHS[+TODAY.slice(5, 7) - 1] + ' ' + TODAY.slice(0, 4), iosNow ? 'iOS ' + iosNow.version : null].filter(Boolean).forEach(function(t, i){ d.appendChild(document.createTextNode((i ? '  ·  ' : '') + t)); });
+    if (nextEv && evWhen(nextEv)){ d.appendChild(document.createTextNode('  ·  ')); d.appendChild(el('b', {text:nextEv.name + ' ' + evWhen(nextEv).toLowerCase()})); }
+  }
   function setNav(){
+    dateline();
     var cur = NAVOF[S.view];
     document.querySelectorAll('[data-go]').forEach(function(b){ if (b.getAttribute('data-go') === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     document.body.setAttribute('data-view', S.view);
@@ -4025,6 +4257,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     go(v, v === 'apps' ? {reset:true} : {});
   }); });
   $('logo').addEventListener('click', function(){ go('home'); });
+  $('logo2').addEventListener('click', function(){ go('home'); });
+  (function(){ var m = $('mast'), on = false; function chk(){ var st = !isPhone() && window.scrollY > 136; if (st !== on){ on = st; m.classList.toggle('stuck', st); $('logo2').tabIndex = st ? 0 : -1; } } window.addEventListener('scroll', chk, {passive:true}); window.addEventListener('resize', chk); chk(); })();
   document.addEventListener('click', function(e){ if (!document.body.classList.contains('fsheet')) return; var pnl = $('fpanel'); if (pnl && !pnl.contains(e.target) && !(e.target.closest && e.target.closest('#fbtn'))) setFilters(false); }, true);
   var msq = $('msq');
   new MutationObserver(function(ms){ ms.forEach(function(m){ m.addedNodes.forEach(function(n){ if (n.nodeType !== 1) return; var imgs = n.tagName === 'IMG' ? [n] : n.querySelectorAll ? n.querySelectorAll('img') : []; Array.prototype.forEach.call(imgs, function(im){ if (!im.complete){ im.classList.add('ld'); var done = function(){ im.classList.remove('ld'); }; im.addEventListener('load', done, {once:true}); im.addEventListener('error', done, {once:true}); } }); }); }); }).observe(document.body, {childList:true, subtree:true});
