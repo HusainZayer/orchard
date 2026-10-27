@@ -1590,7 +1590,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var rank = function(a, b){ return b.date.localeCompare(a.date) || ((b.major?1:0) - (a.major?1:0)) || ((isFollowed(b)?1:0) - (isFollowed(a)?1:0)) || ((b.dev || []).length - (a.dev || []).length); };
     var past = all.filter(function(x){ return x.kind === 'news'; }).sort(rank);
     if (past.length){
-      var lead = past.filter(function(x){ return x.date === past[0].date; }).sort(function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || ((isFollowed(b)?1:0) - (isFollowed(a)?1:0)) || ((b.dev || []).length - (a.dev || []).length) || (b.body || '').length - (a.body || '').length; })[0];
+      var lead = topStory(past);
       shown[lead.id] = 1;
       P.lead = el('section', {'class':'sec', style:'gap:8px'}, [el('span', {'class':'eyebrow', text:'Top story · ' + dayLabel(lead.date)}), newsCard(lead, true)]);
     }
@@ -1708,7 +1708,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     out.push(el('div', {'class':'sec', style:'gap:10px'}, [
       el('span', {'class':'eyebrow', text:c ? (S.ctx.kind === 'collection' ? 'Collection' : 'Story') : 'iPhone Duo'}),
       el('h1', {'class':'display h-lg', text:c ? c.title : 'Duo apps'}),
-      c ? null : odata('Orchard directory'),
+      c ? null : el('span', {style:'display:flex;gap:12px;align-items:center;flex-wrap:wrap'}, [odata('Orchard directory'), el('button', {type:'button', 'class':'link', style:'font-size:13.5px', text:'Update timeline →', on:{click:function(){ S.feed = 'apps'; go('updates'); setHash('news-apps'); }}})]),
       c && c.blurb ? el('p', {'class':'lede', text:c.blurb}) : null,
       c ? el('button', {type:'button', 'class':'link', style:'align-self:flex-start', text:'All ' + state.apps.length + ' apps →', on:{click:function(){ go('apps', {reset:true}); }}}) : null
     ]));
@@ -2277,7 +2277,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   }
   function feedSeg(){
     var seg = el('div', {'class':'ffilter', role:'group', 'aria-label':'Show'});
-    [['apps','Duo apps'],['news','News'],['rumors','Rumors'],['reviews','Reviews'],['issues','Issues'],['releases','Software']].forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip', 'aria-pressed':String(S.feed === o[0] || (o[0] === 'releases' && S.feed === 'all')), text:o[1], on:{click:function(){ S.feed = o[0]; S.tlimit = 60; setHash(o[0] === 'news' ? 'news' : 'news-' + o[0]); render(false); }}})); });
+    [['news','News'],['rumors','Rumors'],['reviews','Reviews'],['issues','Issues'],['releases','Software']].concat(S.feed === 'apps' ? [['apps','Duo app timeline']] : []).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip', 'aria-pressed':String(S.feed === o[0] || (o[0] === 'releases' && S.feed === 'all')), text:o[1], on:{click:function(){ S.feed = o[0]; S.tlimit = 60; setHash(o[0] === 'news' ? 'news' : 'news-' + o[0]); render(false); }}})); });
     return seg;
   }
   function duoEvents(){
@@ -2294,7 +2294,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var ts = S.fq ? S.fq.toLowerCase().split(/\s+/).filter(Boolean) : [];
     var ev = duoEvents().filter(function(e){ return !ts.length || hit([e.a.name, e.a.developer, e.line].join(' '), ts); });
     var week = ev.filter(function(e){ return (Date.parse(TODAY) - Date.parse(e.d)) <= 7*864e5; }).length;
-    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Duo app updates'}), el('h2', {'class':'display h-lg', text:'The timeline'}), feedSeg(),
+    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Duo app updates'}), el('h1', {'class':'display h-lg', text:'The timeline'}), feedSeg(),
       el('p', {'class':'muted', style:'margin:0;font-size:14.5px', text:week + (week === 1 ? ' app' : ' apps') + ' released or confirmed an iPhone Duo update in the last 7 days. Each date is the app’s Duo release where known, otherwise the latest App Store version whose release notes mention iPhone Duo.'}),
       S.fq ? el('p', {'class':'muted', style:'margin:0;font-size:14px'}, ['Showing matches for “' + S.fq + '”. ', el('button', {type:'button', 'class':'link', text:'Clear', on:{click:clearFq}})]) : null])];
     var shown = ev.slice(0, S.tlimit), groups = {}, order = [];
@@ -2313,13 +2313,28 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     if (!ev.length) out.push(emptyNote());
     return out;
   }
+  function newsRail(){
+    var out = [];
+    var rum = (state.news || []).filter(function(n){ return n.kind === 'rumor' && n.status === 'pending' && !n.lowConfidence; }).sort(function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || b.date.localeCompare(a.date); }).slice(0, 5);
+    if (S.feed !== 'rumors' && rum.length) out.push(el('section', {'class':'sec', style:'gap:8px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Rumors to watch'}), el('button', {type:'button', 'class':'link', text:'Tracker', on:{click:function(){ S.feed = 'rumors'; setHash('news-rumors'); render(false); scrollTopAll(); }}})]), storyList(rum)]));
+    var nd = []; (state.events || []).forEach(function(e){ if (e.date >= TODAY) nd.push({d:e.date, t:e.name, sub:(e.rumored ? 'Apple event · details expected' : 'Apple event') + (e.time ? ' · ' + e.time : ''), fn:function(){ S.event = e.id; go('events'); setHash(e.id); }}); });
+    LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.date > TODAY) nd.push({d:g.date, t:g.title, sub:'In stores', fn:function(){ openGroup(k, g); }}); }); });
+    (state.dates || []).forEach(function(x){ if (x.date >= TODAY) nd.push({d:x.date, t:x.title, sub:x.sub || '', fn:function(){ if (x.story && findStory(x.story)) openStory(x.story); else go('calendar'); }}); });
+    nd.sort(function(a, b){ return a.d.localeCompare(b.d); });
+    if (nd.length){ var ol = el('ul', {'class':'srows'}); nd.slice(0, 4).forEach(function(x){ var n = evDays(x.d); ol.appendChild(el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:x.fn}}, [el('span', {'class':'lnic', style:lnStyle('apple'), html:PALIC.event}), el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:(n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : shortDate(x.d)) + (x.sub ? ' · ' + x.sub : '')}), el('b', {text:x.t})])])])); });
+      out.push(el('section', {'class':'sec', style:'gap:8px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Coming up'}), el('button', {type:'button', 'class':'link', text:'Calendar', on:{click:function(){ go('calendar'); }}})]), ol])); }
+    var ios = latestRel('iOS', 'release'), mac = latestRel('macOS', 'release');
+    out.push(el('button', {type:'button', 'class':'hubd', style:lnStyle('software'), on:{click:function(){ S.feed = 'releases'; setHash('news-releases'); render(false); scrollTopAll(); }}}, [el('span', {'class':'lnic', html:lnSvg('software', 18)}), el('span', {'class':'hubd-t'}, [el('b', {text:'Software today'}), el('span', {text:[ios ? 'iOS ' + ios.version : null, mac ? 'macOS ' + mac.version.replace('Golden Gate ', '') : null].filter(Boolean).join(' · ') + ' · pipeline and betas'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})]));
+    out.push(el('button', {type:'button', 'class':'hubd', style:lnStyle('duo'), on:{click:function(){ S.feed = 'apps'; setHash('news-apps'); render(false); scrollTopAll(); }}}, [el('span', {'class':'lnic', html:lnSvg('duo', 18)}), el('span', {'class':'hubd-t'}, [el('b', {text:'Duo app timeline'}), el('span', {text:'Every iPhone Duo app update, newest first'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})]));
+    return out;
+  }
   function updatesRight(){
     if (S.feed === 'duo') S.feed = 'news';
     if (S.feed === 'apps') return duoTimeline();
     if (S.feed === 'rumors' || S.feed === 'reviews' || S.feed === 'issues') return newsKindView(S.feed);
     var items = feedFiltered();
     var seg = feedSeg();
-    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:S.feed === 'news' ? 'Apple news' : 'Software'}), el('h2', {'class':'display h-lg', text:S.feed === 'news' ? 'The news' : 'Releases'}), seg, S.feed === 'news' ? devFilter('news') : null,
+    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:S.feed === 'news' ? 'Apple news' : 'Software'}), el('h1', {'class':'display h-lg', text:S.feed === 'news' ? 'The news' : 'Releases'}), seg, S.feed === 'news' ? devFilter('news') : null,
       S.feed === 'releases' || S.feed === 'all' ? el('div', {'class':'ffilter'}, [el('button', {type:'button', 'class':'chip', 'aria-pressed':String(S.feed === 'releases'), text:'iOS and Xcode', on:{click:function(){ S.feed = 'releases'; render(false); }}}), el('button', {type:'button', 'class':'chip', 'aria-pressed':String(S.feed === 'all'), text:'Every platform', on:{click:function(){ S.feed = 'all'; render(false); }}})]) : null,
       S.fq ? el('p', {'class':'muted', style:'margin:0;font-size:14px'}, ['Showing matches for “' + S.fq + '”. ', el('button', {type:'button', 'class':'link', text:'Clear', on:{click:clearFq}})]) : null])];
     if (canEdit){
@@ -2400,7 +2415,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var k = kind === 'rumors' ? 'rumor' : kind === 'reviews' ? 'review' : 'issue';
     var ts = S.fq ? S.fq.toLowerCase().split(/\s+/).filter(Boolean) : [];
     var items = (state.news || []).filter(function(n){ return n.kind === k && devOk(n.dev) && (!ts.length || hit([n.title, n.body, n.source].join(' '), ts)); });
-    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:meta[0]}), el('h2', {'class':'display h-lg', text:meta[1]}), feedSeg(), devFilter(k), el('p', {'class':'muted', style:'margin:0;font-size:14.5px', text:meta[2]}), S.fq ? el('p', {'class':'muted', style:'margin:0;font-size:14px'}, ['Showing matches for “' + S.fq + '”. ', el('button', {type:'button', 'class':'link', text:'Clear', on:{click:clearFq}})]) : null])];
+    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:meta[0]}), el('h1', {'class':'display h-lg', text:meta[1]}), feedSeg(), devFilter(k), el('p', {'class':'muted', style:'margin:0;font-size:14.5px', text:meta[2]}), S.fq ? el('p', {'class':'muted', style:'margin:0;font-size:14px'}, ['Showing matches for “' + S.fq + '”. ', el('button', {type:'button', 'class':'link', text:'Clear', on:{click:clearFq}})]) : null])];
     if (k === 'rumor'){
       var groups = [['pending','Still pending'],['confirmed','Confirmed'],['false','Didn’t happen']];
       var nc = items.filter(function(n){ return n.status === 'confirmed'; }).length, nf = items.filter(function(n){ return n.status === 'false'; }).length;
@@ -2573,12 +2588,17 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       see.length ? el('div', {'class':'nc-see'}, see.map(function(s){ return el('span', {text:s[0] + ' →'}); })) : null
     ]);
   }
+  /* one rule for the top story everywhere: newest day, then major, followed lines, breadth, depth */
+  function topStory(list){
+    var past = list.filter(function(x){ return x && x.kind === 'news' && x.date <= TODAY; }); if (!past.length) past = list.filter(function(x){ return x && x.date <= TODAY; });
+    if (!past.length) return null; var d = past.reduce(function(m, x){ return x.date > m ? x.date : m; }, '');
+    return past.filter(function(x){ return x.date === d; }).sort(function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || ((isFollowed(b)?1:0) - (isFollowed(a)?1:0)) || ((b.dev || []).length - (a.dev || []).length) || (b.body || '').length - (a.body || '').length; })[0];
+  }
   function newsFront(items){
     var stories = items.map(function(it){ return findStory(it.id); }).filter(Boolean);
     if (!stories.length) return [emptyNote()];
     var past = stories.filter(function(x){ return x.date <= TODAY; });
-    var top = past.length ? past[0].date : null;
-    var lead = past.filter(function(x){ return x.date >= (top || ''); }).sort(function(a, b){ return ((isFollowed(b)?1:0) - (isFollowed(a)?1:0)) || ((b.dev || []).length - (a.dev || []).length) || (b.body || '').length - (a.body || '').length; })[0] || stories[0];
+    var lead = topStory(past) || stories[0];
     var out = [el('section', {'class':'sec', style:'gap:8px'}, [el('span', {'class':'eyebrow', text:'Lead story · ' + dayLabel(lead.date)}), newsCard(lead, true)])];
     var by = {}, order = [];
     stories.forEach(function(x){ if (x === lead) return; if (!by[x.date]){ by[x.date] = []; order.push(x.date); } by[x.date].push(x); });
@@ -3224,8 +3244,8 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       var b = el('button', {type:'button', 'class':'ev-card' + (e.duo ? ' duo' : ''), 'aria-current':String(S.event === e.id), on:{click:function(){ S.event = e.id; setHash(e.id); render(isPhone() ? true : 'right'); if (isPhone()) scrollTopAll(); }}}, [
         el('span', {'class':'ev-date'}, [el('b', {text:String(+e.date.slice(8))}), el('span', {text:MONTHS[+e.date.slice(5,7)-1].slice(0,3)})]),
         el('span', {style:'min-width:0'}, [el('span', {'class':'ev-meta', text:[e.format, e.place].filter(Boolean).join(' · ')}), el('b', {'class':'ev-name', text:e.name}),
-          el('span', {'class':'ev-sub', text:e.items.map(function(x){ return x[0]; }).slice(0, 3).join(', ') + (e.items.length > 3 ? '…' : '')}),
-          el('span', {'class':'ev-tags'}, [e.date >= TODAY ? el('span', {'class':'tag soon', text:evWhen(e) || 'Upcoming'}) : null, e.duo ? el('span', {'class':'tag duo', text:'iPhone Duo'}) : e.road ? el('span', {'class':'tag road', text:'Road to iPhone Duo'}) : null])])]);
+          el('span', {'class':'ev-sub', text:(e.rumored ? 'Expected: ' : '') + e.items.map(function(x){ return x[0]; }).slice(0, 3).join(', ') + (e.items.length > 3 ? '…' : '')}),
+          el('span', {'class':'ev-tags'}, [e.date >= TODAY ? el('span', {'class':'tag soon', text:evWhen(e) || 'Upcoming'}) : null, e.rumored ? el('span', {'class':'tag rum', text:'Rumor'}) : null, e.duo ? el('span', {'class':'tag duo', text:'iPhone Duo'}) : e.road ? el('span', {'class':'tag road', text:'Road to iPhone Duo'}) : null])])]);
       return el('li', null, [b]);
     }
     var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Apple events'}), el(isPhone() && !S.event ? 'h1' : 'h2', {'class':'display h-lg', text:'Keynotes and launches'}),
@@ -3600,7 +3620,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     else if (v === 'story'){ var sv2 = storyView(); L = sv2.left; R = sv2.right; }
     else if (v === 'line'){ var lv = lineView(); L = lv.left; R = lv.right; }
     else if (v === 'calendar'){ var cv = calendarView(); L = cv.left; R = cv.right; }
-    else if (v === 'updates'){ L = updatesLeft(); R = updatesRight(); if (isPhone()){ var tmp = L; L = R; R = tmp; } }
+    else if (v === 'updates'){ if (S.feed === 'releases' || S.feed === 'all'){ L = updatesLeft(); R = updatesRight(); if (isPhone()){ var tmp = L; L = R; R = tmp; } } else { L = updatesRight(); R = newsRail(); } }
     else if (v === 'apps'){
       L = appsLeft();
       if (S.editing && canEdit){ R = [appForm(S.editing === 'new' ? null : findApp(S.editing))]; phoneApp = true; }
