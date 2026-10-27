@@ -1318,6 +1318,9 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .mm-t{display:flex;flex-direction:column;gap:1px;min-width:0}
 .mm-t b{font-size:14.5px;font-weight:600}
 .mm-t span{font-size:12.5px;color:var(--muted)}
+.lu-r{display:flex;align-items:center;gap:10px;flex:none}
+.buy-l.sm{font-size:10.5px;padding:2px 8px}
+@media (max-width:719px){ .lu-r .buy-l.sm{display:none} }
 </style>
 
 <div id="site">
@@ -1691,15 +1694,9 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     var macNow = latestRel('macOS', 'release');
     var doors = [
       ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
-      ['news', 'News', 'Every story, newest first', 'apple', function(){ S.feed = 'news'; go('updates'); setHash('news'); }],
       ['rumors', 'Rumors', nRum + ' open, marked when settled', 'iphone', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
       ['buy', 'Buy now or wait', (function(){ var b = buyItems(), w = b.filter(function(x){ return x.lab === 'wait' || x.lab === 'caution'; }).length; return w + ' of ' + b.length + ' products: hold off for now'; })(), 'mac', function(){ go('buy'); }],
-      ['lines', 'Product lines', LINES.length + ' lines with prices, history and compare', 'mac', function(){ S.dtab = 'lines'; go('devices'); setHash('devices'); }],
-      ['duo', 'iPhone Duo apps', opt + ' optimized · ' + com + ' coming', 'duo', function(){ go('apps', {reset:true}); }],
-      ['events', 'Events', nextEv ? nextEv.name + ' ' + when(nextEv.date) : 'Past keynotes and recaps', 'apple', function(){ if (nextEv){ S.event = nextEv.id; go('events'); setHash(nextEv.id); } else go('events'); }],
-      ['calendar', 'Calendar', nd.length ? 'Next: ' + nd[0][1] + ' ' + when(nd[0][0]) : 'Every date in the year ahead', 'watch', function(){ go('calendar'); }],
-      ['software', 'Software', [iosNow ? 'iOS ' + iosNow.version : null, macNow ? 'macOS ' + macNow.version.replace('Golden Gate ', '') : null].filter(Boolean).join(' · ') || 'Releases and betas', 'software', function(){ S.feed = 'releases'; go('updates'); setHash('news-releases'); }],
-      ['reviews', 'Reviews and issues', nRev + ' reviews · ' + nIss + ' open ' + (nIss === 1 ? 'issue' : 'issues'), 'airpods', function(){ S.feed = 'reviews'; go('updates'); setHash('news-reviews'); }]
+      ['events', 'Events and calendar', [nextEv ? nextEv.name + ' ' + when(nextEv.date) : null, nd.length ? 'next date: ' + nd[0][1] + ' ' + when(nd[0][0]) : null].filter(Boolean).join(' · ') || 'Keynotes, launches and the year’s dates', 'apple', function(){ if (nextEv){ S.event = nextEv.id; go('events'); setHash(nextEv.id); } else go('events'); }]
     ];
     var hub = el('ul', {'class':'hub'});
     doors.forEach(function(d){ hub.appendChild(el('li', null, [el('button', {type:'button', 'class':'hubd', style:lnStyle(d[3]), on:{click:d[4]}}, [
@@ -2405,8 +2402,6 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     if (nd.length){ var ol = el('ul', {'class':'srows'}); nd.slice(0, 4).forEach(function(x){ var n = evDays(x.d); ol.appendChild(el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:x.fn}}, [el('span', {'class':'lnic', style:lnStyle('apple'), html:PALIC.event}), el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:(n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : shortDate(x.d)) + (x.sub ? ' · ' + x.sub : '')}), el('b', {text:x.t})])])])); });
       out.push(el('section', {'class':'sec', style:'gap:8px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Coming up'}), el('button', {type:'button', 'class':'link', text:'Calendar', on:{click:function(){ go('calendar'); }}})]), ol])); }
     var ios = latestRel('iOS', 'release'), mac = latestRel('macOS', 'release');
-    out.push(el('button', {type:'button', 'class':'hubd', style:lnStyle('software'), on:{click:function(){ S.feed = 'releases'; setHash('news-releases'); render(false); scrollTopAll(); }}}, [el('span', {'class':'lnic', html:lnSvg('software', 18)}), el('span', {'class':'hubd-t'}, [el('b', {text:'Software today'}), el('span', {text:[ios ? 'iOS ' + ios.version : null, mac ? 'macOS ' + mac.version.replace('Golden Gate ', '') : null].filter(Boolean).join(' · ') + ' · pipeline and betas'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})]));
-    out.push(el('button', {type:'button', 'class':'hubd', style:lnStyle('duo'), on:{click:function(){ S.feed = 'apps'; setHash('news-apps'); render(false); scrollTopAll(); }}}, [el('span', {'class':'lnic', html:lnSvg('duo', 18)}), el('span', {'class':'hubd-t'}, [el('b', {text:'Duo app timeline'}), el('span', {text:'Every iPhone Duo app update, newest first'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})]));
     return out;
   }
   function updatesRight(){
@@ -2813,16 +2808,15 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         el('span', {'class':'lnx-latest'}, [f.catalog ? null : el('small', {text:last ? 'Latest · ' + MONTHS[+last.date.slice(5, 7) - 1].slice(0, 3) + ' ' + last.date.slice(0, 4) : ''}), el('span', {text:latest}), r ? el('em', {text:r + (r === 1 ? ' open rumor' : ' open rumors')}) : null]),
         el('span', {'class':'lnx-foot', text:f.from ? 'From $' + f.from.toLocaleString('en-US') : f.now.length + ' on sale'})]));
     });
-    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Apple’s product lines'}), el('p', {'class':'lede', text:'Pick a line for what’s on sale, prices, rumors, news, known issues, software support and its full history.'}), devTabs()]), grid,
-      el('button', {type:'button', 'class':'hubd', style:lnStyle('mac'), on:{click:function(){ go('buy'); }}}, [el('span', {'class':'lnic', html:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + HUBIC.buy + '</svg>'}), el('span', {'class':'hubd-t'}, [el('b', {text:'Buy now or wait?'}), el('span', {text:'How recent each product is, and what’s coming'})]), el('span', {'class':'hubd-a', 'aria-hidden':'true', html:PALIC.page})])];
+    var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Apple’s product lines'}), el('p', {'class':'lede', text:'Pick a line for what’s on sale, prices, rumors, news, known issues, software support and its full history.'}), devTabs()]), grid];
     /* lineup at a glance */
     var D = state.devices || {};
-    var lu = el('div', {'class':'lu'});
+    var lu = el('div', {'class':'lu'}), BL = {}; buyItems().forEach(function(b){ BL[b.name] = b.lab; });
     (D.lineup || []).forEach(function(c){
       lu.appendChild(el('section', {'class':'lu-cat'}, [el('h3', {text:c[0]}), el('ul', null, c[1].map(function(x){ var sp = splitPrice(x[1]), k = lineupLine(x[0]);
-        return el('li', null, [el('button', {type:'button', style:lnStyle(k), on:{click:function(){ if (k !== 'apple') openLine(k); }}}, [el('span', {'class':'lu-n'}, [el('span', {text:x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)').replace(/\s*\(new\)/, '')}), /new\)/.test(x[0]) ? el('span', {'class':'tag new', text:'New'}) : null, noteTag(sp.note)]), el('b', {text:sp.price || '—'})])]); }))]));
+        return el('li', null, [el('button', {type:'button', style:lnStyle(k), on:{click:function(){ if (k !== 'apple') openLine(k); }}}, [el('span', {'class':'lu-n'}, [el('span', {text:x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)').replace(/\s*\(new\)/, '')}), /new\)/.test(x[0]) ? el('span', {'class':'tag new', text:'New'}) : null, noteTag(sp.note)]), el('span', {'class':'lu-r'}, [BL[x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)')] ? el('span', {'class':'buy-l sm ' + BL[x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)')], text:BUYL[BL[x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)')]][0]}) : null, el('b', {text:sp.price || '—'})])])]); }))]));
     });
-    var right = [el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Lineup at a glance'}), el('span', {'class':'muted', style:'font-size:12.5px', text:'US starting prices' + (D.lineupAsOf ? ' · ' + shortDate(D.lineupAsOf) : '')})]), lu,
+    var right = [el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Lineup at a glance'}), el('button', {type:'button', 'class':'link', text:'Buy now or wait? →', on:{click:function(){ go('buy'); }}})]), el('p', {'class':'muted', style:'margin:0;font-size:12.5px', text:'US starting prices' + (D.lineupAsOf ? ' as of ' + fmtDate(D.lineupAsOf) : '') + '. Labels are Orchard’s buying advice; tap “Buy now or wait?” for the reasons.'}), lu,
       el('p', {'class':'muted', style:'margin:0;font-size:13px;line-height:1.5', text:'Tags marked Rumor are reports, not confirmed by Apple. Prices change at launches; this list is updated after each one.'})]),
       devSources(true)];
     if (isPhone()) return {left:left.concat(right), right:[]};
@@ -3926,10 +3920,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   var MOREI = [
     ['This week in Apple', 'Launches, software and news in one recap', 'week', function(){ S.week = null; go('week'); }],
     ['Buy now or wait', 'How recent each product is, and what’s next', 'buy', function(){ go('buy'); }],
-    ['Events', 'Keynotes and launches since 2016', 'events', function(){ S.event = null; go('events'); }],
-    ['Calendar', 'Every Apple date in the year', 'calendar', function(){ S.caly = null; go('calendar'); }],
-    ['Rumor tracker', 'Open rumors, marked when settled', 'rumors', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
-    ['Software', 'Releases, betas and the pipeline', 'software', function(){ S.feed = 'releases'; go('updates'); setHash('news-releases'); }],
+    ['Events and calendar', 'Keynotes, launches and every Apple date', 'events', function(){ S.event = null; go('events'); }],
     ['About Orchard', 'How the site works and how scores are made', 'about', function(){ go('about'); }]
   ];
   var MOREIC = {week:HUBIC.week, buy:HUBIC.buy, events:HUBIC.events, calendar:HUBIC.calendar, rumors:HUBIC.rumors, software:HUBIC.software, about:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/>'};
@@ -3937,7 +3928,7 @@ button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   function toggleMore(btn){
     if ($('moremenu')){ closeMore(true); return; }
     closeMore.btn = btn;
-    var cur = S.view === 'updates' ? (S.feed === 'rumors' ? 'rumors' : S.feed === 'releases' || S.feed === 'all' ? 'software' : '') : S.view;
+    var cur = S.view === 'calendar' ? 'events' : S.view;
     var menu = el('div', {id:'moremenu', 'class':'moremenu' + (isPhone() ? ' sheet' : ''), role:'menu', 'aria-label':'More sections'});
     MOREI.forEach(function(it){ menu.appendChild(el('button', {type:'button', role:'menuitem', 'class':'mm-i', 'aria-current':it[2] === cur ? 'page' : null, on:{click:function(){ closeMore(false); it[3](); }}}, [
       el('span', {'class':'mm-ic', html:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MOREIC[it[2]] + '</svg>'}),
