@@ -16,3 +16,7 @@ Live: https://orchard-mu-snowy.vercel.app
 - rebuilds and commits only when something changed.
 
 App statuses, news, rumors and events are editorial and are not changed automatically.
+
+## Instant refresh when news breaks
+`.github/workflows/detect.yml` checks Apple Newsroom, Apple's developer releases, MacRumors and 9to5Mac every 30 minutes. When it sees new, relevant items (filtered by `scripts/detect.py`), it starts the Claude "Orchard news refresh" scheduled task through its API trigger, passing the list of new items. It never starts the task more than once every 30 minutes and remembers what it has already seen.
+It needs two repository secrets: `ORCHARD_FIRE_URL` and `ORCHARD_FIRE_TOKEN` (from the task's API trigger). Without them it only logs what it would have sent.

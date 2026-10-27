@@ -1,0 +1,39 @@
+name: Watch for Apple news
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'   # every 30 minutes
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: detect
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+      - name: Remember what was already seen
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/seen.json
+          key: seen-${{ github.run_id }}
+          restore-keys: seen-
+      - name: Check feeds and start a refresh if something is new
+        env:
+          ORCHARD_FIRE_URL: ${{ secrets.ORCHARD_FIRE_URL }}
+          ORCHARD_FIRE_TOKEN: ${{ secrets.ORCHARD_FIRE_TOKEN }}
+        run: python3 scripts/detect.py
+      - name: Save what was seen
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/seen.json
+          key: seen-${{ github.run_id }}
