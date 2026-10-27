@@ -1197,6 +1197,68 @@ body{font-size:15.5px}
 .asearch input{all:unset;flex:1;min-width:0;font-size:15px;color:var(--ink)}
 .asearch input::placeholder{color:var(--faint)}
 .asearch:focus-within{box-shadow:0 0 0 2px var(--accent)}
+
+/* devices refresh */
+.lnx{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto;align-items:start;gap:6px;min-height:170px}
+.lnx b{margin-top:6px!important;font-size:18px}
+.lnx-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;width:100%}
+.lnx-flags{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.lnx-flags .tag{font-size:10.5px;padding:2px 7px}
+.lnx-latest{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lnx-latest small{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.lnx-latest span{font-size:13px;color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lnx-foot{display:flex;justify-content:space-between;gap:6px;width:100%;font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);padding-top:8px;border-top:1px solid color-mix(in srgb,var(--ln) 18%,var(--line))}
+.lnx-latest em{font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--warn);margin-top:4px}
+.tag.rum{background:color-mix(in srgb,var(--warn) 16%,transparent);color:color-mix(in srgb,var(--warn) 80%,var(--ink))}
+.tag.new{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.lu{display:flex;flex-direction:column;gap:14px}
+.lu-cat h3{margin:0 0 2px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+.lu-cat ul{list-style:none;margin:0;padding:0}
+.lu-cat li{border-top:1px solid var(--line)}
+.lu-cat button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:9px 6px 9px 10px;border-left:3px solid var(--ln);font-size:14.5px}
+.lu-cat button:hover{background:color-mix(in srgb,var(--ln) 8%,transparent)}
+.lu-cat button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.lu-n{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.lu-n .tag{font-size:10.5px;padding:1px 7px}
+.lu-cat b{font-weight:600;white-space:nowrap}
+.dv-src summary{cursor:pointer;font-size:13.5px;color:var(--muted);padding:4px 0}
+.dv-src .ev-links{margin-top:6px}
+.lnswitch{flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);padding-right:28px}
+.ln-now li{padding:0!important;background:none!important}
+.ln-card{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;width:100%;height:100%;padding:12px 14px;border-radius:var(--r-lg);background:var(--tile)}
+button.ln-card{cursor:pointer}
+button.ln-card:hover{background:color-mix(in srgb,var(--ln) 10%,var(--tile))}
+button.ln-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ln-card b{font-weight:600;font-size:14.5px}
+.ln-card .ln-price{font-size:13.5px;color:var(--ink)}
+.ln-card .ln-spec{font-size:12px;color:var(--muted);line-height:1.4}
+.ln-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.ln-tags .tag{font-size:10.5px;padding:1px 7px}
+.ev-card[aria-current="true"]{background:color-mix(in srgb,var(--ln,var(--accent)) 9%,var(--page))!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ln,var(--accent)) 45%,transparent)!important}
+.yjump{display:flex;gap:2px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px}
+.yjump::-webkit-scrollbar{display:none}
+.yjump button{all:unset;cursor:pointer;flex:none;font-family:var(--mono);font-size:12px;padding:5px 9px;border-radius:999px;color:var(--muted)}
+.yjump button:hover{background:var(--tile);color:var(--ink)}
+.yjump button:focus-visible{outline:2px solid var(--accent)}
+.ev-list li[id]{scroll-margin-top:16px}
+.cmp-table tr.dv-diff td{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.cmp-table tr.dv-diff th{color:var(--ink)}
+.cmp-table thead th{position:sticky;top:0;background:var(--page);z-index:1}
+.dv-tog{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer}
+.dv-tog input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.dv-line b.ok{color:var(--accent)}
+.dv-line .dv-sub{font-weight:400;color:var(--muted);font-size:13px}
+.dv-grp h3{margin:0;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.dv-grp h3 span{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--muted);background:var(--tile);border-radius:999px;padding:1px 7px}
+.dv-grp p{margin:4px 0 0;font-size:13.5px;line-height:1.55;color:var(--muted)}
+.dv-grp{padding-top:10px;border-top:1px solid var(--line)}
+.chk{display:flex;flex-direction:column;padding:16px;border-radius:var(--r-lg);background:var(--tile)}
+.chk .ctrl{background:var(--page)}
+.chk-out{margin:0;font-size:14px;line-height:1.5;min-height:0}
+.chk-out:empty{display:none}
+.chk-out.ok{color:var(--accent);font-weight:500}
+.chk-out.no{color:var(--warn);font-weight:500}
+@media (max-width:719px){ .lnx{min-height:150px} }
 </style>
 
 <div id="site">
@@ -2607,7 +2669,13 @@ body{font-size:15.5px}
     var news = lineStories(k, ['news','review']).filter(function(x){ return x.date <= TODAY; }).sort(function(a, b){ return b.date.localeCompare(a.date); }).slice(0, 6);
     var iss = lineStories(k, ['issue']).sort(function(a, b){ return (a.status === 'open' ? 0 : 1) - (b.status === 'open' ? 0 : 1) || b.date.localeCompare(a.date); });
     var now = el('ul', {'class':'ln-now'});
-    f.now.forEach(function(p){ now.appendChild(el('li', null, [el('b', {text:p[0]}), el('span', {text:p[1] || '—'}), p[2] ? el('small', {'class':'ln-note', text:p[2]}) : null])); });
+    f.now.forEach(function(p){
+      if (f.catalog){ now.appendChild(el('li', null, [el('div', {'class':'ln-card'}, [el('b', {text:p[0]}), el('span', {text:p[1] || '—'}), p[2] ? el('small', {'class':'ln-note', text:p[2]}) : null])])); return; }
+      var sp = splitPrice(p[1]), mo = lineupModel(k, p[0]);
+      var spec = mo ? [mo.m.chip, mo.m.display].filter(function(x){ return x && x !== '—'; }).map(function(x){ return x.split(',')[0]; }).join(' · ') : '';
+      var kids = [el('b', {text:p[0].replace(/\s*\(([^)]*), new\)/, ' ($1)')}), el('span', {'class':'ln-price', text:sp.price || 'Price not listed'}), spec ? el('small', {'class':'ln-spec', text:spec}) : null, sp.note || /new\)/.test(p[0]) ? el('span', {'class':'ln-tags'}, [/new\)/.test(p[0]) ? el('span', {'class':'tag new', text:'New'}) : null, noteTag(sp.note)]) : null];
+      now.appendChild(el('li', null, [mo ? el('button', {type:'button', 'class':'ln-card', title:'Open ' + mo.g.title, on:{click:function(){ openGroup(k, mo.g); }}}, kids) : el('div', {'class':'ln-card'}, kids)]));
+    });
     var CS = ((state.devices || {}).catalogSrc || {})[k];
     var left = [
       lineSwitch(k),
@@ -2632,21 +2700,46 @@ body{font-size:15.5px}
     if (isPhone()) return {left:left.concat(right), right:[]};
     return {left:left, right:right};
   }
+  /* lineup helpers: split "$1,499 · update expected this week" into price and note, and find the model behind a lineup name */
+  function splitPrice(v){ var parts = String(v || '').split(/\s*·\s*/), pr = parts[0] || ''; if (!/\$/.test(pr)) return {price:'', note:parts.join(' · ')}; return {price:pr, note:parts.slice(1).join(' · ')}; }
+  function noteTag(t){ if (!t) return null; var rum = /expected|rumou?r|reportedly/i.test(t); return el('span', {'class':'tag ' + (rum ? 'rum' : 'soon'), text:rum ? 'Rumor · ' + t.replace(/^update /i, 'Update ').replace(/^./, function(c){ return c.toUpperCase(); }) : t.replace(/^./, function(c){ return c.toUpperCase(); })}); }
+  function lineupLine(name){ var hit = null; LINES.forEach(function(k){ if (!hit && !isCatalog(k) && LNRX[k] && LNRX[k].test(name) && !(k === 'mac' && /iPad/.test(name))) hit = k; }); return hit || 'apple'; }
+  function lineupModel(k, name){
+    var base = String(name).replace(/\s*\(.*$/, '').trim(), ms = lineModels(k).filter(function(o){ return o.g.date <= TODAY; }).reverse();
+    return ms.filter(function(o){ var n = o.m.name.replace(/\s*\(.*$/, ''); return o.m.name === name || n === base || n.indexOf(base + ' ') === 0; })[0] || null;
+  }
+  function openGroup(k, g){ S.dtab = 'history'; S.dline = k; S.dgroup = g.id; go('devices'); setHash(g.id); }
+  function lineStatus(k){
+    var gs = lineGroups(k), up = gs.filter(function(g){ return g.date > TODAY; })[0];
+    if (up) return {t:'Coming ' + shortDate(up.date), c:'soon'};
+    var last = gs.filter(function(g){ return g.date <= TODAY; }).pop();
+    if (last && evDays(last.date) >= -21) return {t:'New', c:'new'};
+    if (lineNow(k).some(function(p){ return /expected/i.test(p[1] || '') || /expected/i.test(p[2] || ''); })) return {t:'Update expected', c:'rum'};
+    return null;
+  }
   function linesOverview(){
     var grid = el('div', {'class':'lncards'});
     LINES.forEach(function(k){
-      var f = lineFacts(k), r = lineStories(k, ['rumor']).filter(function(x){ return x.status === 'pending'; }).length;
-      grid.appendChild(el('button', {type:'button', 'class':'lnbig', style:lnStyle(k), on:{click:function(){ openLine(k); }}}, [lnIcon(k, 28),
-        el('b', {text:LINEDEF[k].n}), el('span', {text:f.catalog ? f.now.length + ' products' : f.models + ' models since ' + f.since}),
-        el('span', {'class':'lnbig-p', text:f.from ? 'From $' + f.from.toLocaleString('en-US') : f.now.length + ' on sale'}),
-        r ? el('span', {'class':'lnbig-r', text:r + (r === 1 ? ' rumor' : ' rumors')}) : null,
-        follows[k] || lineNewCount(k) ? el('span', {'class':'lnbig-flags'}, [follows[k] ? el('span', {'class':'lnbig-f', text:'Following'}) : null, lineNewCount(k) ? el('span', {'class':'newb', text:lineNewCount(k) + ' new'}) : null]) : null]));
+      var f = lineFacts(k), r = lineStories(k, ['rumor']).filter(function(x){ return x.status === 'pending'; }).length, st = lineStatus(k), nn = lineNewCount(k);
+      var last = lineGroups(k).filter(function(g){ return g.date <= TODAY; }).pop();
+      var latest = f.catalog ? f.now.length + ' products on sale' : last ? last.title : '';
+      grid.appendChild(el('button', {type:'button', 'class':'lnbig lnx', style:lnStyle(k), on:{click:function(){ openLine(k); }}}, [
+        el('span', {'class':'lnx-top'}, [lnIcon(k, 24), el('span', {'class':'lnx-flags'}, [st ? el('span', {'class':'tag ' + st.c, text:st.t}) : null, nn ? el('span', {'class':'newb', text:nn + ' new'}) : null, follows[k] ? el('span', {'class':'lnbig-f', title:'Following', text:'✓'}) : null])]),
+        el('b', {text:LINEDEF[k].n}),
+        el('span', {'class':'lnx-latest'}, [f.catalog ? null : el('small', {text:last ? 'Latest · ' + MONTHS[+last.date.slice(5, 7) - 1].slice(0, 3) + ' ' + last.date.slice(0, 4) : ''}), el('span', {text:latest}), r ? el('em', {text:r + (r === 1 ? ' open rumor' : ' open rumors')}) : null]),
+        el('span', {'class':'lnx-foot', text:f.from ? 'From $' + f.from.toLocaleString('en-US') : f.now.length + ' on sale'})]));
     });
     var left = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:'Apple’s product lines'}), el('p', {'class':'lede', text:'Pick a line for what’s on sale, prices, rumors, news, known issues, software support and its full history.'}), devTabs()]), grid];
-    var devNews = allStories().filter(function(x){ return x.kind === 'news' && x.date <= TODAY && (x.dev || []).some(function(d){ return LINES.indexOf(lnPage(d)) >= 0; }); }).sort(function(a, b){ return b.date.localeCompare(a.date); }).slice(0, 6);
-    var rum = (state.news || []).filter(function(n){ return n.kind === 'rumor' && n.status === 'pending' && !n.lowConfidence; }).sort(function(a, b){ return ((b.major?1:0) - (a.major?1:0)) || b.date.localeCompare(a.date); }).slice(0, 4);
-    var right = [el('section', {'class':'sec', style:'gap:8px'}, [el('h2', {'class':'h-md', text:'Latest device news'}), storyList(devNews)]),
-      el('section', {'class':'sec', style:'gap:8px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Coming up'}), el('span', {'class':'pill pend', text:'Rumors'})]), storyList(rum)])];
+    /* lineup at a glance */
+    var D = state.devices || {};
+    var lu = el('div', {'class':'lu'});
+    (D.lineup || []).forEach(function(c){
+      lu.appendChild(el('section', {'class':'lu-cat'}, [el('h3', {text:c[0]}), el('ul', null, c[1].map(function(x){ var sp = splitPrice(x[1]), k = lineupLine(x[0]);
+        return el('li', null, [el('button', {type:'button', style:lnStyle(k), on:{click:function(){ if (k !== 'apple') openLine(k); }}}, [el('span', {'class':'lu-n'}, [el('span', {text:x[0].replace(/\s*\(([^)]*), new\)/, ' ($1)').replace(/\s*\(new\)/, '')}), /new\)/.test(x[0]) ? el('span', {'class':'tag new', text:'New'}) : null, noteTag(sp.note)]), el('b', {text:sp.price || '—'})])]); }))]));
+    });
+    var right = [el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Lineup at a glance'}), el('span', {'class':'muted', style:'font-size:12.5px', text:'US starting prices' + (D.lineupAsOf ? ' · ' + shortDate(D.lineupAsOf) : '')})]), lu,
+      el('p', {'class':'muted', style:'margin:0;font-size:13px;line-height:1.5', text:'Tags marked Rumor are reports, not confirmed by Apple. Prices change at launches; this list is updated after each one.'})]),
+      devSources(true)];
     if (isPhone()) return {left:left.concat(right), right:[]};
     return {left:left, right:right};
   }
@@ -2964,10 +3057,19 @@ body{font-size:15.5px}
   function iosLatest(mo){ return mo.ios1 === 'current' ? 'iOS 27 (current)' : mo.ios1; }
   function devTabs(){
     var seg = el('div', {'class':'ffilter', role:'group', 'aria-label':'Devices sections'});
-    [['lines','Product lines'],['history','History'],['compare','Compare'],['ios','Software support']].forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip', 'aria-pressed':String((S.dtab || 'lines') === o[0]), text:o[1], on:{click:function(){ S.dtab = o[0]; setHash(o[0] === 'lines' ? 'devices' : o[0] === 'ios' ? 'devices-ios27' : 'devices-' + o[0]); render(false); scrollTopAll(); }}})); });
+    (isPhone() ? [['lines','Lines'],['history','History'],['compare','Compare'],['ios','Software']] : [['lines','Product lines'],['history','History'],['compare','Compare'],['ios','Software support']]).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip', 'aria-pressed':String((S.dtab || 'lines') === o[0]), text:o[1], on:{click:function(){ S.dtab = o[0]; setHash(o[0] === 'lines' ? 'devices' : o[0] === 'ios' ? 'devices-ios27' : 'devices-' + o[0]); render(false); scrollTopAll(); }}})); });
     return seg;
   }
-  function devSources(){ var D = state.devices || {}; return el('section', {'class':'sec', style:'gap:6px'}, [el('h2', {'class':'h-md', style:'font-size:16px', text:'Sources'}), el('ul', {'class':'ev-links'}, (D.sources || []).filter(function(l){ return safe(l[1]); }).map(function(l){ return el('li', null, [el('a', {href:l[1], target:'_blank', rel:'noopener', text:l[0] + ' ↗'})]); }))]); }
+  function devSources(collapsed, pick){ var D = state.devices || {}; var ls = (D.sources || []).filter(function(l){ return safe(l[1]) && (!pick || pick(l[0])); }); if (pick && !ls.length) ls = (D.sources || []).filter(function(l){ return safe(l[1]); });
+    var list = el('ul', {'class':'ev-links'}, ls.map(function(l){ return el('li', null, [el('a', {href:l[1], target:'_blank', rel:'noopener', text:l[0] + ' ↗'})]); }));
+    if (collapsed) return el('details', {'class':'dv-src'}, [el('summary', {text:'Sources (' + ls.length + ')'}), list]);
+    return el('section', {'class':'sec', style:'gap:6px'}, [el('h2', {'class':'h-md', style:'font-size:16px', text:ls.length === 1 ? 'Source' : 'Sources'}), list]); }
+  function srcFor(LN, names){
+    var lineRx = {iphone:/iPhone|iOS/, ipad:/iPad/, mac:/Mac(?!Rumors)|macOS/, watch:/Watch/, airpods:/AirPods/, vision:/Vision/, home:/HomePod|Apple TV|HomeView/}[LN];
+    var joined = (names || []).join(' | ');
+    return function(label){ if (/List of Apple products|Buyer/.test(label)) return true; if (lineRx && !lineRx.test(label.replace(/MacRumors/g, ''))) return false;
+      var m = label.match(/(iPhone|iPad) (Duo|mini|\d+\w*(?: Pro(?: Max)?)?)/); if (m && !/List of/.test(label) && joined.indexOf(m[0]) < 0 && !(/compatible|price/i.test(label))) return false; return true; };
+  }
   function specTable(rows){ var t = el('dl', {'class':'facts'}); rows.forEach(function(r){ if (!r[1]) return; t.appendChild(el('dt', {text:r[0]})); t.appendChild(el('dd', {text:r[1]})); }); return t; }
   function lineSeg(skip){
     var LN = S.dline || 'iphone';
@@ -2981,12 +3083,26 @@ body{font-size:15.5px}
     [['ios','iOS 27']].concat(((state.devices || {}).support || []).map(function(x){ return [x.id, x.os.replace(' Golden Gate', '')]; })).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip sm', 'aria-pressed':String((S.dos || 'ios') === o[0]), text:o[1], on:{click:function(){ S.dos = o[0]; render(false); }}})); });
     return seg;
   }
+  var CMPN = {iphone:'iPhones', ipad:'iPads', mac:'Macs', watch:'Apple Watches', airpods:'AirPods', vision:'Vision headsets', home:'home devices'};
+  function cmpTitle(){ var LN = S.dline || 'iphone'; if (LN === 'iphone' && (!S.cmpB || S.cmpB === 'd-iphone-duo')) return 'Duo vs your iPhone'; return 'Compare two ' + CMPN[LN]; }
+  var IOSSEQ = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,26,27];
+  function iosMajor(v){ var m = String(v || '').match(/(\d+)/); return m ? +m[1] : 0; }
+  function iosYears(v0){ var i = IOSSEQ.indexOf(iosMajor(v0)); return i < 0 ? 1 : IOSSEQ.length - i; }
+  function ordinal(n){ var s2 = ['th','st','nd','rd'], v = n % 100; return n + (s2[(v - 20) % 10] || s2[v] || s2[0]); }
+  function checkBox(osName, fn, names){
+    var id = 'chk-' + osName.replace(/\W+/g, '').toLowerCase(), out = el('p', {'class':'chk-out', role:'status', 'aria-live':'polite'});
+    var dl = el('datalist', {id:id + '-l'}, names.map(function(n){ return el('option', {value:n}); }));
+    var inp = el('input', {id:id, type:'search', 'class':'ctrl', placeholder:'Type a model, e.g. ' + (/iOS/.test(osName) ? 'iPhone 13' : names[0] ? names[0].replace(/\s*\(.*$/, '') : 'model'), list:id + '-l', autocomplete:'off'});
+    var run = function(){ var q = inp.value.trim(); if (q.length < 2){ out.textContent = ''; out.className = 'chk-out'; return; } var r = fn(q); out.textContent = r[1]; out.className = 'chk-out ' + r[0]; };
+    inp.addEventListener('input', run); inp.addEventListener('change', run);
+    return el('section', {'class':'chk', style:'gap:8px'}, [el('label', {'for':id, 'class':'fp-label', text:'Check my device for ' + osName}), inp, dl, out]);
+  }
   function devicesView(){
     var D = state.devices; if (!D) return {left:[], right:[]};
     var tab = S.dtab || 'lines';
     if (tab === 'lines') return linesOverview();
-    var head = el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:tab === 'compare' ? ((S.dline || 'iphone') === 'iphone' ? 'Duo vs your iPhone' : 'Compare two models') : tab === 'lineup' ? 'Apple’s lineup today' : tab === 'ios' ? 'Who gets this year’s software' : 'Product history'}),
-      el('p', {'class':'lede', text:tab === 'compare' ? ((S.dline || 'iphone') === 'iphone' ? 'Pick any iPhone and see how it stacks up against iPhone Duo.' : 'Pick any two models from the same product line.') : tab === 'lineup' ? 'What Apple sells right now, with US starting prices as of ' + fmtDate(D.lineupAsOf) + '.' : tab === 'ios' ? 'Which devices get iOS, iPadOS, macOS, watchOS, tvOS and visionOS 27.' : (function(){ var LN = S.dline || 'iphone', gs = LN === 'iphone' ? D.groups : (D.lines || {})[LN] || [], nm = 0; gs.forEach(function(g){ nm += g.models.length; }); var first = gs.slice().sort(function(a, b){ return a.date.localeCompare(b.date); })[0]; return 'Every ' + ({iphone:'iPhone', ipad:'iPad', mac:'Apple silicon Mac', watch:'Apple Watch', airpods:'pair of AirPods', vision:'Vision headset', home:'Apple TV, HomePod and HomeView'})[LN] + (first ? ' since ' + first.date.slice(0, 4) : '') + ': ' + gs.length + ' launches, ' + nm + ' models.'; })()}), devTabs()]);
+    var head = el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-lg', text:tab === 'compare' ? cmpTitle() : tab === 'lineup' ? 'Apple’s lineup today' : tab === 'ios' ? 'Who gets this year’s software' : 'Product history'}),
+      el('p', {'class':'lede', text:tab === 'compare' ? (cmpTitle() === 'Duo vs your iPhone' ? 'Pick any iPhone and see how it stacks up against iPhone Duo.' : 'Pick any two ' + CMPN[S.dline || 'iphone'] + ' and see what changed between them.') : tab === 'lineup' ? 'What Apple sells right now, with US starting prices as of ' + fmtDate(D.lineupAsOf) + '.' : tab === 'ios' ? 'Which devices get iOS, iPadOS, macOS, watchOS, tvOS and visionOS 27.' : (function(){ var LN = S.dline || 'iphone', gs = LN === 'iphone' ? D.groups : (D.lines || {})[LN] || [], nm = 0; gs.forEach(function(g){ nm += g.models.length; }); var first = gs.slice().sort(function(a, b){ return a.date.localeCompare(b.date); })[0]; return 'Every ' + ({iphone:'iPhone', ipad:'iPad', mac:'Apple silicon Mac', watch:'Apple Watch', airpods:'pair of AirPods', vision:'Vision headset', home:'Apple TV, HomePod and HomeView'})[LN] + (first ? ' since ' + first.date.slice(0, 4) : '') + ': ' + gs.length + ' launches, ' + nm + ' models.'; })()}), devTabs()]);
     var left = [head], right = [];
     if (tab === 'history'){
       var LN = S.dline || 'iphone';
@@ -2994,11 +3110,13 @@ body{font-size:15.5px}
       left.push(lineSeg());
       if (!S.dgroup || !gs.some(function(g){ return g.id === S.dgroup; })) S.dgroup = isPhone() ? null : (LN === 'iphone' ? 'g-duo' : (gs[0] || {}).id);
       var byY = {}; gs.forEach(function(g){ var y = g.date.slice(0, 4); (byY[y] = byY[y] || []).push(g); });
-      var ul = el('ul', {'class':'ev-list'});
+      var ys = Object.keys(byY).sort().reverse();
+      if (ys.length > 4){ var yj = el('nav', {'class':'yjump', 'aria-label':'Jump to year'}); ys.forEach(function(y){ yj.appendChild(el('button', {type:'button', text:"’" + y.slice(2), title:y, on:{click:function(){ var t = $('hy-' + y); if (t) t.scrollIntoView({block:'start', behavior:'smooth'}); }}})); }); left.push(yj); }
+      var ul = el('ul', {'class':'ev-list', style:lnStyle(LN)});
       Object.keys(byY).sort().reverse().forEach(function(y){
         byY[y].forEach(function(g){
           var low = g.models.map(function(x){ return x.price; }).filter(function(x){ return x && x !== '—'; })[0];
-          ul.appendChild(el('li', null, [el('button', {type:'button', 'class':'ev-card' + (g.id === 'g-duo' ? ' duo' : ''), 'aria-current':String(S.dgroup === g.id), on:{click:function(){ S.dgroup = g.id; setHash(g.id); render(isPhone() ? true : 'right'); if (isPhone()) scrollTopAll(); }}}, [
+          ul.appendChild(el('li', {id:byY[y][0] === g ? 'hy-' + y : null}, [el('button', {type:'button', 'class':'ev-card' + (g.id === 'g-duo' ? ' duo' : ''), 'aria-current':String(S.dgroup === g.id), on:{click:function(){ S.dgroup = g.id; setHash(g.id); render(isPhone() ? true : 'right'); if (isPhone()) scrollTopAll(); }}}, [
             el('span', {'class':'ev-date'}, [el('b', {text:"’" + g.date.slice(2, 4)}), el('span', {text:MONTHS[+g.date.slice(5, 7) - 1].slice(0, 3)})]),
             el('span', {style:'min-width:0'}, [el('span', {'class':'ev-meta', text:[g.models.length > 1 ? g.models.length + ' models' : '', low ? 'from ' + low : ''].filter(Boolean).join(' · ').replace(/^from/, 'From') || 'Price not confirmed'}), el('b', {'class':'ev-name', text:g.title}), el('span', {'class':'ev-sub', text:g.intro}),
               el('span', {'class':'ev-tags'}, [g.id === 'g-duo' ? el('span', {'class':'tag duo', text:'iPhone Duo'}) : g.road ? el('span', {'class':'tag road', text:'Road to iPhone Duo'}) : null, g.models.some(function(x){ return x.ios1 === 'current'; }) && g.id !== 'g-duo' ? el('span', {'class':'tag', text:'Gets iOS 27'}) : null, g.date > TODAY ? el('span', {'class':'tag soon', text:'Coming ' + shortDate(g.date)}) : null])])])]));
@@ -3009,12 +3127,12 @@ body{font-size:15.5px}
       if (g){
         if (isPhone()) right.push(el('button', {type:'button', 'class':'back', html:'<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>', on:{click:function(){ S.dgroup = null; setHash('devices-history'); render(true); scrollTopAll(); }}}, ['All launches']));
         right.push(el('div', {'class':'sec', style:'gap:10px'}, [el('span', {'class':'eyebrow', text:(g.date > TODAY ? 'Coming ' : 'Released ') + fmtDate(g.date)}), el('h1', {'class':'display h-lg', text:g.title}), el('p', {'class':'lede', text:g.intro})]));
-        if (g.road) right.push(el('div', {'class':'note'}, [el('span', {html:'<svg width="18" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="1" width="8" height="12" rx="1.6"/><rect x="10.5" y="1" width="8" height="12" rx="1.6"/></svg>'}), el('div', null, [el('b', {text:g.id === 'g-duo' ? 'iPhone Duo' : 'Road to iPhone Duo'}), el('p', {text:g.road})])]));
+        if (g.road && g.id !== 'g-duo') right.push(el('div', {'class':'note'}, [el('span', {html:'<svg width="18" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="1" width="8" height="12" rx="1.6"/><rect x="10.5" y="1" width="8" height="12" rx="1.6"/></svg>'}), el('div', null, [el('b', {text:g.id === 'g-duo' ? 'iPhone Duo' : 'Road to iPhone Duo'}), el('p', {text:g.road})])]));
         g.models.forEach(function(mo){
-          right.push(el('section', {'class':'sec dv-model', style:'gap:8px'}, [el('h2', {'class':'h-md', text:mo.name}), specTable([['Launch price', mo.price && mo.price !== '—' ? mo.price + (mo.priceNote ? ' (' + mo.priceNote + ')' : '') : 'Not confirmed'], ['Chip', mo.chip !== '—' ? mo.chip : null], ['Display', mo.display !== '—' ? mo.display : null], ['Unlock', mo.bio], ['Main camera', mo.cam], ['Shipped with', mo.ios0], ['Latest software', mo.ios1 ? iosLatest(mo) : null]]),
+          right.push(el('section', {'class':'sec dv-model', style:'gap:8px'}, [g.models.length === 1 && mo.name === g.title ? el('h2', {'class':'vh', text:mo.name + ' specs'}) : el('h2', {'class':'h-md', text:mo.name}), specTable([['Launch price', mo.price && mo.price !== '—' ? mo.price + (mo.priceNote ? ' (' + mo.priceNote + ')' : '') : 'Not confirmed'], ['Chip', mo.chip !== '—' ? mo.chip : null], ['Display', mo.display !== '—' ? mo.display : null], ['Unlock', mo.bio], ['Main camera', mo.cam], ['Shipped with', mo.ios0], ['Latest software', mo.ios1 ? iosLatest(mo) : null]]),
             (S.dline || 'iphone') !== 'iphone' ? null : mo.id !== 'd-iphone-duo' ? el('button', {type:'button', 'class':'btn sm', style:'align-self:flex-start', text:'Compare with iPhone Duo', on:{click:function(){ S.dtab = 'compare'; S.cmpA = mo.id; setHash('devices-compare'); render(false); scrollTopAll(); }}}) : el('button', {type:'button', 'class':'btn sm primary', style:'align-self:flex-start', text:'Browse iPhone Duo apps', on:{click:function(){ go('apps', {reset:true}); }}})]));
         });
-        right.push(devSources());
+        right.push(devSources(false, srcFor(LN, g.models.map(function(m){ return m.name; }))));
       }
     } else if (tab === 'compare'){
       var LNc = S.dline || 'iphone'; if (LNc === 'vision' && false) LNc = 'iphone';
@@ -3052,9 +3170,10 @@ body{font-size:15.5px}
       var rows = [['Released', function(x){ return fmtDate(x.g.date); }], ['Launch price', function(x){ return x.m.price + (x.m.priceNote ? ' (contract)' : ''); }], ['Chip', function(x){ return x.m.chip; }], ['Display', function(x){ return x.m.display; }], ['Foldable', function(x){ return x.m.id === 'd-iphone-duo' ? 'Yes' : 'No'; }], ['Unlock', function(x){ return x.m.bio === 'None' ? 'Passcode' : x.m.bio; }], ['Main camera', function(x){ return x.m.cam; }], ['Shipped with', function(x){ return x.m.ios0; }], ['Latest software', function(x){ return iosLatest(x.m); }]];
       if (!iph) rows = rows.filter(function(r){ return ['Released','Launch price','Chip','Display'].indexOf(r[0]) >= 0; });
       var tb = el('table', {'class':'cmp-table'}, [el('thead', null, [el('tr', null, [el('th', {scope:'col'}, [el('span', {'class':'vh', text:'Spec'})]), el('th', {scope:'col', text:A ? A.m.name : ''}), el('th', {scope:'col', text:B ? B.m.name : ''})])])]);
-      var tbody = el('tbody'); rows.forEach(function(r){ var va = A ? r[1](A) : '', vb = B ? r[1](B) : ''; tbody.appendChild(el('tr', null, [el('th', {scope:'row', text:r[0]}), el('td', {text:va, 'class':va !== vb ? 'dv-d' : null}), el('td', {text:vb, 'class':va !== vb ? 'dv-d' : null})])); }); tb.appendChild(tbody);
-      right.push(el('section', {'class':'sec', style:'gap:10px'}, [el('h2', {'class':'h-md', text:'Side by side'}), tb]));
-      right.push(devSources());
+      var tbody = el('tbody'), nd = 0; rows.forEach(function(r){ var va = A ? r[1](A) : '', vb = B ? r[1](B) : ''; var d = va !== vb; if (d) nd++; if (S.cmpDiff && !d) return; tbody.appendChild(el('tr', {'class':d ? 'dv-diff' : null}, [el('th', {scope:'row', text:r[0]}), el('td', {text:va || '—', 'class':d ? 'dv-d' : null}), el('td', {text:vb || '—', 'class':d ? 'dv-d' : null})])); }); tb.appendChild(tbody);
+      var tog = el('label', {'class':'dv-tog'}, [el('input', {type:'checkbox', checked:S.cmpDiff ? true : null, on:{change:function(e){ S.cmpDiff = e.target.checked; render(false); }}}), el('span', {text:'Differences only'})]);
+      right.push(el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Side by side'}), tog]), el('p', {'class':'muted', style:'margin:0;font-size:13px', text:nd + (nd === 1 ? ' row differs' : ' rows differ') + ', highlighted.'}), el('div', {'class':'cmp-wrap'}, [tb])]));
+      right.push(devSources(false, srcFor(LNc, [A ? A.m.name : '', B ? B.m.name : ''])));
     } else if (tab === 'lineup'){
       var cats = D.lineup.map(function(c){ return el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:c[0]}), el('ul', {'class':'dv-line'}, c[1].map(function(x){ return el('li', null, [el('span', {text:x[0]}), el('b', {text:x[1]})]); }))]); });
       left = left.concat(cats.slice(0, 3)); right = cats.slice(3);
@@ -3064,8 +3183,12 @@ body{font-size:15.5px}
       left.push(osSeg());
       var SUP = (D.support || []).filter(function(x){ return x.id === S.dos; })[0];
       if (SUP){
-        left.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Gets ' + SUP.os + ' (' + SUP.yes.length + ')'}), el('ul', {'class':'dv-line'}, SUP.yes.map(function(t){ return el('li', null, [el('span', {text:t}), el('b', {text:'Yes'})]); }))]));
-        if (SUP.no.length) right.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Dropped this year'}), el('ul', {'class':'dv-line'}, SUP.no.map(function(t){ return el('li', null, [el('span', {text:t}), el('b', {text:'No'})]); }))]));
+        left.push(checkBox(SUP.os.replace(' Golden Gate', ''), function(q){ var ql = q.toLowerCase(), y = SUP.yes.filter(function(t){ return t.toLowerCase().indexOf(ql) >= 0; }), n = SUP.no.filter(function(t){ return t.toLowerCase().indexOf(ql) >= 0; });
+          if (y.length) return ['ok', 'Supported: ' + y.slice(0, 3).join('; ') + '.'];
+          if (n.length) return ['no', 'Not supported: ' + n.slice(0, 3).join('; ') + '.'];
+          return ['', 'Not in Apple’s list. Apple lists model families, so try a shorter name like “iPad Air”.']; }, SUP.yes.concat(SUP.no)));
+        left.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Gets ' + SUP.os.replace(' Golden Gate', '') + ' (' + SUP.yes.length + ')'}), el('ul', {'class':'dv-line'}, SUP.yes.map(function(t){ return el('li', null, [el('span', {text:t}), el('b', {'class':'ok', text:'✓'})]); }))]));
+        if (SUP.no.length) right.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Dropped this year (' + SUP.no.length + ')'}), el('ul', {'class':'dv-line'}, SUP.no.map(function(t){ return el('li', null, [el('span', {text:t}), el('b', {'class':'muted', text:'Stops here'})]); }))]));
         right.push(el('div', {'class':'note quiet'}, [el('div', null, [el('b', {text:'Good to know'}), el('p', {text:SUP.note})])]));
         right.push(el('section', {'class':'sec', style:'gap:6px'}, [el('h2', {'class':'h-md', style:'font-size:16px', text:'Source'}), el('ul', {'class':'ev-links'}, [el('li', null, [el('a', {href:SUP.src[1], target:'_blank', rel:'noopener', text:SUP.src[0] + ' ↗'})])])]));
       }
@@ -3073,10 +3196,16 @@ body{font-size:15.5px}
       left.push(osSeg());
       var cur = devModels().filter(function(x){ return x.m.ios1 === 'current'; });
       var old = devModels().filter(function(x){ return x.m.ios1 !== 'current'; }).reverse();
-      left.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Gets iOS 27 (' + cur.length + ')'}), el('ul', {'class':'dv-line'}, cur.slice().reverse().map(function(x){ return el('li', null, [el('span', {text:x.m.name}), el('b', {text:x.m.id === 'd-iphone-duo' ? 'Shipped with 27.1' : 'Yes'})]); }))]));
-      right.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Stopped earlier'}), el('ul', {'class':'dv-line'}, old.map(function(x){ return el('li', null, [el('span', {text:x.m.name}), el('b', {text:'Last: ' + x.m.ios1})]); }))]));
+      left.push(checkBox('iOS 27', function(q){ var ql = q.toLowerCase().replace(/^iphone\s*/, ''); var hit = devModels().filter(function(x){ return x.m.name.toLowerCase().replace(/^iphone\s*/, '') === ql; })[0] || devModels().filter(function(x){ return x.m.name.toLowerCase().indexOf(ql) >= 0; }).pop();
+        if (!hit) return ['', 'No iPhone by that name. Try “iPhone 13” or “iPhone SE”.'];
+        if (hit.m.ios1 === 'current') return ['ok', hit.m.name + ' gets iOS 27. ' + (hit.m.id === 'd-iphone-duo' ? 'It shipped with iOS 27.1.' : 'This is its ' + ordinal(iosYears(hit.m.ios0)) + ' year of iOS updates, since ' + hit.m.ios0 + '.')];
+        return ['no', hit.m.name + ' doesn’t get iOS 27. Its last version is ' + hit.m.ios1 + '.']; }, devModels().map(function(x){ return x.m.name; })));
+      left.push(el('section', {'class':'sec', style:'gap:4px'}, [el('h2', {'class':'h-md', text:'Gets iOS 27 (' + cur.length + ')'}), el('p', {'class':'muted odata-h', style:'margin:0 0 4px;font-size:13px'}, ['Years of updates counts each yearly iOS version since the one it shipped with. ', odata('Orchard data')]), el('ul', {'class':'dv-line'}, cur.slice().reverse().map(function(x){ var yrs = iosYears(x.m.ios0); return el('li', null, [el('span', {text:x.m.name}), x.m.id === 'd-iphone-duo' ? el('b', {text:'Year 1 · shipped with 27.1'}) : el('b', null, ['Year ' + yrs, el('small', {'class':'dv-sub', text:' · since ' + x.m.ios0})])]); }))]));
+      var byLast = {}, order = []; old.forEach(function(x){ var k2 = x.m.ios1; if (!byLast[k2]){ byLast[k2] = []; order.push(k2); } byLast[k2].push(x.m.name); });
+      order.sort(function(a2, b2){ return iosMajor(b2) - iosMajor(a2); });
+      right.push(el('section', {'class':'sec', style:'gap:10px'}, [el('h2', {'class':'h-md', text:'Stopped earlier (' + old.length + ')'})].concat(order.map(function(v){ return el('div', {'class':'dv-grp'}, [el('h3', null, ['Last: ' + v, el('span', {text:String(byLast[v].length)})]), el('p', {text:byLast[v].join(' · ')})]); }))));
       right.push(el('div', {'class':'note quiet'}, [el('div', null, [el('b', {text:'Good to know'}), el('p', {text:'iOS 27 dropped no iPhones: it runs on everything that ran iOS 26, back to iPhone 11 and iPhone SE (2nd generation). Some of the most advanced Siri AI features need a newer model. On the Mac, macOS 27 runs only on Apple silicon.'})])]));
-      right.push(devSources());
+      right.push(devSources(false, srcFor('iphone', [])));
     }
     if (isPhone()){
       if (tab === 'history') return S.dgroup ? {left:right, right:[]} : {left:left, right:[]};
