@@ -69,16 +69,19 @@ except Exception as e:
     print('WARNING: Apple release feed unavailable:', e, file=sys.stderr)
     feed = ET.fromstring('<rss/>')
 TITLE = re.compile(r'^(iOS|iPadOS|macOS|watchOS|tvOS|visionOS|Xcode) ([\d.]+)((?: beta(?: \d+)?)|(?: RC(?: \d+)?))? \(([0-9A-Za-z]+)\)$')
-def norm(v): return re.sub(r'^[A-Za-z ]+ (?=\d)', '', v).replace(' RC', '').strip().lower()
+def norm(v): return re.sub(r'(\.0)+(?=$| )', '', re.sub(r'^[A-Za-z ]+ (?=\d)', '', v).replace(' RC', '').strip().lower())
 have = {(r['platform'], r['channel'], norm(r['version'])) for r in st['releases']}
-macPrefix = next((r['version'].rsplit(' ', 1)[0] + ' ' for r in st['releases'] if r['platform'] == 'macOS' and not r['version'][0].isdigit()), '')
+# macOS has a name (e.g. "Golden Gate 27.2"). Use the newest named release to learn the current name and major version.
+macRel = max((r for r in st['releases'] if r['platform'] == 'macOS' and r['channel'] == 'release' and re.match(r'^[A-Za-z][A-Za-z ]* \d', r['version'])), key=lambda r: r['date'], default=None)
+macMajor = re.search(r'(\d+)', macRel['version']).group(1) if macRel else ''
+macPrefix = re.match(r'^([A-Za-z][A-Za-z ]* )\d', macRel['version']).group(1) if macRel else ''
 for it in feed.iter('item'):
     m = TITLE.match((it.findtext('title') or '').strip())
     if not m: continue
     plat, ver, tag, build = m.group(1), m.group(2), (m.group(3) or '').strip(), m.group(4)
     ch = 'developer' if tag.startswith('beta') else 'rc' if tag.startswith('RC') else 'release'
     vs = ver + (' ' + tag if tag.startswith('beta') or (tag.startswith('RC ') ) else '')
-    if plat == 'macOS' and macPrefix: vs = macPrefix + vs
+    if plat == 'macOS' and macPrefix and ver.split('.')[0] == macMajor: vs = macPrefix + vs
     if (plat, ch, norm(vs)) in have: continue
     dt = email.utils.parsedate_to_datetime(it.findtext('pubDate')).strftime('%Y-%m-%d')
     rid = 'r-auto-' + re.sub(r'[^a-z0-9]+', '-', (plat + '-' + vs + '-' + ch).lower()).strip('-')
