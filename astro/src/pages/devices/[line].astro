@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { LN, lines, groupsOf, fmt } from '../../lib/devices.js';
+export function getStaticPaths() { return lines.map(k => ({ params: { line: k }, props: { k } })); }
+const { k } = Astro.props;
+const gs = groupsOf(k);
+---
+<Base title={`${LN[k]}: every generation`} desc={`${gs.length} releases of ${LN[k]}, newest first, with prices and what changed.`} path={`/devices/${k}`}>
+<p class="k"><a href="/devices">Devices</a></p><h1>{LN[k]}</h1>
+<p>{lines.map(x => <a class="chip" href={`/devices/${x}`} aria-current={x === k ? 'page' : undefined}>{LN[x]}</a>)}</p>
+{gs.map(g => <><h2 id={g.id}>{g.title} <span class="k">{fmt(g.date)}</span></h2><p>{g.intro}</p>
+<ul>{(g.models || []).map(m => <li><b>{m.name}</b>{m.price ? ` · ${m.price}` : ''}{m.chip && m.chip !== '—' ? ` · ${m.chip}` : ''}{m.display && m.display !== '—' ? ` · ${m.display}` : ''}</li>)}</ul>
+{g.road && <p><i>{g.road}</i></p>}</>)}
+</Base>

@@ -41,7 +41,7 @@ ul.l{list-style:none;margin:0;padding:0}ul.l li{border-bottom:1px solid var(--ha
 @media(max-width:600px){.logo{font-size:1.8rem}nav{margin-left:0;width:100%}nav a{padding:4px 8px;min-height:32px;font-size:.72rem;flex:1;justify-content:center}.stats{grid-template-columns:1fr 1fr 1fr}.stat b{font-size:1.5rem}}
 footer{border-top:4px solid var(--fg);padding:20px 0 40px;font-size:14px;color:var(--mut)}
 </style></head><body>
-<header class="top"><div class="w"><a class="logo" href="/">Orchard</a><nav aria-label="Main"><a href="/" aria-current="page">Home</a><a href="/news">News</a><a href="/app#devices">Devices</a><a href="/duo-apps">Duo apps</a><a href="/picks">Picks</a><a href="/app">Search</a></nav></div></header>
+<header class="top"><div class="w"><a class="logo" href="/">Orchard</a><nav aria-label="Main"><a href="/" aria-current="page">Home</a><a href="/news">News</a><a href="/devices">Devices</a><a href="/duo-apps">Duo apps</a><a href="/picks">Picks</a><a href="/app">Search</a></nav></div></header>
 <main><div class="w"><div class="grid"><div>
 {lead && <><p class="k">Top story · {fmt(lead.date)}</p>
 <a class="lead" href={`/news/${lead.id}`}><span class="k">{lead.source}</span><h1>{lead.title}</h1><p>{trim(lead.body, 260)}</p></a></>}
@@ -53,7 +53,7 @@ footer{border-top:4px solid var(--fg);padding:20px 0 40px;font-size:14px;color:v
 <div class="stats"><div class="stat"><b>{opt}</b><span class="k">Optimized</span></div><div class="stat"><b>{soon}</b><span class="k">Coming</span></div><div class="stat"><b>{rep}</b><span class="k">Developer-reported</span></div></div>
 <ul class="l">{fresh.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a> <span class="k">{a.category}</span></li>)}</ul>
 <a class="btn" href="/duo-apps">All {apps.length} Duo apps</a> <a class="btn" href="/picks">Our picks</a>
-<h2>Tools</h2><ul class="l"><li><a href="/app#devices">Devices and line-ups</a></li><li><a href="/app#calendar">Calendar</a></li><li><a href="/app#week">This week in Apple</a></li><li><a href="/app#compare">Compare</a></li></ul>
+<h2>Tools</h2><ul class="l"><li><a href="/devices">Devices and line-ups</a></li><li><a href="/app#calendar">Calendar</a></li><li><a href="/app#week">This week in Apple</a></li><li><a href="/app#compare">Compare</a></li></ul>
 </aside></div></div></main>
 <footer><div class="w">An independent site about Apple, not affiliated with Apple. <a href="/feed.xml">RSS</a> · <a href="/app#about">About</a></div></footer>
 </body></html>

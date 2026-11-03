@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import { D, LN, lines, groupsOf, fmt } from '../../lib/devices.js';
+---
+<Base title="Apple devices: the current line-up and every generation" desc="Apple's current line-up with prices, and the history of each product line, from the sources listed on each page." path="/devices">
+<h1>Devices</h1>
+<p>The current line-up with US prices as of {fmt(D.lineupAsOf)}, and the history of each product line.</p>
+<p>{lines.map(k => <a class="chip" href={`/devices/${k}`}>{LN[k]} {groupsOf(k).length}</a>)}</p>
+{D.lineup.map(([fam, rows]) => <><h2>{fam}</h2><ul>{rows.map(([n, p]) => <li>{n} <span class="k">{p}</span></li>)}</ul></>)}
+<h2>Sources</h2><ul>{D.sources.map(([t, u]) => <li><a href={u} rel="noopener">{t}</a></li>)}</ul>
+</Base>
