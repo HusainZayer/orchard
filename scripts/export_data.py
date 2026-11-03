@@ -5,5 +5,5 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import state
 _, st = state.load()
 out = ROOT / 'astro' / 'src' / 'data'; out.mkdir(parents=True, exist_ok=True)
-(out / 'state.json').write_text(json.dumps({k: st[k] for k in ('updated', 'apps', 'news', 'posts')}, ensure_ascii=False))
+(out / 'state.json').write_text(json.dumps({**{k: st[k] for k in ('updated', 'apps', 'news', 'posts', 'dates')}, 'lines': {k: [{'id': g['id'], 'title': g['title'], 'date': g['date']} for g in v] for k, v in st['devices']['lines'].items()}}, ensure_ascii=False))
 print('exported', len(st['apps']), 'apps')
