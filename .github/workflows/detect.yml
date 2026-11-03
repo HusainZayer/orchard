@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: scripts
       - name: Remember what was already seen
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: .cache/seen.json
           key: seen-${{ github.run_id }}
@@ -33,7 +33,7 @@ jobs:
         run: python3 scripts/detect.py
       - name: Save what was seen
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: .cache/seen.json
           key: seen-${{ github.run_id }}

@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Check the App Store and Apple's release feed
@@ -27,7 +27,7 @@ jobs:
       - name: Rebuild the public page
         if: steps.run.outputs.changed == 'true'
         run: python scripts/build.py
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.run.outputs.changed == 'true'
         with:
           node-version: 22

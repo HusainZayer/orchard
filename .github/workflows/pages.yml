@@ -1,7 +1,7 @@
 name: Build static pages (Astro)
 on:
   push:
-    branches: [main, astro]
+    branches: [main]
     paths: [src/orchard.html, scripts/build.py, astro/**, scripts/gen_pages.sh, scripts/export_data.py, .github/workflows/pages.yml]
   workflow_dispatch: {}
 permissions:
@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22 }
       - run: python3 scripts/build.py
       - run: bash scripts/gen_pages.sh
@@ -29,6 +29,6 @@ jobs:
           git commit -m "Rebuild static pages"
           git pull --rebase origin main
           git push origin HEAD:main
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: github.ref != 'refs/heads/main'
         with: { name: pages, path: "app.html\nvercel.json\nindex.html\nduo-apps\nnews\npicks\npicks.html\ndevices\ndevices.html\ncalendar\ncalendar.html\nweek\nweek.html\nog\nduo-apps.html\nnews.html\nsitemap.xml\nfeed.xml\nrobots.txt" }
