@@ -1,0 +1,6 @@
+---
+import Layout from '../../layouts.astro';
+import data from '../../data/state.json';
+---
+<Layout title="iPhone Duo apps" desc={`${data.apps.length} apps`}><h1>iPhone Duo apps</h1>
+<ul>{data.apps.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a></li>)}</ul></Layout>

@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts.astro';
+import data from '../../data/state.json';
+const items = [...data.news, ...data.posts];
+export function getStaticPaths() { return [...data.news, ...data.posts].map(n => ({ params: { id: n.id }, props: { n } })); }
+const { n } = Astro.props;
+---
+<Layout title={n.title} desc={n.body}><p>{n.date}</p><h1>{n.title}</h1><p>{n.body}</p></Layout>

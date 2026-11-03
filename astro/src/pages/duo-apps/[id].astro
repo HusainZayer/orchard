@@ -1,0 +1,9 @@
+---
+import Layout from '../../layouts.astro';
+import data from '../../data/state.json';
+export function getStaticPaths() { return data.apps.map(a => ({ params: { id: a.id }, props: { a } })); }
+const { a } = Astro.props;
+---
+<Layout title={`${a.name} on iPhone Duo`} desc={a.body}>
+<h1>{a.name}</h1><p>{a.body}</p><p>{a.developer} · {a.category} · {a.status}</p><a href={`/#${a.id}`}>See it in Orchard</a>
+</Layout>
