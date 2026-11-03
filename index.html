@@ -1872,6 +1872,37 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
   .toast{bottom:calc(94px + env(safe-area-inset-bottom,0px))}
   .app{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 }
+
+/* our picks */
+body[data-view="picks"] .spread{grid-template-columns:minmax(0,1fr)}
+body[data-view="picks"] .page.right{display:none}
+body[data-view="picks"] .page.left{padding-right:0}
+.pk-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.pk-row{display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;padding:16px 0;border-top:1px solid var(--rule)}
+.pk-row:first-child{border-top:3px solid var(--rule)}
+.pk-n{font-family:var(--display);font-weight:900;font-stretch:62%;font-size:40px;line-height:.9}
+.pk-row:nth-child(-n+10) .pk-n{color:var(--accent)}
+.pk-main{display:flex;flex-direction:column;gap:8px;min-width:0}
+.pk-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+.pk-t{display:flex;flex-direction:column;min-width:0}
+.pk-name{all:unset;cursor:pointer;font-weight:800;font-size:19px;line-height:1.1}
+.pk-name:hover{text-decoration:underline;text-decoration-thickness:3px}
+.pk-name:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.pk-body{margin:0;font-size:15px;line-height:1.4}
+.pk-why{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.pk-why li{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 7px;border:2px solid var(--rule);background:var(--bg)}
+.pk-why li:first-child{background:var(--volt);color:#0E0E10;border-color:#0E0E10}
+.pk-act{display:flex;gap:16px;flex-wrap:wrap}
+.pk-row.compact{padding:12px 0;grid-template-columns:34px minmax(0,1fr)}
+.pk-row.compact .pk-n{font-size:30px}
+.pk-row.compact .pk-name{font-size:16.5px}
+.pk-row.compact .pk-body{font-size:13.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pk-row.compact .pk-why li{font-size:10px;padding:2px 6px}
+.pk-row.compact .pk-why li:nth-child(n+3){display:none}
+.pk-tease{padding:16px 0 20px;border-top:4px solid var(--rule);border-bottom:2px solid var(--rule)}
+.pk-note{margin:0;font-size:14px}
+.pk-more{align-self:flex-start}
+
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){ .tabbar{background:#0E0E10!important} }
 
 /* dark theme designed on its own: deeper base, dimmer rules, volt as the one bright line, soft glows */
@@ -2312,6 +2343,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
           dk ? el('span', {'class':'rail-art', 'aria-hidden':'true', html:'<svg viewBox="-100 0 400 290">' + devSvg(dk, 100) + '</svg>'}) : el('span', {'class':'rail-art', 'aria-hidden':'true'}, [lnIcon(x.k, 56)]),
           el('b', {text:x.g.title}), el('span', {'class':'muted', text:fmtDate(x.g.date) + ' · ' + LINEDEF[x.k].n})]); }))]);
     var doors = [
+      ['picks', 'Our picks', 'Ten Duo apps to install first, a hundred in all', 'iphone', function(){ S.pcat = 'All'; go('picks'); }],
       ['launches', 'Launch features', (nextF ? 'Coming ' + shortDate(nextF.g.date) + ': ' + nextF.g.title : lastF ? 'Latest: ' + lastF.g.title : 'Every launch as one long read'), 'mac', function(){ if (nextF || lastF) openFeature((nextF || lastF).g.id); else go('launches'); }],
       ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
       ['rumors', 'Rumors', nRum + ' open, marked when settled', 'iphone', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
@@ -2400,6 +2432,72 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     return null;
   }
   function currentList(){ var c = ctxList(); return c ? c.items : filtered(); }
+  /* ---------- Our picks: Duo apps worth installing first ---------- */
+  var PK = null;
+  function pickModel(){
+    var key = state.apps.length + '|' + (state.updated || '');
+    if (PK && PK.key === key) return PK;
+    var pool = state.apps.filter(function(a){ return a.status === 'optimized' && score(a); });
+    var ps = function(a){ return sv(a) * 10 + (a.featured ? 3 : 0); };
+    pool.sort(function(a, b){ return (ps(b) - ps(a)) || a.name.localeCompare(b.name); });
+    var per = {}, top10 = [];
+    pool.forEach(function(a){ if (top10.length >= 10) return; per[a.category] = per[a.category] || 0; if (per[a.category] >= 2) return; per[a.category]++; top10.push(a); });
+    var seen = {}, set = [];
+    var add = function(a){ if (!seen[a.id] && set.length < 100){ seen[a.id] = 1; set.push(a); } };
+    top10.forEach(add);
+    CATS.forEach(function(c){ pool.filter(function(a){ return a.category === c; }).slice(0, 4).forEach(add); });
+    pool.forEach(add);
+    var rest = set.filter(function(a){ return top10.indexOf(a) < 0; }).sort(function(a, b){ return (ps(b) - ps(a)) || a.name.localeCompare(b.name); });
+    PK = {key:key, top10:top10, all:top10.concat(rest)};
+    return PK;
+  }
+  function pickWhy(a){
+    var out = [], ps = postures(a).filter(function(k){ return k !== 'folded'; });
+    if (a.featured) out.push('Apple pick');
+    if (a.foldFeature) out.push('Built around the fold');
+    if (ps.length >= 2) out.push(ps.length + ' unfolded postures: ' + ps.map(function(k){ return PM[k].label; }).join(', '));
+    else if (ps.length === 1) out.push('Works ' + PM[ps[0]].label.toLowerCase() + ' on the inner display');
+    if (a.confirmed && a.confirmed.v) out.push('Confirmed in release notes (v' + String(a.confirmed.v).replace(/^v/i, '') + ')');
+    return out;
+  }
+  function pickRow(a, n, compact){
+    var why = pickWhy(a);
+    return el('li', {'class':'pk-row' + (compact ? ' compact' : '')}, [
+      el('span', {'class':'pk-n', text:String(n).padStart(2, '0')}),
+      el('div', {'class':'pk-main'}, [
+        el('div', {'class':'pk-head'}, [tile(a, compact ? 40 : 56), el('span', {'class':'pk-t'}, [el('button', {type:'button', 'class':'pk-name', text:a.name, on:{click:function(){ openApp(a.id); }}}), el('span', {'class':'muted', text:a.category + (a.developer && !compact ? ' · ' + a.developer : '')})]), gauge(a, compact ? 34 : 44, true)]),
+        el('p', {'class':'pk-body', text:a.body}),
+        el('ul', {'class':'pk-why', 'aria-label':'Why we picked it'}, why.map(function(w){ return el('li', {text:w}); })),
+        compact ? null : el('div', {'class':'pk-act'}, [el('button', {type:'button', 'class':'link', text:'See on iPhone Duo →', on:{click:function(){ openApp(a.id); }}}), safe(a.appStore) ? el('a', {'class':'link', href:a.appStore, target:'_blank', rel:'noopener', text:'App Store ↗'}) : null])])]);
+  }
+  function picksTeaser(){
+    var m = pickModel(); if (m.top10.length < 3) return null;
+    return el('section', {'class':'sec pk-tease', style:'gap:12px'}, [
+      el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Our picks'}), el('span', {'class':'eyebrow', text:'Top 10 of ' + m.all.length})]),
+      el('p', {'class':'muted pk-note', text:'The Duo apps we’d install first, ranked by how well they use the two screens and the hinge.'}),
+      el('ol', {'class':'pk-list'}, m.top10.map(function(a, i){ return pickRow(a, i + 1, true); })),
+      el('button', {type:'button', 'class':'btn pk-more', text:'Show more: our top ' + m.all.length + ' by category', on:{click:function(){ S.pcat = 'All'; go('picks'); }}})]);
+  }
+  function picksView(){
+    if (APPS_PENDING) return {left:[el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Our picks'}), el('p', {'class':'lede', role:'status', text:'Loading the app directory…'})])], right:[]};
+    var m = pickModel(), cat = S.pcat && (S.pcat === 'All' || CATS.indexOf(S.pcat) >= 0) ? S.pcat : 'All';
+    var list = cat === 'All' ? m.all : m.all.filter(function(a){ return a.category === cat; });
+    var left = [];
+    left.push(el('button', {type:'button', 'class':'back', html:BACKSVG, on:{click:function(){ go('apps', {reset:true}); }}}, ['All Duo apps']));
+    left.push(el('div', {'class':'sec', style:'gap:10px'}, [el('span', {'class':'eyebrow', text:'Our picks'}), el('h1', {'class':'display h-lg', text:'Top ' + m.all.length + ' Duo apps'}),
+      el('p', {'class':'lede', text:'The apps we’d install first on iPhone Duo, across every category. Each one is optimized for the phone, and each shows why it made the list.'})]));
+    var seg = el('div', {'class':'ffilter dfilter', role:'group', 'aria-label':'Category'});
+    [['All', m.all.length]].concat(CATS.map(function(c){ return [c, m.all.filter(function(a){ return a.category === c; }).length]; }).filter(function(x){ return x[1]; })).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip sm', 'aria-pressed':String(cat === o[0]), text:o[0] + ' ' + o[1], on:{click:function(){ S.pcat = o[0]; render(false); }}})); });
+    left.push(seg);
+    left.push(el('p', {'class':'muted', role:'status', text:cat === 'All' ? 'Showing all ' + list.length + ' picks. The first ten are our top 10.' : list.length + (list.length === 1 ? ' pick' : ' picks') + ' in ' + cat + '.'}));
+    left.push(el('ol', {'class':'pk-list'}, list.map(function(a, i){ return pickRow(a, i + 1, false); })));
+    left.push(el('section', {'class':'sec', style:'gap:8px'}, [el('h2', {'class':'h-md', text:'How we pick'}), el('ul', {'class':'ab-rows'}, [
+      el('li', null, [el('b', {text:'Optimized apps only'}), el('span', {text:'Apps that are only reported, announced or coming aren’t eligible until they ship an update.'})]),
+      el('li', null, [el('b', {text:'Ranked by the Duo score'}), el('span', {text:'How many unfolded postures it supports, whether it’s built around the fold, and whether its release notes confirm Duo support. Apple’s own picks get a small bonus.'})]),
+      el('li', null, [el('b', {text:'Spread across categories'}), el('span', {text:'No more than two apps from one category in the top 10, and at least four from every category in the full list.'})]),
+      el('li', null, [el('b', {text:'It’s not a review'}), el('span', {text:'We rank how well an app uses iPhone Duo, not how good the app is overall. Many apps with no Duo features are excellent.'})])])]));
+    return {left:left, right:[]};
+  }
   function appsLeft(){
     if (APPS_PENDING) return [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Duo apps'}), el('p', {'class':'lede', role:'status', text:'Loading the app directory…'})])];
     var c = ctxList();
@@ -2414,6 +2512,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     ]));
     if (c && c.coll && canEdit) out.push(collEditor(c.coll));
     if (!c){ var shw = duoShowcase(); if (shw) out.push(el('details', {'class':'showcase-d'}, [el('summary', null, [el('span', {html:glyph('tent', 16)}), 'See Duo apps in each posture']), shw])); }
+    if (!c){ var pkT = picksTeaser(); if (pkT) out.push(pkT); }
     var aq = el('input', {id:'aq', type:'search', value:S.q || '', placeholder:'Filter ' + state.apps.length + ' apps by name, developer or category', autocomplete:'off', 'aria-label':'Filter Duo apps'});
     aq.addEventListener('input', function(){ S.q = aq.value; S.limit = 80; refreshList(); });
     out.push(el('label', {'class':'asearch', 'for':'aq'}, [el('span', {'aria-hidden':'true', html:'<svg width="15" height="15" viewBox="0 0 16 16"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'}), aq]));
@@ -4569,7 +4668,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     if (animate && !reduce){ page.classList.remove('turn'); void page.offsetWidth; page.classList.add('turn'); }
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
-  var NAVOF = {feature:'more', launches:'more', buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
+  var NAVOF = {picks:'apps', feature:'more', launches:'more', buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
   function ticker(){
     var t = $('tick'); if (!t || t.childElementCount) return;
     var ns = (state.news || []).filter(function(x){ return x.kind === 'news' || x.kind === 'rumor'; }).sort(function(a, b){ return b.date.localeCompare(a.date); }).slice(0, 8);
@@ -4624,7 +4723,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
         R = appRight(S.app ? findApp(S.app) : null); phoneApp = !!S.app;
       }
     } else {
-      var res = v === 'feature' ? featureView() : v === 'launches' ? launchesView() : v === 'buy' ? buyView() : v === 'week' ? weekView() : v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
+      var res = v === 'picks' ? picksView() : v === 'feature' ? featureView() : v === 'launches' ? launchesView() : v === 'buy' ? buyView() : v === 'week' ? weekView() : v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
       if (!res) return;
       L = res.left; R = res.right;
     }
@@ -4650,7 +4749,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     if (v === 'apps' && !keepL) refreshList();
     if (v === 'apps') document.querySelectorAll('.row').forEach(function(r){ r.setAttribute('aria-current', String(r.getAttribute('data-id') === S.app)); });
     setNav();
-    var TT = {calendar:'Apple’s year – Events', story:((findStory(S.story) || {}).title || 'Story'), line:(LINEDEF[S.line] || {n:'Devices'}).n + ' – Devices', devices:'Apple devices', collections:'Collections', updates:'Apple news', about:'How the Duo score works', wanted:'Most wanted', suggest:'Suggest an app', compare:'Compare apps', apps:'iPhone Duo apps'};
+    var TT = {calendar:'Apple’s year – Events', story:((findStory(S.story) || {}).title || 'Story'), line:(LINEDEF[S.line] || {n:'Devices'}).n + ' – Devices', devices:'Apple devices', collections:'Collections', updates:'Apple news', about:'How the Duo score works', wanted:'Most wanted', suggest:'Suggest an app', compare:'Compare apps', apps:'iPhone Duo apps', picks:'Our picks – Duo apps'};
     var appT = v === 'apps' && S.app && findApp(S.app), evT = v === 'events' && S.event && (state.events || []).filter(function(x){ return x.id === S.event; })[0];
     try { document.title = (appT ? appT.name + ' on iPhone Duo – ' : evT ? evT.name + ' – Apple events – ' : v === 'devices' && S.dtab === 'history' && S.dgroup && state.devices ? ((((S.dline || 'iphone') === 'iphone' ? state.devices.groups : state.devices.lines[S.dline]) || []).filter(function(g){ return g.id === S.dgroup; }).map(function(g){ return g.title; })[0] || 'Devices') + ' – Devices – ' : v === 'events' ? 'Apple events – ' : TT[v] ? TT[v] + ' – ' : '') + 'Orchard'; } catch(e){}
     document.querySelectorAll('.seg, .ffilter').forEach(function(sg){ var upd = function(){ sg.classList.toggle('at-end', sg.scrollLeft + sg.clientWidth >= sg.scrollWidth - 4); }; upd(); if (!sg._fade){ sg._fade = 1; sg.addEventListener('scroll', upd, {passive:true}); } });
@@ -4870,6 +4969,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     else if (/^s-/.test(h) && findStory(h.slice(2))){ S.view = 'story'; S.story = h.slice(2); render(true); }
     else if (h === 'buy'){ S.view = 'buy'; render(true); }
     else if (h === 'launches'){ S.view = 'launches'; render(true); }
+    else if (h === 'picks'){ S.view = 'picks'; render(true); }
     else if (/^f-/.test(h) && featFor(h.slice(2))){ S.view = 'feature'; S.feat = h.slice(2); render(true); }
     else if (/^week(-\d{4}-\d{2}-\d{2})?$/.test(h)){ S.view = 'week'; S.week = h.length > 4 ? h.slice(5) : null; render(true); }
     else if (/^calendar(-\d{4})?$/.test(h)){ S.view = 'calendar'; S.caly = h.split('-')[1] || null; render(true); }
