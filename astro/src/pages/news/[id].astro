@@ -6,7 +6,7 @@ const { n } = Astro.props;
 const srcs = n.srcs && n.srcs.length ? n.srcs : (n.link ? [[n.source || 'Source', n.link]] : []);
 const ld = { '@context': 'https://schema.org', '@type': 'NewsArticle', headline: n.title, datePublished: n.date, publisher: { '@type': 'Organization', name: 'Orchard' } };
 ---
-<Base title={n.title} desc={trim(n.body)} path={`/news/${n.id}`} type="article" ld={ld}>
+<Base title={n.title} desc={trim(n.body)} path={`/news/${n.id}`} type="article" ld={ld} image={`/og/news/${n.id}.png`}>
 <p class="k">{n.date}</p><h1>{n.title}</h1><p>{n.body}</p>
 {srcs.length > 0 && <><h2>Sources</h2><ul>{srcs.map(([t, u]) => <li><a href={u} rel="noopener">{t}</a></li>)}</ul></>}
 <a class="btn" href={`/app#${n.id}`}>See it in Orchard</a>

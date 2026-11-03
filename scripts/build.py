@@ -65,6 +65,7 @@ cfg = {'cleanUrls': True, 'headers': heads + [
  {'source': '/app', 'headers': short},
  {'source': '/(duo-apps|news)(/.*)?', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'}]},
  {'source': '/(sitemap.xml|feed.xml|robots.txt)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600'}]},
+ {'source': '/og/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=86400, s-maxage=604800'}]},
  {'source': '/og.png', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=86400'}]}]}
 (ROOT / 'vercel.json').write_text(json.dumps(cfg, indent=1))
 print('built app.html,', len(heads), 'images')
