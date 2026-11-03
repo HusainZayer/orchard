@@ -1,0 +1,7 @@
+---
+import Week from '../../components/Week.astro';
+import { weekList, curWeek } from '../../lib/time.js';
+export function getStaticPaths() { return weekList.filter(w => w !== curWeek).map(ws => ({ params: { ws }, props: { ws } })); }
+const { ws } = Astro.props;
+---
+<Week ws={ws} path={`/week/${ws}`} />

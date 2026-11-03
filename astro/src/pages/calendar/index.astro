@@ -1,0 +1,6 @@
+---
+import CalendarYear from '../../components/CalendarYear.astro';
+import { years, TODAY } from '../../lib/time.js';
+const y = years.includes(TODAY.slice(0, 4)) ? TODAY.slice(0, 4) : years[years.length - 1];
+---
+<CalendarYear y={y} path="/calendar" />

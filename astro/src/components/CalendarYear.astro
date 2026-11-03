@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { years, calItems, MONTHS, fmt, TODAY } from '../lib/time.js';
+const { y, path } = Astro.props;
+const list = calItems(y);
+const byM = {}; list.forEach(it => (byM[+it.d.slice(5, 7) - 1] = byM[+it.d.slice(5, 7) - 1] || []).push(it));
+const n = k => list.filter(i => i.k === k).length;
+---
+<Base title={`Apple's ${y}: events, software releases and launches`} desc={`${n('Event')} events, ${n('Software')} software release days and ${n('Launch')} product launches in ${y}.`} path={path}>
+<h1>Apple’s {y}</h1>
+<p>{n('Event')} events, {n('Software')} software release days and {n('Launch')} product launches. Software releases are tracked from 2026 on.</p>
+<p>{[...years].reverse().map(yy => <a class="chip" href={`/calendar/${yy}`} aria-current={yy === y ? 'page' : undefined}>{yy}</a>)}</p>
+{Object.keys(byM).map(Number).sort((a, b) => a - b).map(m => <><h2>{MONTHS[m]}</h2><ul>{byM[m].map(it => <li><span class="k">{fmt(it.d)}{it.d > TODAY ? ' · upcoming' : ''}</span><br>{it.href ? <a href={it.href}>{it.t}</a> : it.t} <span class="k">{it.sub}</span></li>)}</ul></>)}
+{list.length === 0 && <p>Nothing recorded for {y}.</p>}
+</Base>
