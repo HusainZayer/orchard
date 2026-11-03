@@ -1583,6 +1583,87 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     .pin > section,.pin > .sec,.srows li,.hub li,.lnx,.ev-card,.feed li{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
   }
 }
+
+/* ---------- launch features ---------- */
+body[data-view="feature"] .spread,body[data-view="launches"] .spread{grid-template-columns:minmax(0,1fr)}
+body[data-view="feature"] .page.right,body[data-view="launches"] .page.right{display:none}
+body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{padding-right:0}
+.ft{display:flex;flex-direction:column;gap:56px}
+.ft .back{align-self:flex-start}
+.ft-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:end;border:4px solid var(--rule);background:var(--hot);color:#0E0E10;padding:32px;box-shadow:var(--hard)}
+.ft-hero .cover{margin:0;border:3px solid #0E0E10;background:#F2F0EB}
+.ft-hero-t{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ft-kick{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:#E6FF2E;border:2px solid #0E0E10;padding:3px 10px;font-family:var(--mono);font-size:12px;font-weight:700;text-transform:uppercase;transform:rotate(-2deg)}
+.ft-kick .lnic{background:none;color:#0E0E10}
+.ft-title{font-size:clamp(52px,7vw,112px)!important;color:#0E0E10;margin:0;overflow-wrap:anywhere}
+.ft-lede{margin:0;font-size:20px;font-weight:500;line-height:1.4;max-width:36ch}
+.ft-facts{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;border:3px solid #0E0E10;align-self:flex-start}
+.ft-facts li{display:flex;flex-direction:column;padding:8px 14px;border-right:3px solid #0E0E10;background:#F2F0EB}
+.ft-facts li:last-child{border-right:0}
+.ft-facts span{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase}
+.ft-facts b{font-family:var(--display);font-weight:900;font-stretch:70%;font-size:26px;line-height:1;text-transform:uppercase}
+.ft-ch{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:40px;border-top:4px solid var(--rule);padding-top:20px}
+.ft-ch-h{position:sticky;top:calc(var(--navh) + 20px);align-self:start;display:flex;flex-direction:column;gap:4px}
+.ft-ch-n{font-family:var(--display);font-weight:900;font-stretch:62%;font-size:120px;line-height:.8;color:transparent;-webkit-text-stroke:3px var(--rule)}
+.ft-ch-t{margin:0;font-family:var(--display);font-weight:900;font-stretch:70%;font-size:40px;line-height:.92;text-transform:uppercase}
+.ft-ch-b{display:flex;flex-direction:column;gap:18px;min-width:0}
+.ft-pull{margin:0;font-size:clamp(24px,2.4vw,34px);font-weight:700;line-height:1.22;letter-spacing:-.01em}
+.ft-model{display:flex;flex-direction:column;gap:14px}
+.ft-model + .ft-model{border-top:2px solid var(--rule);padding-top:18px}
+.ft-mname{margin:0;font-family:var(--display);font-weight:900;font-stretch:72%;font-size:30px;text-transform:uppercase;line-height:.95}
+.ft-tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ft-tile{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:3px solid var(--rule);min-width:0}
+.ft-tile.blk{background:#0E0E10;color:#F2F0EB}.ft-tile.blk .ft-l{color:#E6FF2E}
+.ft-tile.hot{background:#FF6A13;color:#0E0E10}
+.ft-tile.grape{background:#7B2CFF;color:#FFFFFF}
+.ft-tile.volt{background:#E6FF2E;color:#0E0E10}
+.ft-tile.blue{background:#1F3BFF;color:#FFFFFF}
+.ft-l{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase}
+.ft-big{font-family:var(--display);font-weight:900;font-stretch:64%;font-size:clamp(34px,3.4vw,52px);line-height:.9;text-transform:uppercase;overflow-wrap:anywhere}
+.ft-s{font-size:12.5px;line-height:1.35;opacity:.9}
+.ft-buy{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ft-buy li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center;padding:12px 0;border-top:2px solid var(--rule)}
+.ft-buy li .muted{grid-column:2;font-size:14px}
+.ft-buy b{font-size:19px;font-weight:800}
+.ft-cov,.ft-line{list-style:none;margin:0;padding:0}
+.ft-cov li{border-top:2px solid var(--rule)}
+.ft-line{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);border:3px solid var(--rule);overflow-x:auto}
+.ft-line li + li{border-left:3px solid var(--rule)}
+.ft-line button{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-direction:column;gap:4px;padding:12px 14px;height:100%;width:100%}
+.ft-line button:hover{background:var(--volt);color:#0E0E10}
+.ft-line button:hover .muted{color:#0E0E10}
+.ft-line button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.ft-line li.me button{background:var(--block);color:var(--on-block);cursor:default}
+.ft-line li.me .muted{color:var(--on-block)}
+.ft-line b{font-weight:800;font-size:15px;line-height:1.15}
+.ft-yr{font-family:var(--display);font-weight:900;font-stretch:62%;font-size:40px;line-height:.85}
+.ft-prices td.on,.ft-prices th.on{background:var(--volt);color:#0E0E10}
+.ft-src .src-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.ft-pn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ft-pn .lnx{display:flex;flex-direction:column;gap:6px;padding:18px;text-align:left;cursor:pointer;border:0;font:inherit;color:inherit}
+.ft-pn .lnx:last-child{text-align:right}
+.ft-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ft-card{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:18px;height:100%;width:100%;text-align:left;cursor:pointer;border:0;font:inherit;color:inherit;border-top:10px solid var(--ln)!important}
+.ft-card-s{font-size:14px;color:var(--muted);line-height:1.4}
+.ft-go{align-self:flex-start}
+@media (max-width:1000px){ .ft-hero{grid-template-columns:minmax(0,1fr)} .ft-ch{grid-template-columns:minmax(0,1fr);gap:16px} .ft-ch-h{position:static;flex-direction:row;align-items:flex-end;gap:12px} .ft-ch-n{font-size:72px} .ft-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:719px){ .ft{gap:40px} .ft-hero{padding:18px;gap:18px} .ft-title{font-size:52px!important} .ft-lede{font-size:17px} .ft-tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .ft-ch-t{font-size:32px} .ft-ch-n{font-size:60px} .ft-grid,.ft-pn{grid-template-columns:minmax(0,1fr)} .ft-pn .lnx:last-child{text-align:left} .ft-facts b{font-size:21px} }
+@media (prefers-reduced-motion: no-preference){
+  @supports (animation-timeline: scroll()){
+    .ft-progress{position:fixed;left:0;top:0;right:0;height:6px;z-index:60;background:var(--hot);transform-origin:0 50%;animation:ftbar linear both;animation-timeline:scroll(root)}
+    @keyframes ftbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    .ft-hero{animation:ftout linear both;animation-timeline:view();animation-range:exit 10% exit 100%}
+    @keyframes ftout{to{transform:scale(.94) rotate(-1deg);opacity:.35}}
+    .ft-ch-n{animation:ftnum linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+    @keyframes ftnum{from{-webkit-text-stroke-color:transparent;transform:translateX(-30px);opacity:0}to{opacity:1}}
+    .ft-tile{animation:fttile linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+    .ft-tile:nth-child(2){animation-range:entry 8% entry 78%}.ft-tile:nth-child(3){animation-range:entry 16% entry 86%}
+    @keyframes fttile{from{opacity:0;transform:translateY(40px) rotate(2deg)}to{opacity:1;transform:none}}
+    .ft-line li{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+  }
+}
+.ft-progress{display:none}
+@supports (animation-timeline: scroll()){ @media (prefers-reduced-motion: no-preference){ .ft-progress{display:block} } }
 </style>
 
 <div id="site">
@@ -1924,6 +2005,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
   ];
   var HP = null;
   var HUBIC = {
+    launches:'<path d="M12 3.5c3 2.2 4.6 5.5 4.6 9.3l-2.2 2.7H9.6l-2.2-2.7c0-3.8 1.6-7.1 4.6-9.3z"/><circle cx="12" cy="10" r="1.7"/><path d="M9.6 15.5 8 20l4-1.8 4 1.8-1.6-4.5"/>',
     news:'<path d="M5 5h11v14H6.5A1.5 1.5 0 0 1 5 17.5z"/><path d="M16 9h3v8.5a1.5 1.5 0 0 1-3 0M8 9h5M8 12.5h5M8 16h3"/>',
     rumors:'<path d="M5 6.5h14v9H11l-4 3v-3H5z"/><path d="M12 9.2v2.6M12 13.6v.1"/>',
     lines:'<rect x="3.5" y="4.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="4.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="14.5" width="7" height="5" rx="1.8"/><rect x="13.5" y="14.5" width="7" height="5" rx="1.8"/>',
@@ -1971,7 +2053,9 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     nd.sort(function(a, b){ return a[0].localeCompare(b[0]); });
     var when = function(d){ var n = evDays(d); return n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'; };
     var macNow = latestRel('macOS', 'release');
+    var nextF = featList().filter(function(f){ return f.g.date > TODAY; }).pop(), lastF = featList().filter(function(f){ return f.g.date <= TODAY; })[0];
     var doors = [
+      ['launches', 'Launch features', (nextF ? 'Coming ' + shortDate(nextF.g.date) + ': ' + nextF.g.title : lastF ? 'Latest: ' + lastF.g.title : 'Every launch as one long read'), 'mac', function(){ if (nextF || lastF) openFeature((nextF || lastF).g.id); else go('launches'); }],
       ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
       ['rumors', 'Rumors', nRum + ' open, marked when settled', 'iphone', function(){ S.feed = 'rumors'; go('updates'); setHash('news-rumors'); }],
       ['buy', 'Buy now or wait', (function(){ var b = buyItems(), w = b.filter(function(x){ return x.lab === 'wait' || x.lab === 'caution'; }).length; return w + ' of ' + b.length + ' products: hold off for now'; })(), 'mac', function(){ go('buy'); }],
@@ -3217,6 +3301,102 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
   }
   function pl(n, one, many){ return n + ' ' + (n === 1 ? one : many); }
   function weekLabel(ws){ var we = addDays(ws, 6); return +ws.slice(8) + (ws.slice(5, 7) !== we.slice(5, 7) ? ' ' + MONTHS[+ws.slice(5, 7) - 1].slice(0, 3) : '') + ' – ' + +we.slice(8) + ' ' + MONTHS[+we.slice(5, 7) - 1].slice(0, 3) + ' ' + we.slice(0, 4); }
+  /* ================= LAUNCH FEATURES: one long scroll story per launch, built only from Orchard's data ================= */
+  function featList(){
+    var out = [];
+    ['iphone','ipad','mac','watch','airpods','vision','home'].forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.whatsNew) out.push({k:k, g:g}); }); });
+    return out.sort(function(a, b){ return b.g.date.localeCompare(a.g.date) || a.k.localeCompare(b.k); });
+  }
+  function featFor(id){ return featList().filter(function(f){ return f.g.id === id; })[0] || null; }
+  function openFeature(id){ S.feat = id; go('feature'); }
+  function featBtn(id, label){ return featFor(id) ? el('button', {type:'button', 'class':'btn sm primary ft-go', on:{click:function(){ openFeature(id); }}}, [label || 'Read the launch feature', el('span', {'aria-hidden':'true', text:' →'})]) : null; }
+  function ftBig(label, v){
+    if (!v) return null;
+    if (label === 'Display'){ var ds = String(v).match(/[\d.]+″/g); return ds ? ds.join(' + ') : null; }
+    if (label === 'Storage' || label === 'Capacity'){ var p = String(v).split(/,\s*/); return p.length > 1 ? p[0] + '–' + p[p.length - 1] : p[0]; }
+    if (label === 'Chip' || label === 'Launch price') return String(v).replace(/\s*\(.*$/, '');
+    var m = String(v).match(/(up to\s+)?[\d,.]+\s?(GB|TB|kg|g|hours?|mm|Hz|MP|nits|-core)?/i);
+    return m ? m[0].replace(/^up to/i, 'Up to').trim() : null;
+  }
+  var FTPICK = ['Launch price','Chip','Display','Storage','Weight','Battery'];
+  var FTCOL = ['blk','hot','grape','volt','blue','blk'];
+  function featModel(mo, i, many){
+    var xs = mo.xs || [], val = function(l){ if (l === 'Launch price') return mo.price && mo.price !== '—' ? mo.price : null; if (l === 'Chip') return mo.chip && mo.chip !== '—' ? mo.chip : null; if (l === 'Display') return mo.display && mo.display !== '—' ? mo.display : null; var r = xs.filter(function(x){ return x[0] === l; })[0]; return r ? r[1] : null; };
+    var tiles = el('ul', {'class':'ft-tiles'}), n = 0;
+    FTPICK.forEach(function(l){ var v = val(l), b = ftBig(l, v); if (!b) return; tiles.appendChild(el('li', {'class':'ft-tile ' + FTCOL[n++ % FTCOL.length]}, [el('span', {'class':'ft-l', text:l}), el('b', {'class':'ft-big' + (l === 'Chip' || l === 'Display' ? ' nc' : ''), text:b}), b !== v ? el('span', {'class':'ft-s', text:v}) : null])); });
+    var rows = [['Unlock', mo.bio], ['Main camera', xs.some(function(r){ return r[0] === 'Cameras'; }) ? null : mo.cam]].concat(xs.filter(function(r){ return ['Storage','Weight','Battery'].indexOf(r[0]) < 0; })).concat([['Shipped with', mo.ios0], ['Latest software', mo.ios1 ? iosLatest(mo) : null]]).filter(function(r){ return r[1] && r[1] !== 'None' && r[1] !== '—'; });
+    return el('div', {'class':'ft-model'}, [many ? el('h3', {'class':'ft-mname', text:mo.name}) : null, n ? tiles : null, rows.length ? specTable(rows) : null,
+      mo.specs && safe(mo.specs[1]) ? el('a', {'class':'btn sm', href:mo.specs[1], target:'_blank', rel:'noopener', text:'Apple tech specs ↗'}) : null]);
+  }
+  function featChapter(num, title, kids, extra){
+    return el('section', {'class':'ft-ch' + (extra ? ' ' + extra : '')}, [el('div', {'class':'ft-ch-h'}, [el('span', {'class':'ft-ch-n', 'aria-hidden':'true', text:(num < 10 ? '0' : '') + num}), el('h2', {'class':'ft-ch-t', text:title})]), el('div', {'class':'ft-ch-b'}, kids)]);
+  }
+  function featCoverage(k, g){
+    var base = g.models.map(function(m){ return m.name.replace(/\s*\(.*$/, '').replace(/\s*\d+(\.\d+)?-inch$/, '').trim(); }), chips = g.models.map(function(m){ return (m.chip || '').split(/\s+or\s+/)[0]; }).filter(function(c){ return c && c !== '—' && c.length > 1; });
+    var lo = new Date(Date.parse(g.date) - 75 * 864e5).toISOString().slice(0, 10), hi = new Date(Date.parse(g.date) + 45 * 864e5).toISOString().slice(0, 10);
+    return (state.news || []).filter(function(x){
+      var dv = x.dev || []; if (!(dv.indexOf(k) >= 0 || (g.id === 'g-duo' && dv.indexOf('duo') >= 0))) return false;
+      if (x.date < lo || x.date > hi) return false;
+      var t = (x.title || '') + ' ' + (x.body || '');
+      return g.id === 'g-duo' || base.some(function(b){ return b && t.indexOf(b) >= 0; }) || chips.some(function(c){ return t.indexOf(c) >= 0; });
+    }).sort(function(a, b){ return a.date.localeCompare(b.date); }).slice(-8);
+  }
+  var FTKIND = {news:'News', rumor:'Rumor', review:'Review', issue:'Known issue'};
+  function featureView(){
+    var all = featList(), i = -1; all.forEach(function(f, j){ if (f.g.id === S.feat) i = j; });
+    if (i < 0) return launchesView();
+    var k = all[i].k, g = all[i].g, up = g.date > TODAY, days = evDays(g.date), D = state.devices || {}, I = INTL();
+    var low = g.models.map(function(x){ return x.price; }).filter(function(x){ return x && x !== '—'; })[0];
+    var out = [el('div', {'class':'ft-progress', 'aria-hidden':'true'})];
+    out.push(el('button', {type:'button', 'class':'back', html:BACKSVG, on:{click:function(){ go('launches'); }}}, ['All launch features']));
+    out.push(el('header', {'class':'ft-hero', style:lnStyle(k)}, [
+      el('div', {'class':'ft-hero-t'}, [el('span', {'class':'ft-kick'}, [lnIcon(k, 18), el('span', {text:'Launch feature · ' + LINEDEF[k].n})]),
+        el('h1', {'class':'display ft-title', text:g.title}), el('p', {'class':'ft-lede', text:g.intro}),
+        el('ul', {'class':'ft-facts'}, [
+          el('li', null, [el('span', {text:up ? 'In stores' : 'Released'}), el('b', {text:fmtDate(g.date)})]),
+          el('li', null, [el('span', {text:up ? 'Countdown' : 'Age'}), el('b', {text:up ? (days === 1 ? 'Tomorrow' : days + ' days') : days === 0 ? 'Today' : (-days < 61 ? -days + ' days' : Math.round(-days / 30.4) + ' months')})]),
+          el('li', null, [el('span', {text:'Models'}), el('b', {text:String(g.models.length)})]),
+          low ? el('li', null, [el('span', {text:'From'}), el('b', {text:low})]) : null])]),
+      coverArt(k, g.id)]));
+    var ch = 0;
+    out.push(featChapter(++ch, up ? 'What’s coming' : 'What’s new', [el('p', {'class':'ft-pull', text:g.whatsNew}), el('span', {'class':'odata-h'}, [odata('Orchard summary'), el('span', {'class':'muted', style:'font-size:12.5px', text:'From Apple’s announcement and tech specs'})]),
+      g.road ? el('div', {'class':'note'}, [el('div', null, [el('b', {text:g.id === 'g-duo' ? 'iPhone Duo' : 'Road to iPhone Duo'}), el('p', {text:g.road})])]) : null]));
+    out.push(featChapter(++ch, 'By the numbers', g.models.map(function(mo, j){ return featModel(mo, j, g.models.length > 1); })));
+    /* prices: lineup entries whose current model is this launch */
+    var names = []; (D.lineup || []).forEach(function(c){ c[1].forEach(function(x){ var mo = lineupModel(k, x[0]); if ((mo && mo.g.id === g.id) || (up && (I.avail || {})[x[0]] && famKey(x[0]) && g.models.some(function(m){ return famKey(m.name) === famKey(x[0]); }))) names.push(x[0]); }); });
+    if (names.length){
+      var cs = I.countries.filter(function(x){ return x.store; });
+      var t = el('table', {'class':'cmp-table intl ft-prices'}, [el('thead', null, [el('tr', null, [el('th', {scope:'col'}, [el('span', {'class':'vh', text:'Product'})])].concat(cs.map(function(x){ return el('th', {scope:'col', 'class':x.c === ctry ? 'on' : null, text:x.n.replace('United States', 'US').replace('United Kingdom', 'UK').replace('Saudi Arabia', 'Saudi').replace('United Arab Emirates', 'UAE')}); })))])]);
+      var tb = el('tbody'); names.forEach(function(n){ tb.appendChild(el('tr', null, [el('th', {scope:'row'}, [n.replace(/\s*\(([^)]*), new\)/, ' ($1)'), availLine(n) ? el('small', {'class':'intl-av', text:availLine(n)}) : null])].concat(cs.map(function(x){ var v = priceIn(n, x.c); return el('td', {'class':(x.c === ctry ? 'on' : '') + (v ? '' : ' none'), text:v || '—'}); })))); }); t.appendChild(tb);
+      out.push(featChapter(++ch, 'Price around the world', [el('div', {'class':'intl-wrap'}, [t]), el('p', {'class':'muted', style:'margin:0;font-size:12.5px;line-height:1.5', text:'Official starting prices from each country’s Apple Store, as of ' + fmtDate(I.asOf) + '. “—” means Apple’s page didn’t show a price. ' + (I.resellerNote || '')})]));
+    }
+    var bi = buyItems().filter(function(x){ return x.mo && x.mo.g.id === g.id; });
+    if (bi.length) out.push(featChapter(++ch, 'Buy now or wait?', [el('ul', {'class':'ft-buy'}, bi.map(function(x){ return el('li', null, [el('span', {'class':'buy-l ' + x.lab, text:BUYL[x.lab][0]}), el('b', {text:x.name}), el('span', {'class':'muted', text:x.why.length ? x.why.join(' ') : BUYL[x.lab][1]})]); })), el('span', {'class':'odata-h'}, [odata('Orchard analysis'), el('button', {type:'button', 'class':'link', text:'How labels work →', on:{click:function(){ go('buy'); }}})])]));
+    var cov = featCoverage(k, g);
+    if (cov.length) out.push(featChapter(++ch, 'The story so far', [el('ol', {'class':'ft-cov'}, cov.map(function(x){ return el('li', null, [el('button', {type:'button', 'class':'srow', on:{click:function(){ openStory(x.id); }}}, [el('span', {'class':'srow-t'}, [el('span', {'class':'srow-k', text:fmtDate(x.date) + ' · ' + (FTKIND[x.kind] || 'News') + (x.kind === 'rumor' && x.status ? ' · ' + x.status : '') + ' · ' + (x.source || '')}), el('b', {text:x.title})])])]); }))]));
+    var gs = lineGroups(k), at = gs.indexOf(g), win = gs.slice(Math.max(0, at - 4), at + 3);
+    out.push(featChapter(++ch, 'Where it fits', [el('ol', {'class':'ft-line'}, win.map(function(x){ var me = x === g, f = featFor(x.id); return el('li', {'class':me ? 'me' : null}, [el('button', {type:'button', 'aria-current':me ? 'true' : null, on:{click:function(){ if (me) return; if (f) openFeature(x.id); else openGroup(k, x); }}}, [el('span', {'class':'ft-yr', text:x.date.slice(0, 4)}), el('b', {text:x.title}), el('span', {'class':'muted', text:shortDate(x.date) + (x.date > TODAY ? ' · coming' : '')})])]); })),
+      el('div', {style:'display:flex;gap:8px;flex-wrap:wrap'}, [el('button', {type:'button', 'class':'btn sm', text:'All ' + LINEDEF[k].n + ' launches', on:{click:function(){ openGroup(k, g); }}}), el('button', {type:'button', 'class':'btn sm', text:LINEDEF[k].n + ' line page', on:{click:function(){ openLine(k); }}})])]));
+    var srcs = []; g.models.forEach(function(m){ if (m.specs && safe(m.specs[1]) && !srcs.some(function(s){ return s[1] === m.specs[1]; })) srcs.push(m.specs); });
+    cov.forEach(function(x){ if (safe(x.link) && !srcs.some(function(s){ return s[1] === x.link; })) srcs.push([x.source + ': ' + x.title, x.link]); });
+    if (srcs.length) out.push(el('section', {'class':'sec ft-src', style:'gap:6px'}, [el('h2', {'class':'h-md', text:'Sources'}), el('ul', {'class':'src-list'}, srcs.map(function(s){ return el('li', null, [el('a', {href:s[1], target:'_blank', rel:'noopener', text:s[0] + ' ↗'})]); }))]));
+    var prev = all[i + 1], next = all[i - 1];
+    out.push(el('nav', {'class':'ft-pn', 'aria-label':'More launch features'}, [prev ? el('button', {type:'button', 'class':'lnx', on:{click:function(){ openFeature(prev.g.id); }}}, [el('span', {'class':'srow-k', text:'← Earlier · ' + fmtDate(prev.g.date)}), el('b', {text:prev.g.title})]) : el('span'), next ? el('button', {type:'button', 'class':'lnx', on:{click:function(){ openFeature(next.g.id); }}}, [el('span', {'class':'srow-k', text:'Later · ' + fmtDate(next.g.date) + ' →'}), el('b', {text:next.g.title})]) : el('span')]));
+    return {left:[el('article', {'class':'ft'}, out)], right:[]};
+  }
+  function launchesView(){
+    var all = featList(), F = S.featf || 'all', byY = {};
+    var seg = el('div', {'class':'ffilter dfilter', role:'group', 'aria-label':'Product line'});
+    [['all','All']].concat(['iphone','ipad','mac','watch','airpods','vision','home'].filter(function(k){ return all.some(function(f){ return f.k === k; }); }).map(function(k){ return [k, LINEDEF[k].n]; })).forEach(function(o){ seg.appendChild(el('button', {type:'button', 'class':'chip sm', 'aria-pressed':String(F === o[0]), text:o[1], on:{click:function(){ S.featf = o[0]; render(false); }}})); });
+    all.filter(function(f){ return F === 'all' || f.k === F; }).forEach(function(f){ var y = f.g.date.slice(0, 4); (byY[y] = byY[y] || []).push(f); });
+    var out = [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Devices'}), el('h1', {'class':'display h-xl', text:'Launch features'}), el('p', {'class':'lede', text:'Every Apple launch since 2024 as one long read: what’s new, the numbers, prices around the world, whether to buy, and the story so far.'}), seg])];
+    Object.keys(byY).sort().reverse().forEach(function(y){
+      out.push(el('section', {'class':'sec', style:'gap:12px'}, [el('h2', {'class':'h-md', text:y}), el('ul', {'class':'ft-grid'}, byY[y].map(function(f){ var up = f.g.date > TODAY; return el('li', null, [el('button', {type:'button', 'class':'lnx ft-card', style:lnStyle(f.k), on:{click:function(){ openFeature(f.g.id); }}}, [
+        el('span', {'class':'srow-k'}, [LINEDEF[f.k].n + ' · ' + (up ? 'coming ' : '') + fmtDate(f.g.date)]), el('b', {text:f.g.title}), el('span', {'class':'ft-card-s', text:f.g.intro})])]); }))]));
+    });
+    return {left:out, right:[]};
+  }
+
   function openWeek(ws){ S.week = ws; go('week'); setHash(ws === weekStart(TODAY) ? 'week' : 'week-' + ws); }
   function weekView(){
     var cur = weekStart(TODAY), ws = S.week && S.week <= cur ? weekStart(S.week) : cur, W = weekData(ws);
@@ -3626,7 +3806,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
       var g = gs.filter(function(x){ return x.id === S.dgroup; })[0];
       if (g){
         if (isPhone()) right.push(el('button', {type:'button', 'class':'back', html:'<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>', on:{click:function(){ S.dgroup = null; setHash('devices-history'); render(true); scrollTopAll(); }}}, ['All launches']));
-        right.push(el('div', {'class':'sec', style:'gap:10px'}, [el('span', {'class':'eyebrow', text:(g.date > TODAY ? 'Coming ' : 'Released ') + fmtDate(g.date)}), el('h1', {'class':'display h-lg', text:g.title}), el('p', {'class':'lede', text:g.intro})]));
+        right.push(el('div', {'class':'sec', style:'gap:10px'}, [el('span', {'class':'eyebrow', text:(g.date > TODAY ? 'Coming ' : 'Released ') + fmtDate(g.date)}), el('h1', {'class':'display h-lg', text:g.title}), el('p', {'class':'lede', text:g.intro}), featBtn(g.id)]));
         if (g.road && g.id !== 'g-duo') right.push(el('div', {'class':'note'}, [el('span', {html:'<svg width="18" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="1" width="8" height="12" rx="1.6"/><rect x="10.5" y="1" width="8" height="12" rx="1.6"/></svg>'}), el('div', null, [el('b', {text:g.id === 'g-duo' ? 'iPhone Duo' : 'Road to iPhone Duo'}), el('p', {text:g.road})])]));
         if (g.whatsNew) right.push(el('div', {'class':'note quiet dv-new'}, [el('div', null, [el('span', {'class':'odata-h'}, [el('b', {text:g.date > TODAY ? 'What’s coming' : 'What’s new'}), odata('Orchard summary')]), el('p', {text:g.whatsNew})])]));
         var specLinks = [];
@@ -4089,7 +4269,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     if (animate && !reduce){ page.classList.remove('turn'); void page.offsetWidth; page.classList.add('turn'); }
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
-  var NAVOF = {buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
+  var NAVOF = {feature:'more', launches:'more', buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
   function dateline(){
     var d = $('dateline'); if (!d) return;
     var iosNow = latestRel('iOS', 'release'), nextEv = (state.events || []).filter(function(e){ return e.date >= TODAY; }).sort(function(a, b){ return a.date.localeCompare(b.date); })[0];
@@ -4135,7 +4315,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
         R = appRight(S.app ? findApp(S.app) : null); phoneApp = !!S.app;
       }
     } else {
-      var res = v === 'buy' ? buyView() : v === 'week' ? weekView() : v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
+      var res = v === 'feature' ? featureView() : v === 'launches' ? launchesView() : v === 'buy' ? buyView() : v === 'week' ? weekView() : v === 'collections' ? collectionsView() : v === 'compare' ? compareView() : v === 'suggest' ? suggestView() : v === 'wanted' ? wantedView() : v === 'about' ? aboutView() : v === 'icons' ? iconsView() : null;
       if (!res) return;
       L = res.left; R = res.right;
     }
@@ -4175,7 +4355,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     }
     booted = true;
   }
-  function snapshot(){ return {view:S.view, app:S.app, ctx:S.ctx, compare:S.compare.slice(), q:S.q, story:S.story, line:S.line, feed:S.feed}; }
+  function snapshot(){ return {view:S.view, app:S.app, ctx:S.ctx, compare:S.compare.slice(), q:S.q, story:S.story, line:S.line, feed:S.feed, feat:S.feat}; }
   function go(view, opts){
     opts = opts || {};
     var primary = view === 'home' || view === 'apps' || view === 'updates' || view === 'events' || view === 'devices';
@@ -4190,13 +4370,13 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     if (opts.savedOnly) S.savedOnly = true;
     if (view !== 'updates') S.relForm = S.postForm = false;
     render(true);
-    setHash(view === 'apps' ? (S.ctx && S.ctx.kind === 'collection' ? S.ctx.id : 'apps') : view === 'story' ? 's-' + S.story : view === 'line' ? 'line-' + S.line : view);
+    setHash(view === 'apps' ? (S.ctx && S.ctx.kind === 'collection' ? S.ctx.id : 'apps') : view === 'story' ? 's-' + S.story : view === 'line' ? 'line-' + S.line : view === 'feature' ? 'f-' + S.feat : view);
     scrollTopAll();
   }
   function goBack(){
     var s = navStack.pop();
     if (!s){ go('home'); return; }
-    S.view = s.view; S.app = s.app; S.ctx = s.ctx; S.compare = s.compare; S.editing = null; S.story = s.story; S.line = s.line; if (s.feed) S.feed = s.feed;
+    S.view = s.view; S.app = s.app; S.ctx = s.ctx; S.compare = s.compare; S.editing = null; S.story = s.story; S.line = s.line; if (s.feed) S.feed = s.feed; if (s.feat) S.feat = s.feat;
     render(true); scrollTopAll();
     setHash(S.view === 'apps' && S.app ? S.app : S.view === 'story' ? 's-' + S.story : S.view === 'line' ? 'line-' + S.line : S.view);
   }
@@ -4250,11 +4430,12 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
   /* ================= MORE MENU ================= */
   var MOREI = [
     ['This week in Apple', 'Launches, software and news in one recap', 'week', function(){ S.week = null; go('week'); }],
+    ['Launch features', 'Every launch since 2024 as one long read', 'launches', function(){ go('launches'); }],
     ['Buy now or wait', 'How recent each product is, and what’s next', 'buy', function(){ go('buy'); }],
     ['Events and calendar', 'Keynotes, launches and every Apple date', 'events', function(){ S.event = null; go('events'); }],
     ['About Orchard', 'How the site works and how scores are made', 'about', function(){ go('about'); }]
   ];
-  var MOREIC = {week:HUBIC.week, buy:HUBIC.buy, events:HUBIC.events, calendar:HUBIC.calendar, rumors:HUBIC.rumors, software:HUBIC.software, about:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/>'};
+  var MOREIC = {launches:HUBIC.launches, week:HUBIC.week, buy:HUBIC.buy, events:HUBIC.events, calendar:HUBIC.calendar, rumors:HUBIC.rumors, software:HUBIC.software, about:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/>'};
   function closeMore(refocus){ var m = $('moremenu'); if (!m) return; m.remove(); document.querySelectorAll('.morebtn').forEach(function(b){ b.setAttribute('aria-expanded', 'false'); }); if (refocus && closeMore.btn) closeMore.btn.focus(); }
   function toggleMore(btn){
     if ($('moremenu')){ closeMore(true); return; }
@@ -4290,8 +4471,9 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
   // 2026 motion: big numbers count up the first time they scroll into view
   (function(){
     if (!window.IntersectionObserver || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return; io.unobserve(e.target); var n = e.target, txt = n.textContent, end = +txt.replace(/,/g, ''); if (!isFinite(end) || end < 2) return; var t0 = performance.now(), dur = Math.min(1100, 500 + end * 4); (function f(t){ var k = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - k, 3))); n.textContent = k < 1 ? v.toLocaleString('en-US') : txt; if (k < 1) requestAnimationFrame(f); })(t0); }); }, {threshold:.6});
-    function scan(){ document.querySelectorAll('.wk-stats b:not([data-ct])').forEach(function(b){ if (!/^[\d,]+$/.test(b.textContent.trim())) return; b.setAttribute('data-ct', '1'); io.observe(b); }); }
+    var RX = /^(\D*?)(\d[\d,]*)(\D*)$/;
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return; io.unobserve(e.target); var n = e.target, txt = n.textContent, m = txt.match(RX); if (!m) return; var end = +m[2].replace(/,/g, ''), com = m[2].indexOf(',') >= 0; if (!isFinite(end) || end < 2) return; var t0 = performance.now(), dur = Math.min(1100, 500 + Math.min(end, 150) * 4); (function f(t){ var k = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - k, 3))); n.textContent = k < 1 ? m[1] + (com ? v.toLocaleString('en-US') : String(v)) + m[3] : txt; if (k < 1) requestAnimationFrame(f); })(t0); }); }, {threshold:.6});
+    function scan(){ document.querySelectorAll('.wk-stats b:not([data-ct]), .ft-big:not(.nc):not([data-ct])').forEach(function(b){ if (!RX.test(b.textContent.trim())) return; b.setAttribute('data-ct', '1'); io.observe(b); }); }
     new MutationObserver(scan).observe(document.getElementById('spread'), {childList:true, subtree:true}); scan();
   })();
   (function(){ var m = $('mast'), on = false; function chk(){ var st = !isPhone() && window.scrollY > 136; if (st !== on){ on = st; m.classList.toggle('stuck', st); $('logo2').tabIndex = st ? 0 : -1; } } window.addEventListener('scroll', chk, {passive:true}); window.addEventListener('resize', chk); chk(); })();
@@ -4333,6 +4515,8 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
     else if (state.devices && state.devices.lines && Object.keys(state.devices.lines).some(function(k){ if (state.devices.lines[k].some(function(g){ return g.id === h; })){ S.dline = k; return true; } return false; })){ S.view = 'devices'; S.dtab = 'history'; S.dgroup = h; render(true); }
     else if (/^s-/.test(h) && findStory(h.slice(2))){ S.view = 'story'; S.story = h.slice(2); render(true); }
     else if (h === 'buy'){ S.view = 'buy'; render(true); }
+    else if (h === 'launches'){ S.view = 'launches'; render(true); }
+    else if (/^f-/.test(h) && featFor(h.slice(2))){ S.view = 'feature'; S.feat = h.slice(2); render(true); }
     else if (/^week(-\d{4}-\d{2}-\d{2})?$/.test(h)){ S.view = 'week'; S.week = h.length > 4 ? h.slice(5) : null; render(true); }
     else if (/^calendar(-\d{4})?$/.test(h)){ S.view = 'calendar'; S.caly = h.split('-')[1] || null; render(true); }
     else if (/^line-/.test(h) && LINES.indexOf(h.slice(5)) >= 0){ S.view = 'line'; S.line = h.slice(5); render(true); }
