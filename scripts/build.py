@@ -40,6 +40,7 @@ if _m:
     _st = json.loads(_m.group(2))
     _apps = _st.pop('apps', None)
     if _apps is not None:
+        _st['appCounts'] = {'optimized': sum(x.get('status') == 'optimized' for x in _apps), 'coming': sum(x.get('status') in ('coming', 'announced') for x in _apps)}
         _enc = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
         body = body[:_m.start(2)] + _enc(_st) + body[_m.end(2):]
         tail = '\n<script type="application/json" id="apps-data">' + _enc(_apps) + '</script>'

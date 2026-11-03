@@ -1574,7 +1574,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 3px var(--rule),var(--hard);transfor
 /* ---------- 2026 motion layer: squeeze-in headlines, scroll reveals, springy presses, grain ---------- */
 .ncard.lead{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:160px 160px!important}
 @media (prefers-reduced-motion: no-preference){
-  @keyframes squeeze{from{opacity:0;font-stretch:125%;letter-spacing:.04em;transform:translateY(10px)}to{opacity:1}}
+  @keyframes squeeze{from{opacity:0;transform:translateY(10px) scaleX(1.04);transform-origin:left center}to{opacity:1}}
   .pin .display,.ncard.lead .nc-h{animation:squeeze .7s cubic-bezier(.2,.8,.2,1) both}
   .btn,.lnx,.lnbig,button.ln-card,.nav button,.chip,.tabbar button,.hubd,.srow{transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .12s,background-color .12s}
   .btn:active,.lnx:active,.lnbig:active,button.ln-card:active,.nav button:active,.chip:active,.tabbar button:active,.hubd:active,.srow:active{transform:scale(.95)!important;transition-duration:.08s}
@@ -1902,6 +1902,16 @@ body[data-view="picks"] .page.left{padding-right:0}
 :root[data-theme="dark"] .ncard.lead,:root[data-theme="dark"] .ft-hero,:root[data-theme="dark"] .bt{border-color:#EFEDE8}
 :root[data-theme="dark"] .rail-card:not(:hover){border-color:var(--rule)}
 :root[data-theme="dark"] .page.right .pin,:root[data-theme="dark"] .ahero{border-top-color:#E6FF2E}
+/* accessibility: touch targets of at least 24px and no text under 11px */
+button.link,a.link,.pk-name,.tick-track button,summary,.ft-links a,.src a,footer a{min-height:24px;padding-block:2px}
+.pin input[type=search],.pin input[type=text],.mast input{min-height:24px}
+.showcase .dots button{position:relative}.showcase .dots button::after{content:"";position:absolute;inset:-9px}
+.soon-n span,.odata,.tag,.lnx small,.lnx em,.buy-l,details li,.sec li small{font-size:max(11px,1em)}
+.soon-n span{font-size:11px}.tag,.lnx small,.lnx em,.buy-l,.odata{font-size:11px}
+.pin .tag,.pin .buy-l,.pin span.odata,.pk-why li,.pin .tag.new,.pin .tag.soon,.pin .buy-l.sm{font-size:11px}
+.back{min-height:24px}
+.ev-links a{display:inline-block;padding-block:4px}
+.pk-row.compact .pk-why li,.pin .pk-why li{font-size:11px}
 </style>
 
 <div id="site">
@@ -2288,7 +2298,7 @@ body[data-view="picks"] .page.left{padding-right:0}
     var nWeek = all.filter(function(x){ return x.date > wk; }).length;
     var nRum = news.filter(function(n){ return n.kind === 'rumor' && n.status === 'pending'; }).length;
     var nRev = news.filter(function(n){ return n.kind === 'review'; }).length, nIss = news.filter(function(n){ return n.kind === 'issue' && n.status === 'open'; }).length;
-    var opt = state.apps.filter(function(a){ return a.status === 'optimized'; }).length, com = state.apps.filter(function(a){ return a.status === 'coming' || a.status === 'announced'; }).length;
+    var ac = APPS_PENDING && state.appCounts, opt = ac ? ac.optimized : state.apps.filter(function(a){ return a.status === 'optimized'; }).length, com = ac ? ac.coming : state.apps.filter(function(a){ return a.status === 'coming' || a.status === 'announced'; }).length;
     var nd = [];
     LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.date > TODAY) nd.push([g.date, g.title]); }); });
     (state.dates || []).forEach(function(x){ if (x.date >= TODAY) nd.push([x.date, x.title]); });
@@ -4961,7 +4971,7 @@ body[data-view="picks"] .page.left{padding-right:0}
     else if (['apps','updates','events','collections','about','wanted','suggest','compare','icons'].indexOf(h) >= 0){ if (h === 'compare') openCompare(); else { S.view = h; S.ctx = null; if (h === 'apps') S.app = null; if (h === 'events') S.event = null; render(true); } }
     else { S.view = 'home'; S.app = null; render(true); }
   }
-  window.__appsReady = function(){ var hh = (location.hash || '').slice(1); HP = null; if (hh && S.view === 'home') route(hh); else render(false); };
+  window.__appsReady = function(){ var hh = (location.hash || '').slice(1); HP = null; if (hh && S.view === 'home') route(hh); else if (S.view === 'home' && !Object.keys(saved).length && !S.q) return; else render(false); };
   route(h);
   window.addEventListener('hashchange', function(){ navStack = []; route((location.hash || '').slice(1)); scrollTopAll(); });
 
