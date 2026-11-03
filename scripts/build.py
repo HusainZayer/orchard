@@ -65,9 +65,4 @@ cfg = {'cleanUrls': True, 'headers': heads + [
  {'source': '/(sitemap.xml|feed.xml|robots.txt)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600'}]},
  {'source': '/og.png', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=86400'}]}]}
 (ROOT / 'vercel.json').write_text(json.dumps(cfg, indent=1))
-import sys; sys.path.insert(0, str(ROOT / 'scripts'))
-import static_pages, state as _state
-_h, _st = _state.load()
-_n = static_pages.build(ROOT, _st)
-print('static pages:', _n)
 print('built index.html,', len(heads), 'images')

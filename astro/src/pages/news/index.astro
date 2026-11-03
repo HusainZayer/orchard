@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro';
+import { items } from '../../lib/site.js';
+---
+<Base title="Apple news and rumors" desc="Apple news, rumors and updates, each with its sources." path="/news">
+<h1>News</h1><ul>{items.map(n => <li><span class="k">{n.date}</span> <a href={`/news/${n.id}`}>{n.title}</a></li>)}</ul>
+</Base>

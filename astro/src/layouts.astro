@@ -1,9 +1,0 @@
----
-const { title, desc = '' } = Astro.props;
-const url = new URL(Astro.url.pathname, Astro.site).href;
----
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title} · Orchard</title><meta name="description" content={desc}><link rel="canonical" href={url}>
-<style>body{margin:0;font:17px/1.55 system-ui;background:#F2F0EB;color:#111}main{max-width:42rem;margin:0 auto;padding:24px 16px}</style></head>
-<body><main><nav><a href="/">Orchard</a> · <a href="/news">News</a> · <a href="/duo-apps">Duo apps</a></nav><slot/>
-<footer><p>An independent site about Apple, not affiliated with Apple.</p></footer></main></body></html>

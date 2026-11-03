@@ -1,6 +1,9 @@
 ---
-import Layout from '../../layouts.astro';
-import data from '../../data/state.json';
+import Base from '../../layouts/Base.astro';
+import { apps, STATUS } from '../../lib/site.js';
+const groups = Object.entries(STATUS).map(([k, label]) => [label, apps.filter(a => a.status === k)]).filter(([, v]) => v.length);
 ---
-<Layout title="iPhone Duo apps" desc={`${data.apps.length} apps`}><h1>iPhone Duo apps</h1>
-<ul>{data.apps.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a></li>)}</ul></Layout>
+<Base title="iPhone Duo apps" desc={`${apps.length} apps with their iPhone Duo status, each with its source.`} path="/duo-apps">
+<h1>iPhone Duo apps</h1><p>{apps.length} apps, each with a status and a source. Apple-listed apps come first; developer-reported ones are labelled as such.</p>
+{groups.map(([label, v]) => <><h2>{label} ({v.length})</h2><ul>{v.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a> <span class="k">{a.category}</span></li>)}</ul></>)}
+</Base>

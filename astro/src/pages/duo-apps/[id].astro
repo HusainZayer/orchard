@@ -1,9 +1,21 @@
 ---
-import Layout from '../../layouts.astro';
-import data from '../../data/state.json';
-export function getStaticPaths() { return data.apps.map(a => ({ params: { id: a.id }, props: { a } })); }
+import Base from '../../layouts/Base.astro';
+import { apps, STATUS, POST, trim } from '../../lib/site.js';
+export function getStaticPaths() { return apps.map(a => ({ params: { id: a.id }, props: { a } })); }
 const { a } = Astro.props;
+const lab = STATUS[a.status] || 'iPhone Duo app';
+const store = a.store || {}, c = a.confirmed;
+const ld = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: a.name, applicationCategory: a.category || 'Application', operatingSystem: 'iOS', author: { '@type': 'Organization', name: a.developer || '' }, ...(a.appStore ? { url: a.appStore } : {}) };
 ---
-<Layout title={`${a.name} on iPhone Duo`} desc={a.body}>
-<h1>{a.name}</h1><p>{a.body}</p><p>{a.developer} · {a.category} · {a.status}</p><a href={`/#${a.id}`}>See it in Orchard</a>
-</Layout>
+<Base title={`${a.name} on iPhone Duo`} desc={trim(`${lab}. ${a.body}`)} path={`/duo-apps/${a.id}`} ld={ld}>
+<p class="k">{lab}</p><h1>{a.name}</h1><p>{a.body}</p>
+<ul>
+<li><b>Status:</b> {lab}</li><li><b>Developer:</b> {a.developer}</li><li><b>Category:</b> {a.category}</li>
+{a.postures && a.postures.length > 0 && <li><b>Fold positions it uses:</b> {a.postures.map(p => POST[p] || p).join(', ')}</li>}
+{store.v && <li><b>Latest version:</b> {store.v}{store.d ? ` (${store.d})` : ''}</li>}
+{c && <li><b>Release notes mention iPhone Duo:</b> version {c.v}, {c.d}</li>}
+</ul>
+{a.history && a.history.length > 0 && <><h2>History</h2><ul>{a.history.slice(0, 8).map(h => <li>{h.date}: {h.text}</li>)}</ul></>}
+<p>{a.link && <a href={a.link} rel="noopener">Source</a>}{a.link && a.appStore && ' · '}{a.appStore && <a href={a.appStore} rel="noopener">App Store</a>}</p>
+<a class="btn" href={`/#${a.id}`}>See it in Orchard</a>
+</Base>

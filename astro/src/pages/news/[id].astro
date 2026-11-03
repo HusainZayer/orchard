@@ -1,8 +1,13 @@
 ---
-import Layout from '../../layouts.astro';
-import data from '../../data/state.json';
-const items = [...data.news, ...data.posts];
-export function getStaticPaths() { return [...data.news, ...data.posts].map(n => ({ params: { id: n.id }, props: { n } })); }
+import Base from '../../layouts/Base.astro';
+import { items, trim } from '../../lib/site.js';
+export function getStaticPaths() { return items.map(n => ({ params: { id: n.id }, props: { n } })); }
 const { n } = Astro.props;
+const srcs = n.srcs && n.srcs.length ? n.srcs : (n.link ? [[n.source || 'Source', n.link]] : []);
+const ld = { '@context': 'https://schema.org', '@type': 'NewsArticle', headline: n.title, datePublished: n.date, publisher: { '@type': 'Organization', name: 'Orchard' } };
 ---
-<Layout title={n.title} desc={n.body}><p>{n.date}</p><h1>{n.title}</h1><p>{n.body}</p></Layout>
+<Base title={n.title} desc={trim(n.body)} path={`/news/${n.id}`} type="article" ld={ld}>
+<p class="k">{n.date}</p><h1>{n.title}</h1><p>{n.body}</p>
+{srcs.length > 0 && <><h2>Sources</h2><ul>{srcs.map(([t, u]) => <li><a href={u} rel="noopener">{t}</a></li>)}</ul></>}
+<a class="btn" href={`/#${n.id}`}>See it in Orchard</a>
+</Base>

@@ -27,6 +27,13 @@ jobs:
       - name: Rebuild the public page
         if: steps.run.outputs.changed == 'true'
         run: python scripts/build.py
+      - uses: actions/setup-node@v4
+        if: steps.run.outputs.changed == 'true'
+        with:
+          node-version: 22
+      - name: Rebuild the static pages
+        if: steps.run.outputs.changed == 'true'
+        run: bash scripts/gen_pages.sh
       - name: Commit and push (Vercel deploys automatically)
         if: steps.run.outputs.changed == 'true'
         env:
@@ -35,7 +42,7 @@ jobs:
         run: |
           git config user.name "orchard-bot"
           git config user.email "orchard-bot@users.noreply.github.com"
-          git add src/orchard.html index.html vercel.json
+          git add src/orchard.html index.html vercel.json duo-apps news duo-apps.html news.html sitemap.xml feed.xml robots.txt
           git commit -m "Automatic update: $SUMMARY" -m "$DETAILS"
           git pull --rebase origin main
           git push origin HEAD:main

@@ -3,3 +3,7 @@
 __pycache__/
 *.pyc
 preview.html
+/astro/node_modules/
+/astro/dist/
+/astro/.astro/
+/astro/src/data/state.json
