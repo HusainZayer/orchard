@@ -1800,6 +1800,95 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
 .lnx b{overflow-wrap:normal!important;font-size:clamp(21px,2vw,27px)!important}
 .ft-title.long{font-size:clamp(44px,5vw,80px)!important}
 @media (max-width:719px){ .ft-title.long{font-size:40px!important} }
+
+/* ---------- 2026 trends pass: transitions, bento, rail, reactive type, tilt, feedback, glass bar, dark ---------- */
+#mast{view-transition-name:mast}
+.tabbar{view-transition-name:tabbar}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
+  @keyframes vt-in{from{opacity:0;transform:translateY(16px)}}
+  ::view-transition-old(root){animation:vt-out .18s ease both}
+  ::view-transition-new(root){animation:vt-in .38s cubic-bezier(.2,.8,.2,1) both}
+  ::view-transition-group(hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+  ::view-transition-old(hero){object-fit:cover;object-position:top left}
+  ::view-transition-new(hero){object-fit:cover;object-position:top left}
+  ::view-transition-group(mast),::view-transition-group(tabbar){animation-duration:0s}
+}
+
+/* bento top of the home page */
+.bento{container-type:inline-size;display:flex;flex-direction:column;gap:14px}
+.bento-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(118px,auto);gap:10px}
+.bt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:14px;border:3px solid var(--rule);position:relative;overflow:hidden;min-width:0;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .12s}
+.bt:hover{transform:translate(-3px,-3px);box-shadow:var(--hard)}
+.bt:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.bt-l{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase}
+.bt-b{font-family:var(--display);font-weight:900;font-stretch:62%;font-size:clamp(44px,5vw,72px);line-height:.85;text-transform:uppercase;overflow-wrap:anywhere}
+.bt-b.sm{font-size:clamp(28px,3vw,42px);line-height:.92}
+.bt-s{font-size:13px;font-weight:600}
+.bt.t-a{grid-column:span 2;grid-row:span 2;background:var(--block);color:var(--on-block)}
+.bt.t-b{background:var(--volt);color:#0E0E10}
+.bt.t-c{background:var(--hot);color:#0E0E10}
+.bt.t-d{grid-column:span 2;background:var(--grape);color:#FFFFFF}
+.bt-art{position:absolute;right:-6px;bottom:-4px;width:58%;opacity:.95;pointer-events:none;color:var(--on-block)}
+.bt-art svg{display:block;width:100%;height:auto}
+.bt.t-a .bt-b{max-width:62%}
+@container (max-width:520px){
+  .bento-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bt.t-a{grid-column:span 2;grid-row:span 1;min-height:170px}
+  .bt.t-d{grid-column:span 2}
+}
+
+/* sideways row */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;margin:0 -2px;scrollbar-width:thin;scrollbar-color:var(--rule) transparent;overscroll-behavior-x:contain;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+.rail:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.rail-card{all:unset;box-sizing:border-box;cursor:pointer;flex:0 0 min(62vw,230px);scroll-snap-align:start;display:flex;flex-direction:column;gap:8px;padding:12px;border:3px solid var(--rule);background:var(--bg);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .12s}
+.rail-card:hover{transform:translate(-3px,-3px);box-shadow:var(--hard);background:var(--volt);color:#0E0E10}
+.rail-card:hover .muted{color:#0E0E10}
+.rail-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.rail-art{display:flex;align-items:center;justify-content:center;height:128px;background:color-mix(in srgb,var(--ln) 22%,var(--tile));border:2px solid var(--rule);overflow:hidden;color:var(--ink)}
+.rail-art svg{display:block;height:100%;width:auto;max-width:100%}
+.rail-card b{font-weight:800;font-size:16px;line-height:1.1}
+.rail-card .muted{font-size:12.5px}
+
+/* reactive headline weight and tilting device art */
+.rx-on{font-weight:var(--wt,900)!important;transition:font-weight .15s ease-out}
+.cover .dev{transform:translate(calc(var(--tx,0)*1px),calc(var(--ty,0)*1px)) rotate(var(--rot,0deg));transform-box:fill-box;transform-origin:center;transition:transform .25s ease-out;filter:drop-shadow(calc(var(--tx,0)*-.5px) 7px 0 rgba(14,14,16,.28))}
+
+/* small feedback */
+.ripple{position:fixed;z-index:100;width:14px;height:14px;margin:-7px 0 0 -7px;border:3px solid #E6FF2E;background:#0E0E10;border-radius:50%;pointer-events:none;animation:ripple .55s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes ripple{from{transform:scale(.4);opacity:1}to{transform:scale(4.2);opacity:0}}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes pressedIn{0%{transform:scale(.9)}55%{transform:scale(1.08)}100%{transform:scale(1)}}
+  [aria-pressed="true"]{animation:pressedIn .32s cubic-bezier(.34,1.56,.64,1)}
+  .toast{transition:opacity .2s ease,transform .45s cubic-bezier(.34,1.56,.64,1)}
+}
+@media (prefers-reduced-motion: reduce){ .ripple{display:none} }
+
+/* glass tab bar on phones */
+@media (max-width:719px){
+  .tabbar{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:4px 6px;border-radius:22px;background:color-mix(in srgb,#0E0E10 56%,transparent);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);border:1px solid rgba(255,255,255,.24);box-shadow:0 10px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.3)}
+  .tabbar button{border-radius:17px;padding:7px 0}
+  .tabbar button[aria-current="page"]{background:rgba(230,255,46,.18);color:#E6FF2E}
+  .toast{bottom:calc(94px + env(safe-area-inset-bottom,0px))}
+  .app{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){ .tabbar{background:#0E0E10!important} }
+
+/* dark theme designed on its own: deeper base, dimmer rules, volt as the one bright line, soft glows */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08080A; --page:#08080A; --paper-2:#101013; --tile:#121215; --tile-2:#1B1B20; --ink:#EFEDE8; --muted:#A9A7A1; --faint:#8B8983; --line:#26262C; --rule:#74747D;
+  --hard:5px 5px 0 #E6FF2E; --accent-soft:#1E2208}}
+:root[data-theme="dark"]{
+  --bg:#08080A; --page:#08080A; --paper-2:#101013; --tile:#121215; --tile-2:#1B1B20; --ink:#EFEDE8; --muted:#A9A7A1; --faint:#8B8983; --line:#26262C; --rule:#74747D;
+  --hard:5px 5px 0 #E6FF2E; --accent-soft:#1E2208}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:radial-gradient(900px 420px at 92% -6%,rgba(123,44,255,.22),transparent 62%),radial-gradient(760px 360px at -8% 2%,rgba(230,255,46,.07),transparent 60%),#08080A no-repeat}
+  :root:not([data-theme="light"]) .ncard.lead,:root:not([data-theme="light"]) .ft-hero,:root:not([data-theme="light"]) .bt{border-color:#EFEDE8}
+  :root:not([data-theme="light"]) .rail-card:not(:hover){border-color:var(--rule)}
+  :root:not([data-theme="light"]) .page.right .pin,:root:not([data-theme="light"]) .ahero{border-top-color:#E6FF2E}}
+:root[data-theme="dark"] body{background:radial-gradient(900px 420px at 92% -6%,rgba(123,44,255,.22),transparent 62%),radial-gradient(760px 360px at -8% 2%,rgba(230,255,46,.07),transparent 60%),#08080A no-repeat}
+:root[data-theme="dark"] .ncard.lead,:root[data-theme="dark"] .ft-hero,:root[data-theme="dark"] .bt{border-color:#EFEDE8}
+:root[data-theme="dark"] .rail-card:not(:hover){border-color:var(--rule)}
+:root[data-theme="dark"] .page.right .pin,:root[data-theme="dark"] .ahero{border-top-color:#E6FF2E}
 </style>
 
 <div id="site">
@@ -2201,6 +2290,27 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     soonL.sort(function(a, b){ return a.d.localeCompare(b.d); });
     if (soonL.length) P.soon = el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Coming up'}), el('button', {type:'button', 'class':'link', text:'Calendar →', on:{click:function(){ go('calendar'); }}})]),
       el('ul', {'class':'soon'}, soonL.slice(0, 4).map(function(x){ var n = evDays(x.d); return el('li', null, [el('button', {type:'button', on:{click:x.fn}}, [el('span', {'class':'soon-n'}, [el('b', {text:n === 0 ? 'NOW' : String(n)}), el('span', {text:n === 0 ? 'today' : n === 1 ? 'day' : 'days'})]), el('span', {'class':'soon-t'}, [el('b', {text:x.t}), el('span', {'class':'muted', text:fmtDate(x.d) + ' · ' + x.sub})])])]); }))]);
+    if (lead){
+      var newestL = null;
+      LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.date <= TODAY && (!newestL || g.date > newestL.g.date)) newestL = {k:k, g:g}; }); });
+      var onSale = LINES.reduce(function(n, k){ return n + lineFacts(k).now.length; }, 0);
+      var wkN = all.filter(function(x){ return x.kind === 'news' && evDays(x.date) >= -6; }).length;
+      var btile = function(cls, label, big, sub, fn, small, art){ return el('button', {type:'button', 'class':'bt ' + cls, on:{click:fn}}, [art || null, el('span', {'class':'bt-l', text:label}), el('b', {'class':'bt-b' + (small ? ' sm' : ''), text:big}), el('span', {'class':'bt-s', text:sub})]); };
+      var tl = [];
+      if (newestL){ var ndk = devKind(newestL.k, newestL.g.title); tl.push(btile('t-a', 'Newest launch', newestL.g.title, fmtDate(newestL.g.date) + ' · ' + LINEDEF[newestL.k].n, function(){ if (featFor(newestL.g.id)) openFeature(newestL.g.id); else openGroup(newestL.k, newestL.g); }, true, ndk ? el('span', {'class':'bt-art', 'aria-hidden':'true', style:lnStyle(newestL.k), html:'<svg viewBox="-100 0 400 290">' + devSvg(ndk, 100) + '</svg>'}) : null)); }
+      if (iosNow) tl.push(btile('t-b', 'Latest iOS', iosNow.version, 'Released ' + fmtDate(iosNow.date), function(){ go('updates'); }, true));
+      tl.push(btile('t-c', 'Stories this week', String(wkN), 'Last 7 days', function(){ go('updates'); }));
+      if (onSale) tl.push(btile('t-d', 'Devices on sale', String(onSale), 'Across all Apple lines', function(){ go('devices'); }));
+      P.bento = el('section', {'class':'sec bento'}, [el('div', {'class':'sec', style:'gap:8px'}, [el('span', {'class':'eyebrow', text:'Top story · ' + dayLabel(lead.date)}), newsCard(lead, true)]), el('div', {'class':'bento-tiles'}, tl)]);
+    }
+    var rl = [];
+    LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.date <= TODAY) rl.push({k:k, g:g}); }); });
+    rl.sort(function(a, b){ return b.g.date.localeCompare(a.g.date); }); rl = rl.slice(0, 10);
+    if (rl.length > 2) P.rail = el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Fresh launches'}), el('button', {type:'button', 'class':'link', text:'All launches →', on:{click:function(){ go('launches'); }}})]),
+      el('div', {'class':'rail', role:'region', 'aria-label':'Fresh launches, scrolls sideways', tabindex:'0'}, rl.map(function(x){ var dk = devKind(x.k, x.g.title);
+        return el('button', {type:'button', 'class':'rail-card', style:lnStyle(x.k), on:{click:function(){ if (featFor(x.g.id)) openFeature(x.g.id); else openGroup(x.k, x.g); }}}, [
+          dk ? el('span', {'class':'rail-art', 'aria-hidden':'true', html:'<svg viewBox="-100 0 400 290">' + devSvg(dk, 100) + '</svg>'}) : el('span', {'class':'rail-art', 'aria-hidden':'true'}, [lnIcon(x.k, 56)]),
+          el('b', {text:x.g.title}), el('span', {'class':'muted', text:fmtDate(x.g.date) + ' · ' + LINEDEF[x.k].n})]); }))]);
     var doors = [
       ['launches', 'Launch features', (nextF ? 'Coming ' + shortDate(nextF.g.date) + ': ' + nextF.g.title : lastF ? 'Latest: ' + lastF.g.title : 'Every launch as one long read'), 'mac', function(){ if (nextF || lastF) openFeature((nextF || lastF).g.id); else go('launches'); }],
       ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
@@ -2229,12 +2339,12 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
       el('p', {'class':'foot', text:'Orchard · An independent site about Apple, not affiliated with Apple · Updated ' + fmtDate(state.updated || TODAY)})]);
     return P;
   }
-  function homeOrder(keys){ var P = HP || (HP = homeParts()); return keys.map(function(k){ return P[k]; }).filter(Boolean); }
+  function homeOrder(keys){ var P = HP || (HP = homeParts()); if (!P.bento && P.lead) P.bento = P.lead; return keys.map(function(k){ return P[k]; }).filter(Boolean); }
   function homeLeft(){
     HP = homeParts();
     var h1 = el('h1', {'class':'vh', text:'Orchard: everything Apple, neatly in rows'});
-    if (isPhone()) return [h1].concat(homeOrder(['lead','soon','top','more','saved','foot']));
-    return [h1].concat(homeOrder(['lead','top','foot']));
+    if (isPhone()) return [h1].concat(homeOrder(['bento','soon','rail','top','more','saved','foot']));
+    return [h1].concat(homeOrder(['bento','rail','top','foot']));
   }
   function homeRight(){
     if (isPhone()) return [];
@@ -3212,7 +3322,7 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
     var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><g fill="var(--ink)" opacity=".2">' + dots + '</g>' +
       '<circle cx="' + fx + '" cy="' + fy + '" r="' + (58 + (h % 30)) + '" fill="var(--accent)" opacity=".92"/>' +
       '<rect x="0" y="' + (H - 10) + '" width="' + W + '" height="10" fill="var(--ln,var(--accent))" opacity=".85"/>' +
-      (dk ? '<g>' + devSvg(dk, dcx) + '</g>' : '<g transform="translate(' + gx + ',30) scale(9.2)" fill="var(--bg)" stroke="var(--ink)" stroke-width=".22" stroke-linecap="round" stroke-linejoin="round">' + ic + '</g>') +
+      (dk ? '<g class="dev">' + devSvg(dk, dcx) + '</g>' : '<g transform="translate(' + gx + ',30) scale(9.2)" fill="var(--bg)" stroke="var(--ink)" stroke-width=".22" stroke-linecap="round" stroke-linejoin="round">' + ic + '</g>') +
       '<line x1="0" y1="' + (H - .5) + '" x2="' + W + '" y2="' + (H - .5) + '" stroke="var(--ink)" stroke-width="1"/></svg>';
     return el('figure', {'class':'cover', style:lnStyle(k), html:svg});
   }
@@ -4667,12 +4777,57 @@ button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
   }); });
   $('logo').addEventListener('click', function(){ go('home'); });
   $('logo2').addEventListener('click', function(){ go('home'); });
+
+  // 2026 trends: page transitions, reactive headlines, tilting devices, tap feedback
+  (function(){
+    var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SEL = '.nc-open, .ln-card, .lnbig, .lnx, .bt, .rail-card, .soon button, .nav button, .tabbar button, .hubd, .srow, .back, .ft-toc button';
+    var passing = false, busy = false;
+    if (document.startViewTransition && !RM) document.addEventListener('click', function(e){
+      if (passing || busy || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var t = e.target.closest && e.target.closest(SEL); if (!t || t.disabled || t.getAttribute('aria-disabled') === 'true' || !$('site').contains(t) && !t.closest('.tabbar')) return;
+      var card = t.closest('.ncard, .ln-card, .lnbig, .lnx, .bt, .rail-card, .soon li') || t;
+      e.stopImmediatePropagation(); e.preventDefault();
+      var named = [];
+      var done = function(){ busy = false; named.forEach(function(n){ n.style.viewTransitionName = ''; }); };
+      card.style.viewTransitionName = 'hero'; named.push(card); busy = true;
+      var replay = function(){ passing = true; try { t.click(); } finally { passing = false; } };
+      try {
+        var tr = document.startViewTransition(function(){
+          card.style.viewTransitionName = '';
+          replay();
+          var L = $('L'), c = L && L.firstElementChild;
+          while (c && (c.classList.contains('vh') || c.offsetHeight < 40)) c = c.nextElementSibling;
+          if (c){ c.style.viewTransitionName = 'hero'; named.push(c); }
+        });
+        tr.finished.then(done, done);
+      } catch(err){ done(); card.style.viewTransitionName = ''; replay(); }
+    }, true);
+    if (RM) return;
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches){
+      var hd = null, cv = null;
+      var off = function(){ if (hd){ hd.classList.remove('rx-on'); hd.style.removeProperty('--wt'); hd = null; } if (cv){ ['--tx','--ty','--rot'].forEach(function(v){ cv.style.removeProperty(v); }); cv = null; } };
+      document.addEventListener('pointermove', function(e){
+        var tg = e.target.closest ? e.target : null, h = tg && tg.closest('.display, .ft-title'), c = tg && tg.closest('.cover');
+        if (h !== hd || c !== cv) { var h0 = hd, c0 = cv; hd = h0 === h ? hd : null; cv = c0 === c ? cv : null; if (h0 && h0 !== h){ h0.classList.remove('rx-on'); h0.style.removeProperty('--wt'); } if (c0 && c0 !== c){ ['--tx','--ty','--rot'].forEach(function(v){ c0.style.removeProperty(v); }); } }
+        if (h){ var r = h.getBoundingClientRect(), q = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)); hd = h; h.classList.add('rx-on'); h.style.setProperty('--wt', Math.round(560 + q * 340)); }
+        if (c){ var b = c.getBoundingClientRect(), px = ((e.clientX - b.left) / b.width) * 2 - 1, py = ((e.clientY - b.top) / b.height) * 2 - 1; cv = c; c.style.setProperty('--tx', (px * 14).toFixed(1)); c.style.setProperty('--ty', (py * 8).toFixed(1)); c.style.setProperty('--rot', (px * 2.5).toFixed(2) + 'deg'); }
+      }, {passive:true});
+      document.addEventListener('pointerleave', off);
+    }
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('[aria-pressed], .lnfollow, .share, .btn, .chip, .bt, .rail-card');
+      if (!b) return;
+      try { if (navigator.vibrate) navigator.vibrate(8); } catch(_){}
+      var r = document.createElement('span'); r.className = 'ripple'; r.style.left = (e.clientX || innerWidth / 2) + 'px'; r.style.top = (e.clientY || innerHeight / 2) + 'px'; document.body.appendChild(r); setTimeout(function(){ r.remove(); }, 600);
+    });
+  })();
   // 2026 motion: big numbers count up the first time they scroll into view
   (function(){
     if (!window.IntersectionObserver || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var RX = /^(\D*?)(\d[\d,]*)(\D*)$/;
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return; io.unobserve(e.target); var n = e.target, txt = n.textContent, m = txt.match(RX); if (!m) return; var end = +m[2].replace(/,/g, ''), com = m[2].indexOf(',') >= 0; if (!isFinite(end) || end < 2) return; var t0 = performance.now(), dur = Math.min(1100, 500 + Math.min(end, 150) * 4); (function f(t){ var k = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - k, 3))); n.textContent = k < 1 ? m[1] + (com ? v.toLocaleString('en-US') : String(v)) + m[3] : txt; if (k < 1) requestAnimationFrame(f); })(t0); }); }, {threshold:.6});
-    function scan(){ document.querySelectorAll('.wk-stats b:not([data-ct]), .ft-big:not(.nc):not([data-ct])').forEach(function(b){ if (!RX.test(b.textContent.trim())) return; b.setAttribute('data-ct', '1'); io.observe(b); }); }
+    function scan(){ document.querySelectorAll('.wk-stats b:not([data-ct]), .ft-big:not(.nc):not([data-ct]), .bt-b:not(.sm):not([data-ct])').forEach(function(b){ if (!RX.test(b.textContent.trim())) return; b.setAttribute('data-ct', '1'); io.observe(b); }); }
     new MutationObserver(scan).observe(document.getElementById('spread'), {childList:true, subtree:true}); scan();
   })();
   (function(){ var m = $('mast'), on = false; function chk(){ var st = !isPhone() && window.scrollY > 136; if (st !== on){ on = st; m.classList.toggle('stuck', st); $('logo2').tabIndex = st ? 0 : -1; } } window.addEventListener('scroll', chk, {passive:true}); window.addEventListener('resize', chk); chk(); })();
