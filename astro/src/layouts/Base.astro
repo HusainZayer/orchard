@@ -1,14 +1,22 @@
 ---
 import { SITE } from '../lib/site.js';
+import { css } from '../lib/css.js';
 const { title, desc = '', path, type = 'website', ld, image } = Astro.props;
 const url = SITE + path;
+const nav = [['/', 'Home'], ['/news', 'News'], ['/devices', 'Devices'], ['/duo-apps', 'Duo apps'], ['/picks', 'Picks'], ['/week', 'Week'], ['/calendar', 'Calendar'], ['/app', 'Search']];
+const cur = path === '/' ? '/' : '/' + path.split('/')[1];
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{title} · Orchard</title><meta name="description" content={desc}><link rel="canonical" href={url}>
 <meta property="og:title" content={title}><meta property="og:description" content={desc}><meta property="og:type" content={type}><meta property="og:url" content={url}><meta property="og:image" content={SITE + (image || '/og.png')}>
-<meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Orchard" href="/feed.xml">
-<style is:inline>body{margin:0;font:17px/1.55 system-ui,-apple-system,sans-serif;background:#F2F0EB;color:#111}@media(prefers-color-scheme:dark){body{background:#08080A;color:#EEE}a{color:#C6FF3D}.k{color:#aaa}}main{max-width:42rem;margin:0 auto;padding:24px 16px 64px}a{color:#111;text-underline-offset:3px}h1{font-size:2rem;line-height:1.1;margin:.4em 0}.k{font:600 12px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:#555}nav a{margin-right:1rem}.btn{display:inline-block;margin:1rem 0;padding:.7em 1.1em;border:2px solid currentColor;font-weight:700;text-decoration:none}li{margin:.3em 0}.chip{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border:2px solid currentColor;font-weight:700;font-size:.85rem;text-decoration:none}.chip[aria-current]{background:#111;color:#C6FF3D}ol.pk{padding-left:2.2rem}ol.pk>li{margin:1.2em 0}ol.pk ul{font-size:.9rem;color:#555;padding-left:1.1rem}footer{margin-top:3rem;font-size:14px;opacity:.75}</style>
+<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#F2F0EB" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#08080A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Orchard" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style is:inline set:html={css}></style>
 {ld && <script type="application/ld+json" set:html={JSON.stringify(ld).replace(/</g, '\\u003c')} />}
-</head><body><main><nav class="k"><a href="/">Orchard</a><a href="/news">News</a><a href="/devices">Devices</a><a href="/duo-apps">Duo apps</a><a href="/picks">Picks</a><a href="/week">Week</a><a href="/calendar">Calendar</a><a href="/app">Search</a></nav>
-<slot />
-<footer>An independent site about Apple, not affiliated with Apple. <a href="/app">Open the full Orchard app</a></footer></main></body></html>
+</head><body>
+<header class="top"><div class="w"><a class="logo" href="/">Orchard</a><nav aria-label="Main">{nav.map(([h, l]) => <a href={h} aria-current={h === cur ? 'page' : undefined}>{l}</a>)}</nav></div></header>
+<main><div class="w c"><slot /></div></main>
+<footer><div class="w">An independent site about Apple, not affiliated with Apple. <a href="/feed.xml">RSS</a> · <a href="/app">Open the full Orchard app</a></div></footer>
+</body></html>
