@@ -19,6 +19,10 @@ head = f'''<!doctype html>
 <meta property="og:title" content="Orchard">
 <meta property="og:description" content="{DESC}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://orchard-mu-snowy.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://orchard-mu-snowy.vercel.app/">
+<link rel="alternate" type="application/rss+xml" title="Orchard" href="/feed.xml">
 <meta name="theme-color" content="#F2F0EB" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -54,6 +58,16 @@ for f in sorted(os.listdir(blob)):
     heads.append({'source': '/_blob/' + f, 'headers': [{'key': 'Content-Type', 'value': ctype(blob / f)}, {'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]})
 missing = sorted(set(re.findall(r'/_blob/([0-9a-f]{32})', src)) | set(re.findall(r'"iconId":"([0-9a-f]{32})"', src)) - set(os.listdir(blob)))
 if missing: print('WARNING: images referenced but missing from _blob/:', missing)
-cfg = {'cleanUrls': True, 'headers': heads + [{'source': '/', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=0, must-revalidate'}]}]}
+short = [{'key': 'Cache-Control', 'value': 'public, max-age=0, must-revalidate'}]
+cfg = {'cleanUrls': True, 'headers': heads + [
+ {'source': '/', 'headers': short},
+ {'source': '/(duo-apps|news)(/.*)?', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'}]},
+ {'source': '/(sitemap.xml|feed.xml|robots.txt)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600'}]},
+ {'source': '/og.png', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=86400'}]}]}
 (ROOT / 'vercel.json').write_text(json.dumps(cfg, indent=1))
+import sys; sys.path.insert(0, str(ROOT / 'scripts'))
+import static_pages, state as _state
+_h, _st = _state.load()
+_n = static_pages.build(ROOT, _st)
+print('static pages:', _n)
 print('built index.html,', len(heads), 'images')
