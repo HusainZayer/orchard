@@ -21,5 +21,5 @@ footer{border-top:4px solid var(--fg);padding:20px 0 40px;font-size:14px;color:v
 .c a{font-weight:700}.c ol.pk>li{padding:16px 0}.c ol.pk ul{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.c ol.pk ul li{border:2px solid var(--fg);padding:2px 8px;font-size:12px;font-weight:700}
 .chip{display:inline-flex;align-items:center;min-height:32px;margin:0 6px 8px 0;padding:2px 12px;border:2px solid var(--fg);font-weight:800;font-size:.85rem;text-decoration:none;background:var(--card)}.chip[aria-current]{background:var(--fg);color:var(--volt)}
 .btn{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;padding:8px 16px;background:var(--fg);color:var(--volt);font-weight:800;text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
-@media(max-width:600px){.top .w{gap:10px}}
+img.ic{display:block;flex:none;width:56px;height:56px;border-radius:22%;border:2px solid var(--fg);background:var(--card)}img.ic.lg{width:88px;height:88px}.hd{display:flex;gap:14px;align-items:center}.hd h1{margin:0}.row{display:flex;gap:12px;align-items:flex-start}.row>div{min-width:0}\n@media(max-width:600px){.top .w{gap:10px}}
 `;

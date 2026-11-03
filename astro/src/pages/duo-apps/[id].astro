@@ -1,15 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { apps, STATUS, POST, trim } from '../../lib/site.js';
+import { apps, STATUS, POST, trim, icon } from '../../lib/site.js';
 import { all as picked } from '../../lib/picks.js';
 export function getStaticPaths() { return apps.map(a => ({ params: { id: a.id }, props: { a } })); }
 const { a } = Astro.props;
 const lab = STATUS[a.status] || 'iPhone Duo app';
 const store = a.store || {}, c = a.confirmed;
-const ld = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: a.name, applicationCategory: a.category || 'Application', operatingSystem: 'iOS', author: { '@type': 'Organization', name: a.developer || '' }, ...(a.appStore ? { url: a.appStore } : {}) };
+const ld = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: a.name, applicationCategory: a.category || 'Application', operatingSystem: 'iOS', author: { '@type': 'Organization', name: a.developer || '' }, ...(a.appStore ? { url: a.appStore } : {}), ...(icon(a, 256) ? { image: icon(a, 256) } : {}) };
 ---
 <Base title={`${a.name} on iPhone Duo`} desc={trim(`${lab}. ${a.body}`)} path={`/duo-apps/${a.id}`} ld={ld} image={picked.includes(a) ? `/og/app/${a.id}.png` : undefined}>
-<p class="k">{lab}</p><h1>{a.name}</h1><p>{a.body}</p>
+<div class="hd">{icon(a, 256) && <img class="ic lg" src={icon(a, 256)} width="88" height="88" alt="" loading="eager" />}<div><p class="k">{lab}</p><h1>{a.name}</h1></div></div><p>{a.body}</p>
 <ul>
 <li><b>Status:</b> {lab}</li><li><b>Developer:</b> {a.developer}</li><li><b>Category:</b> {a.category}</li>
 {a.postures && a.postures.length > 0 && <li><b>Fold positions it uses:</b> {a.postures.map(p => POST[p] || p).join(', ')}</li>}

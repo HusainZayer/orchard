@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { all, top10, cats, why } from '../../lib/picks.js';
+import { icon } from '../../lib/site.js';
 ---
 <Base title="Our picks: top 100 iPhone Duo apps" desc={`The ${all.length} Duo apps we'd install first, ranked by how well they use the fold, with the reason for each.`} path="/picks">
 <h1>Our picks</h1>
@@ -8,7 +9,7 @@ import { all, top10, cats, why } from '../../lib/picks.js';
 <p class="k">Pick a category</p>
 <p>{cats.map(c => <a class="chip" href={`/picks/${c.slug}`}>{c.name} {c.n}</a>)}</p>
 <h2>Top 10</h2>
-<ol class="pk">{top10.map(a => <li><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></li>)}</ol>
+<ol class="pk">{top10.map(a => <li class="row">{icon(a) && <img class="ic" src={icon(a)} width="56" height="56" alt="" loading="lazy" />}<div><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></div></li>)}</ol>
 <h2>All {all.length}</h2>
-<ol start="11" class="pk">{all.slice(10).map(a => <li><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></li>)}</ol>
+<ol start="11" class="pk">{all.slice(10).map(a => <li class="row">{icon(a) && <img class="ic" src={icon(a)} width="56" height="56" alt="" loading="lazy" />}<div><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></div></li>)}</ol>
 </Base>

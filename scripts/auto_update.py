@@ -46,7 +46,9 @@ for sid, apps in ids.items():
     x = res.get(sid)
     if not x: continue
     v, d = x.get('version'), (x.get('currentVersionReleaseDate') or '')[:10]
+    ic = re.sub(r'/\d+x\d+bb\.\w+$', '', x.get('artworkUrl512') or x.get('artworkUrl100') or '')
     for a in apps:
+        if ic and a.get('icon') != ic and re.match(r'https://is\d*-ssl\.mzstatic\.com/image/thumb/[\w/.\-]+$', ic): a['icon'] = ic
         sd = a.get('store') or {}
         if v == sd.get('v') and d == sd.get('d'): continue
         a['store'] = {'v': v, 'd': d, 'p': x.get('formattedPrice') or sd.get('p'), 'g': x.get('primaryGenreName') or sd.get('g')}

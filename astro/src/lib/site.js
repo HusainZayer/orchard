@@ -6,3 +6,4 @@ export const apps = [...data.apps].sort((a, b) => a.name.toLowerCase().localeCom
 export const items = [...data.news, ...data.posts].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 export const updated = data.updated;
 export const trim = (s, n = 155) => { s = String(s || '').split(/\s+/).join(' '); return s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; };
+export const icon = (a, n = 128) => (a.icon && /^https:\/\/is\d*-ssl\.mzstatic\.com\//.test(a.icon) ? `${a.icon}/${n}x${n}bb.webp` : null);

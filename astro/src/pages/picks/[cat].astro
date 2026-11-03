@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { all, cats, why } from '../../lib/picks.js';
+import { icon } from '../../lib/site.js';
 export function getStaticPaths() { return cats.map(c => ({ params: { cat: c.slug }, props: { c } })); }
 const { c } = Astro.props;
 const list = all.filter(a => a.category === c.name);
@@ -8,5 +9,5 @@ const list = all.filter(a => a.category === c.name);
 <Base title={`Our picks: ${c.name} apps for iPhone Duo`} desc={`${list.length} ${c.name} apps we'd install first on iPhone Duo, each with the reason.`} path={`/picks/${c.slug}`}>
 <p class="k"><a href="/picks">Our picks</a></p><h1>{c.name}</h1>
 <p>{cats.map(x => <a class="chip" href={`/picks/${x.slug}`} aria-current={x.slug === c.slug ? 'page' : undefined}>{x.name} {x.n}</a>)}</p>
-<ol class="pk">{list.map(a => <li><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">Rank {all.indexOf(a) + 1} of {all.length}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></li>)}</ol>
+<ol class="pk">{list.map(a => <li class="row">{icon(a) && <img class="ic" src={icon(a)} width="56" height="56" alt="" loading="lazy" />}<div><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">Rank {all.indexOf(a) + 1} of {all.length}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></div></li>)}</ol>
 </Base>
