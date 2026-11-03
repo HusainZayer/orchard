@@ -27,7 +27,19 @@ head = f'''<!doctype html>
 </head>
 <body>
 '''
-(ROOT / 'index.html').write_text(head + body + '\n</body>\n</html>\n')
+# Speed: the app directory is most of the data and only the Duo apps pages need it.
+# Move it to the end of the page so the rest renders first; the page loads it once it arrives.
+_PAT = re.compile(r'(<script type="application/json" id="state">)(.*?)(</script>)', re.S)
+_m = _PAT.search(body)
+tail = ''
+if _m:
+    _st = json.loads(_m.group(2))
+    _apps = _st.pop('apps', None)
+    if _apps is not None:
+        _enc = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
+        body = body[:_m.start(2)] + _enc(_st) + body[_m.end(2):]
+        tail = '\n<script type="application/json" id="apps-data">' + _enc(_apps) + '</script>'
+(ROOT / 'index.html').write_text(head + body + tail + '\n</body>\n</html>\n')
 
 def ctype(p):
     b = open(p, 'rb').read(12)

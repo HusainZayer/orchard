@@ -1664,12 +1664,130 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
 }
 .ft-progress{display:none}
 @supports (animation-timeline: scroll()){ @media (prefers-reduced-motion: no-preference){ .ft-progress{display:block} } }
+
+/* ---------- design pass 2 ---------- */
+/* 2. leftovers: square, solid labels and controls */
+.buy-l{border-radius:0;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0;padding:4px 8px;border:2px solid #0E0E10}
+.buy-l.buy{background:#2BD46A;color:#0E0E10}
+.buy-l.fine,.rn-f{background:#1F3BFF;color:#FFFFFF}
+.buy-l.caution{background:#FFB020;color:#0E0E10}
+.buy-l.wait{background:#FF3B30;color:#0E0E10}
+.buy-l.older{background:var(--bg);color:var(--ink);border-color:var(--rule)}
+:root[data-theme="dark"] .buy-l.buy,:root[data-theme="dark"] .buy-l.wait{color:#0E0E10}
+:root[data-theme="dark"] .buy-l.fine,:root[data-theme="dark"] .rn-f{color:#FFFFFF}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .buy-l.buy,:root:not([data-theme="light"]) .buy-l.wait{color:#0E0E10} :root:not([data-theme="light"]) .buy-l.fine,:root:not([data-theme="light"]) .rn-f{color:#FFFFFF} }
+.buy-bar{border-radius:0!important;height:8px!important;background:var(--tile)!important;box-shadow:inset 0 0 0 2px var(--rule)}
+.buy-bar i{border-radius:0!important;background:var(--rule)!important}
+.wk-list button{border-radius:0}
+.wk-list button[aria-current="true"]{background:var(--block);color:var(--on-block)}
+.wk-list button[aria-current="true"] span{color:var(--on-block)}
+.wk-list button:hover:not([aria-current="true"]){background:var(--volt);color:#0E0E10}
+.wk-list button:hover:not([aria-current="true"]) span{color:#0E0E10}
+.ctry-w{color:var(--ink)}
+.ctry-w .ctrl.ctry{border-radius:0;box-shadow:inset 0 0 0 2px var(--rule);font-weight:800;font-family:var(--mono);font-size:12px;text-transform:uppercase;padding:6px 28px 6px 10px}
+.lu-cat button{border-left-width:6px}
+.lu-cat h3{font-weight:700;color:var(--ink)}
+.tag{border:2px solid var(--rule);background:var(--bg);color:var(--ink)}
+.tag.soon{background:#0E0E10;color:#E6FF2E;border-color:#0E0E10}
+.cmp-table td.on,.cmp-table th.on{background:var(--volt);color:#0E0E10}
+.intl-wrap{border:2px solid var(--rule)}
+
+/* 3. lighter rules inside lists; heavy rules only for headers and big blocks */
+.srows li,.hub li,.alist li,.feed li,.ft-cov li,.ft-buy li,.wk-list li,.lu-cat li{border-top:1px solid var(--rule)}
+.ev-card{border-top:1px solid var(--rule)}
+.ffilter.dfilter .chip,.ctrl,select.ctrl,input.ctrl{box-shadow:inset 0 0 0 1.5px var(--rule)}
+.ffilter.dfilter .chip{border-width:1.5px}
+.lnbig,.lnx,.ln-card{box-shadow:inset 0 0 0 2px var(--rule)}
+.lnbig:hover,.lnx:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
+button.ln-card:hover{box-shadow:inset 0 0 0 2px var(--rule),var(--hard)}
+
+/* 4. spec sheets as a two-column grid */
+.facts.fx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;font-size:14.5px}
+.facts.fx > div{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--rule);min-width:0}
+.facts.fx dt,.facts.fx dd{padding:0;border:0;text-align:left}
+.facts.fx dt{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted)}
+.facts.fx dd{margin:0;font-weight:600;overflow-wrap:anywhere;font-family:var(--sans);font-size:15px}
+.facts.fx > div.wide{grid-column:1 / -1}
+.swatches{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px}
+.swatch{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.swatch i{width:16px;height:16px;border:2px solid var(--rule);flex:none;background:var(--sw)}
+.swatch i.unk{background:repeating-linear-gradient(45deg,var(--tile) 0 3px,var(--bg) 3px 6px)}
+@media (max-width:719px){ .facts.fx{grid-template-columns:minmax(0,1fr)} }
+
+/* 5. home right column: coming up */
+.soon{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.soon li{border-top:1px solid var(--rule)}
+.soon button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;align-items:center;width:100%;padding:12px 0}
+.soon button:hover{background:var(--volt);color:#0E0E10}
+.soon button:hover .muted{color:#0E0E10}
+.soon button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.soon-n{display:flex;flex-direction:column;align-items:center;justify-content:center;height:64px;background:var(--block);color:var(--on-block)}
+.soon li:nth-child(2) .soon-n{background:var(--hot);color:#0E0E10}
+.soon li:nth-child(3) .soon-n{background:var(--grape);color:#FFFFFF}
+.soon-n b{font-family:var(--display);font-weight:900;font-stretch:62%;font-size:38px;line-height:.85}
+.soon-n span{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase}
+.soon-t b{display:block;font-weight:800;font-size:16.5px;line-height:1.15}
+.soon-t .muted{font-size:12.5px}
+
+/* 6. moving headline ticker */
+.mast-top{gap:20px}
+.dateline{flex:none}
+.tick{flex:1 1 auto;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent)}
+.tick-track{display:inline-flex;white-space:nowrap}
+.tick button{all:unset;cursor:pointer;color:#F2F0EB;font-size:13px;font-weight:700;padding:0 6px}
+.tick button:hover{color:#E6FF2E;text-decoration:underline}
+.tick button:focus-visible{outline:2px solid #E6FF2E;outline-offset:2px}
+.tick i{color:#FF6A13;font-style:normal;padding:0 10px}
+@media (prefers-reduced-motion: no-preference){
+  .tick-track{animation:tick 70s linear infinite}
+  .tick:hover .tick-track,.tick:focus-within .tick-track{animation-play-state:paused}
+  @keyframes tick{to{transform:translateX(-50%)}}
+}
+@media (max-width:1100px){ .tick{display:none} }
+
+/* 7. phone fixes and chapter jumps */
+.ft-toc{display:flex;gap:0;flex-wrap:nowrap;overflow-x:auto;border:2px solid var(--rule);background:var(--bg);scrollbar-width:none}
+.ft-toc::-webkit-scrollbar{display:none}
+.ft-toc button{all:unset;cursor:pointer;flex:none;padding:9px 14px;font-weight:800;font-size:13px;text-transform:uppercase;border-right:2px solid var(--rule);white-space:nowrap}
+.ft-toc button:last-child{border-right:0}
+.ft-toc button:hover{background:var(--volt);color:#0E0E10}
+.ft-toc button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.ft-toc b{font-family:var(--mono);margin-right:6px}
+.ft-ch{scroll-margin-top:calc(var(--navh) + 70px)}
+@media (max-width:719px){
+  .ft-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-self:stretch}
+  .ft-facts li{border-right:0;border-bottom:3px solid #0E0E10}
+  .ft-facts li:nth-child(odd){border-right:3px solid #0E0E10}
+  .ft-facts li:nth-last-child(-n+2):nth-child(odd),.ft-facts li:last-child{border-bottom:0}
+  .ft-toc{position:sticky;top:60px;z-index:5}
+  .ft-ch{scroll-margin-top:120px}
+  .app{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+}
+
+/* leftovers on app and calendar pages */
+.tiers{background:none;border:2px solid var(--rule);padding:0;gap:0;border-radius:0}
+.tier{border-radius:0;border-right:2px solid var(--rule)}
+.tier:last-child{border-right:0}
+.tier b{font-weight:800}
+.tier[aria-pressed="true"]{background:var(--block);color:var(--on-block);box-shadow:none}
+.tier[aria-pressed="true"] span{color:var(--on-block)}
+.fbtn,.more,.ltl-chip,.ctip,.asum,.gl-p{border-radius:0!important}
+.fbtn,.more{box-shadow:inset 0 0 0 1.5px var(--rule)!important;background:var(--bg)!important;font-weight:800}
+.fcount{border-radius:0;background:var(--hot);color:#0E0E10}
+.badge{border-radius:0;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;border:1.5px solid var(--rule);background:var(--bg);color:var(--ink)}
+.badge.ok{background:#2BD46A;color:#0E0E10;border-color:#0E0E10}
+.tag{border-radius:0!important}
+.tag.fresh{background:var(--volt);color:#0E0E10;border-color:#0E0E10}
+.srow{border-radius:0}
+.lnx b{overflow-wrap:normal!important;font-size:clamp(21px,2vw,27px)!important}
+.ft-title.long{font-size:clamp(44px,5vw,80px)!important}
+@media (max-width:719px){ .ft-title.long{font-size:40px!important} }
 </style>
 
 <div id="site">
 <div class="app">
   <header class="mast" id="mast">
-    <div class="mast-top"><span class="dateline" id="dateline"></span><span class="mast-tools">
+    <div class="mast-top"><span class="dateline" id="dateline"></span><div class="tick" id="tick" role="region" aria-label="Latest headlines"></div><span class="mast-tools">
     <span class="admin-pill" id="admin-pill" hidden title="Only you see the editing controls">Admin</span>
     <label class="msearch" for="msq">
       <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="11" y1="11" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -1720,6 +1838,10 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
   var FONTS = 'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap';
   var state = {apps:[], posts:[], releases:[], collections:[]};
   try { state = JSON.parse(document.getElementById('state').textContent); } catch(e){}
+  var APPS_PENDING = !state.apps;
+  if (APPS_PENDING) state.apps = [];
+  function loadApps(){ var n = document.getElementById('apps-data'); try { if (n) state.apps = JSON.parse(n.textContent); } catch(e){} APPS_PENDING = false; if (window.__appsReady) window.__appsReady(); }
+  if (APPS_PENDING){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(loadApps, 0); }); else setTimeout(loadApps, 0); }
   ['apps','posts','releases','collections'].forEach(function(k){ state[k] = state[k] || []; });
 
   var HOSTED = !!document.querySelector('meta[name="orchard-hosted"]');
@@ -2054,6 +2176,13 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     var when = function(d){ var n = evDays(d); return n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'; };
     var macNow = latestRel('macOS', 'release');
     var nextF = featList().filter(function(f){ return f.g.date > TODAY; }).pop(), lastF = featList().filter(function(f){ return f.g.date <= TODAY; })[0];
+    var soonL = [];
+    if (nextEv) soonL.push({d:nextEv.date, t:nextEv.name, sub:nextEv.rumored ? 'Apple event · rumored details' : 'Apple event', fn:function(){ S.event = nextEv.id; go('events'); }});
+    LINES.forEach(function(k){ lineGroups(k).forEach(function(g){ if (g.date > TODAY) soonL.push({d:g.date, t:g.title, sub:'In stores · ' + LINEDEF[k].n, fn:function(){ if (featFor(g.id)) openFeature(g.id); else openGroup(k, g); }}); }); });
+    (state.dates || []).forEach(function(x){ if (x.date > TODAY) soonL.push({d:x.date, t:x.title, sub:x.sub || 'Date', fn:function(){ if (x.story && findStory(x.story)) openStory(x.story); else go('calendar'); }}); });
+    soonL.sort(function(a, b){ return a.d.localeCompare(b.d); });
+    if (soonL.length) P.soon = el('section', {'class':'sec', style:'gap:10px'}, [el('div', {'class':'sec-head'}, [el('h2', {'class':'h-md', text:'Coming up'}), el('button', {type:'button', 'class':'link', text:'Calendar →', on:{click:function(){ go('calendar'); }}})]),
+      el('ul', {'class':'soon'}, soonL.slice(0, 4).map(function(x){ var n = evDays(x.d); return el('li', null, [el('button', {type:'button', on:{click:x.fn}}, [el('span', {'class':'soon-n'}, [el('b', {text:n === 0 ? 'NOW' : String(n)}), el('span', {text:n === 0 ? 'today' : n === 1 ? 'day' : 'days'})]), el('span', {'class':'soon-t'}, [el('b', {text:x.t}), el('span', {'class':'muted', text:fmtDate(x.d) + ' · ' + x.sub})])])]); }))]);
     var doors = [
       ['launches', 'Launch features', (nextF ? 'Coming ' + shortDate(nextF.g.date) + ': ' + nextF.g.title : lastF ? 'Latest: ' + lastF.g.title : 'Every launch as one long read'), 'mac', function(){ if (nextF || lastF) openFeature((nextF || lastF).g.id); else go('launches'); }],
       ['week', 'This week in Apple', nWeek + ' stories in the last 7 days, in one recap', 'apple', function(){ S.week = null; go('week'); }],
@@ -2086,12 +2215,12 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
   function homeLeft(){
     HP = homeParts();
     var h1 = el('h1', {'class':'vh', text:'Orchard: everything Apple, neatly in rows'});
-    if (isPhone()) return [h1].concat(homeOrder(['lead','top','more','saved','foot']));
+    if (isPhone()) return [h1].concat(homeOrder(['lead','soon','top','more','saved','foot']));
     return [h1].concat(homeOrder(['lead','top','foot']));
   }
   function homeRight(){
     if (isPhone()) return [];
-    var out = homeOrder(['more','saved']); HP = null; return out;
+    var out = homeOrder(['soon','more','saved']); HP = null; return out;
   }
   function lineCard(k){
     var f = lineFacts(k), r = lineStories(k, ['rumor']).filter(function(x){ return x.status === 'pending'; }).length, nn = lineNewCount(k), on = !!follows[k];
@@ -2144,6 +2273,7 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
   }
   function currentList(){ var c = ctxList(); return c ? c.items : filtered(); }
   function appsLeft(){
+    if (APPS_PENDING) return [el('div', {'class':'sec', style:'gap:12px'}, [el('span', {'class':'eyebrow', text:'Duo apps'}), el('p', {'class':'lede', role:'status', text:'Loading the app directory…'})])];
     var c = ctxList();
     var out = [];
     if (navStack.length && c) out.push(backBtn());
@@ -3021,21 +3151,57 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
   function dayLabel(d){ var diff = Math.round((Date.parse(TODAY) - Date.parse(d)) / 864e5); return diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : diff < 0 ? 'Coming up · ' + fmtDate(d) : fmtDate(d); }
   /* cover art drawn in code: a halftone field in the line colour and the line's glyph, unique per story */
   function hashStr(t){ var h = 2166136261; for (var i = 0; i < t.length; i++){ h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
-  function coverArt(k, seed){
+  /* Flat device drawings for covers: picked from the line and the headline, no logos */
+  function devKind(k, hint){
+    var t = String(hint || '');
+    if (/iPhone Duo|foldable/i.test(t) || k === 'duo') return 'duo';
+    if (['iphone','ipad','mac','watch','airpods','vision','home'].indexOf(k) < 0) return null;
+    if (k === 'iphone' || /\biPhone\b/.test(t) && !/iPad|Mac|Watch|AirPods|Vision|HomePod/.test(t)) return 'iphone';
+    if (k === 'ipad' || /\biPad\b/.test(t)) return 'ipad';
+    if (k === 'mac' || /\b(Mac|MacBook|iMac)\b/.test(t)){ if (/iMac/.test(t) && !/MacBook/.test(t)) return 'imac'; if (/Studio/.test(t) && !/MacBook/.test(t)) return 'studio'; if (/Mac mini/.test(t) && !/MacBook/.test(t)) return 'mini'; return 'laptop'; }
+    if (k === 'watch' || /Apple Watch|Watch (Series|Ultra|SE)/.test(t)) return 'watch';
+    if (k === 'airpods' || /AirPods/.test(t)) return 'airpods';
+    if (k === 'vision' || /Vision Pro/.test(t)) return 'vision';
+    if (k === 'home' || /HomePod|HomeView|Apple TV/.test(t)){ if (/HomeView/.test(t)) return /Apple TV/.test(t) ? 'homeview+tv' : 'homeview'; if (/Apple TV/.test(t)) return 'tv'; if (/HomePod mini/.test(t)) return 'podmini'; return 'homepod'; }
+    return null;
+  }
+  function devSvg(kind, cx){
+    var B = 'fill="var(--bg)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"', S = 'fill="var(--ln,var(--accent))" stroke="var(--ink)" stroke-width="3"', K = 'fill="var(--ink)"';
+    var r = function(x, y, w, h, rx, a){ return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '" ' + a + '/>'; };
+    switch (kind){
+      case 'iphone': return r(cx - 58, 22, 116, 236, 24, B) + r(cx - 49, 31, 98, 218, 17, S) + r(cx - 19, 41, 38, 11, 5.5, K);
+      case 'duo': return r(cx - 124, 26, 120, 228, 20, B) + r(cx + 4, 26, 120, 228, 20, B) + r(cx - 116, 34, 112, 212, 14, S) + r(cx + 4, 34, 112, 212, 14, S) + '<line x1="' + cx + '" y1="26" x2="' + cx + '" y2="254" stroke="var(--ink)" stroke-width="5"/><circle cx="' + (cx + 60) + '" cy="50" r="4" fill="var(--ink)" opacity=".5"/>';
+      case 'ipad': return r(cx - 92, 18, 184, 244, 20, B) + r(cx - 80, 30, 160, 220, 10, S) + '<circle cx="' + cx + '" cy="24" r="3" fill="var(--ink)"/>';
+      case 'laptop': return r(cx - 150, 28, 300, 186, 12, B) + r(cx - 139, 39, 278, 164, 4, S) + r(cx - 14, 39, 28, 8, 3, K) + '<path d="M' + (cx - 188) + ' 214h376l-18 26H' + (cx - 170) + 'z" ' + B + '/><path d="M' + (cx - 30) + ' 214h60v6h-60z" ' + K + '/>';
+      case 'imac': return r(cx - 146, 18, 292, 186, 12, B) + r(cx - 135, 29, 270, 140, 3, S) + r(cx - 135, 169, 270, 26, 0, 'fill="var(--ln,var(--accent))" opacity=".55"') + '<path d="M' + (cx - 32) + ' 204h64l12 46H' + (cx - 44) + 'z" ' + B + '/>' + r(cx - 60, 248, 120, 10, 5, B);
+      case 'mini': return r(cx - 96, 132, 192, 80, 22, B) + '<line x1="' + (cx - 70) + '" y1="196" x2="' + (cx + 70) + '" y2="196" stroke="var(--ln,var(--accent))" stroke-width="6" stroke-linecap="round"/><circle cx="' + (cx + 70) + '" cy="160" r="5" fill="var(--ink)"/>';
+      case 'studio': return r(cx - 100, 74, 200, 140, 22, B) + '<g fill="var(--ink)">' + [0, 1, 2, 3, 4, 5].map(function(i){ return '<circle cx="' + (cx - 50 + i * 20) + '" cy="196" r="3.5"/>'; }).join('') + '</g>' + r(cx - 74, 100, 60, 14, 7, S) + r(cx + 14, 100, 60, 14, 7, S);
+      case 'watch': return r(cx - 40, 0, 80, 74, 12, S) + r(cx - 40, 206, 80, 74, 12, S) + r(cx - 64, 58, 128, 164, 38, B) + r(cx - 52, 70, 104, 140, 28, K) + r(cx + 62, 112, 12, 30, 5, B) + '<circle cx="' + cx + '" cy="140" r="26" fill="none" stroke="var(--ln,var(--accent))" stroke-width="8"/>';
+      case 'airpods': return r(cx - 92, 92, 184, 140, 52, B) + '<line x1="' + (cx - 88) + '" y1="132" x2="' + (cx + 88) + '" y2="132" stroke="var(--ink)" stroke-width="3"/><circle cx="' + cx + '" cy="178" r="5" fill="var(--ln,var(--accent))" stroke="var(--ink)" stroke-width="2"/>' + '<circle cx="' + (cx + 118) + '" cy="58" r="24" ' + B + '/>' + r(cx + 108, 66, 20, 76, 10, B) + '<circle cx="' + (cx + 118) + '" cy="58" r="9" fill="var(--ln,var(--accent))"/>';
+      case 'vision': return '<path d="M' + (cx - 170) + ' 150c-20 70 360 70 340 0" fill="none" stroke="var(--ln,var(--accent))" stroke-width="22" stroke-linecap="round"/>' + '<path d="M' + (cx - 150) + ' 120c0-36 30-52 70-52h160c40 0 70 16 70 52v20c0 34-28 54-60 54-30 0-44-22-60-34-14-10-36-10-50 0-16 12-30 34-60 34-32 0-70-20-70-54z" fill="var(--ink)" stroke="var(--ink)" stroke-width="4"/>' + '<path d="M' + (cx - 120) + ' 104c20-14 220-14 240 0" fill="none" stroke="var(--ln,var(--accent))" stroke-width="5" stroke-linecap="round" opacity=".8"/>';
+      case 'homepod': return r(cx - 78, 34, 156, 222, 72, B) + '<ellipse cx="' + cx + '" cy="58" rx="46" ry="12" ' + S + '/>' + [0, 1, 2, 3].map(function(i){ return '<line x1="' + (cx - 70) + '" y1="' + (110 + i * 34) + '" x2="' + (cx + 70) + '" y2="' + (110 + i * 34) + '" stroke="var(--ink)" stroke-width="2" opacity=".35"/>'; }).join('');
+      case 'podmini': return '<path d="M' + (cx - 100) + ' 200a100 100 0 1 1 200 0z" ' + B + '/><ellipse cx="' + cx + '" cy="104" rx="44" ry="11" ' + S + '/>' + r(cx - 104, 198, 208, 14, 7, B);
+      case 'tv': return r(cx - 96, 150, 192, 58, 18, B) + '<circle cx="' + (cx + 70) + '" cy="179" r="4" fill="var(--ln,var(--accent))"/>';
+      case 'homeview': return r(cx - 96, 24, 192, 192, 24, B) + r(cx - 84, 36, 168, 168, 14, S) + '<circle cx="' + cx + '" cy="30" r="3" fill="var(--ink)"/><path d="M' + (cx - 40) + ' 216h80l10 40H' + (cx - 50) + 'z" ' + B + '/>';
+      case 'homeview+tv': return devSvg('homeview', cx - 40) + r(cx + 70, 196, 120, 40, 14, B) + '<circle cx="' + (cx + 168) + '" cy="216" r="3.5" fill="var(--ln,var(--accent))"/>';
+    }
+    return '';
+  }
+  function coverArt(k, seed, hint){
     var h = hashStr(seed || k), W = 640, H = 280, fx = 120 + (h % 400), fy = 40 + ((h >> 9) % 200), dots = '', step = 16;
     for (var y = step / 2; y < H; y += step) for (var x = step / 2; x < W; x += step){ var d = Math.hypot(x - fx, y - fy) / 300, r = Math.max(0, 6.2 * (1 - d)); if (r > .5) dots += '<circle cx="' + x + '" cy="' + y + '" r="' + r.toFixed(1) + '"/>'; }
-    var gx = ((h >> 4) % 2) ? 400 : 60, ic = LINEDEF[lnKey(k)].ic;
+    var gx = ((h >> 4) % 2) ? 400 : 60, ic = LINEDEF[lnKey(k)].ic, dk = devKind(k, hint), dcx = ((h >> 4) % 2) ? 450 : 190;
     var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><g fill="var(--ink)" opacity=".2">' + dots + '</g>' +
       '<circle cx="' + fx + '" cy="' + fy + '" r="' + (58 + (h % 30)) + '" fill="var(--accent)" opacity=".92"/>' +
       '<rect x="0" y="' + (H - 10) + '" width="' + W + '" height="10" fill="var(--ln,var(--accent))" opacity=".85"/>' +
-      '<g transform="translate(' + gx + ',30) scale(9.2)" fill="var(--bg)" stroke="var(--ink)" stroke-width=".22" stroke-linecap="round" stroke-linejoin="round">' + ic + '</g>' +
+      (dk ? '<g>' + devSvg(dk, dcx) + '</g>' : '<g transform="translate(' + gx + ',30) scale(9.2)" fill="var(--bg)" stroke="var(--ink)" stroke-width=".22" stroke-linecap="round" stroke-linejoin="round">' + ic + '</g>') +
       '<line x1="0" y1="' + (H - .5) + '" x2="' + W + '" y2="' + (H - .5) + '" stroke="var(--ink)" stroke-width="1"/></svg>';
     return el('figure', {'class':'cover', style:lnStyle(k), html:svg});
   }
   function newsCard(x, lead){
     var lk = primaryLn(x.dev), see = (x.see || []).filter(function(s){ return seeTarget(s[1]); });
     return el('article', {'class':'ncard' + (lead ? ' lead' : ''), style:lnStyle(lk)}, [
-      lead ? coverArt(lk, x.id) : null,
+      lead ? coverArt(lk, x.id, x.title + ' ' + (x.body || '').slice(0, 120)) : null,
       el('div', {'class':'nc-top'}, [lnIcon(lk, lead ? 20 : 16), el('span', {text:LINEDEF[lnKey(lk)].n}), newBadge(x), el('span', {'class':'nc-src', text:x.source || ''})]),
       el(lead ? 'h3' : 'h4', {'class':lead ? 'display nc-h' : 'nc-h'}, [el('button', {type:'button', 'class':'nc-open', text:x.title, on:{click:function(){ openStory(x.id); }}})]),
       el('p', {'class':'nc-body', text:x.body}),
@@ -3316,7 +3482,9 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     if (label === 'Storage' || label === 'Capacity'){ var p = String(v).split(/,\s*/); return p.length > 1 ? p[0] + '–' + p[p.length - 1] : p[0]; }
     if (label === 'Chip' || label === 'Launch price') return String(v).replace(/\s*\(.*$/, '');
     var m = String(v).match(/(up to\s+)?[\d,.]+\s?(GB|TB|kg|g|hours?|mm|Hz|MP|nits|-core)?/i);
-    return m ? m[0].replace(/^up to/i, 'Up to').trim() : null;
+    var out = m ? m[0].replace(/^up to/i, 'Up to').trim() : null;
+    if (out && label === 'Weight' && /^[\d.,]+$/.test(out)){ var u = String(v).match(/\s(g|kg)\b/); if (u) out += ' ' + u[1]; }
+    return out;
   }
   var FTPICK = ['Launch price','Chip','Display','Storage','Weight','Battery'];
   var FTCOL = ['blk','hot','grape','volt','blue','blk'];
@@ -3351,14 +3519,14 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     out.push(el('button', {type:'button', 'class':'back', html:BACKSVG, on:{click:function(){ go('launches'); }}}, ['All launch features']));
     out.push(el('header', {'class':'ft-hero', style:lnStyle(k)}, [
       el('div', {'class':'ft-hero-t'}, [el('span', {'class':'ft-kick'}, [lnIcon(k, 18), el('span', {text:'Launch feature · ' + LINEDEF[k].n})]),
-        el('h1', {'class':'display ft-title', text:g.title}), el('p', {'class':'ft-lede', text:g.intro}),
+        el('h1', {'class':'display ft-title' + (g.title.length > 26 ? ' long' : ''), text:g.title}), el('p', {'class':'ft-lede', text:g.intro}),
         el('ul', {'class':'ft-facts'}, [
           el('li', null, [el('span', {text:up ? 'In stores' : 'Released'}), el('b', {text:fmtDate(g.date)})]),
           el('li', null, [el('span', {text:up ? 'Countdown' : 'Age'}), el('b', {text:up ? (days === 1 ? 'Tomorrow' : days + ' days') : days === 0 ? 'Today' : (-days < 61 ? -days + ' days' : Math.round(-days / 30.4) + ' months')})]),
           el('li', null, [el('span', {text:'Models'}), el('b', {text:String(g.models.length)})]),
           low ? el('li', null, [el('span', {text:'From'}), el('b', {text:low})]) : null])]),
-      coverArt(k, g.id)]));
-    var ch = 0;
+      coverArt(k, g.id, g.title + ' ' + g.models.map(function(m){ return m.name; }).join(' '))]));
+    var ch = 0, tocAt = out.length;
     out.push(featChapter(++ch, up ? 'What’s coming' : 'What’s new', [el('p', {'class':'ft-pull', text:g.whatsNew}), el('span', {'class':'odata-h'}, [odata('Orchard summary'), el('span', {'class':'muted', style:'font-size:12.5px', text:'From Apple’s announcement and tech specs'})]),
       g.road ? el('div', {'class':'note'}, [el('div', null, [el('b', {text:g.id === 'g-duo' ? 'iPhone Duo' : 'Road to iPhone Duo'}), el('p', {text:g.road})])]) : null]));
     out.push(featChapter(++ch, 'By the numbers', g.models.map(function(mo, j){ return featModel(mo, j, g.models.length > 1); })));
@@ -3377,6 +3545,8 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     var gs = lineGroups(k), at = gs.indexOf(g), win = gs.slice(Math.max(0, at - 4), at + 3);
     out.push(featChapter(++ch, 'Where it fits', [el('ol', {'class':'ft-line'}, win.map(function(x){ var me = x === g, f = featFor(x.id); return el('li', {'class':me ? 'me' : null}, [el('button', {type:'button', 'aria-current':me ? 'true' : null, on:{click:function(){ if (me) return; if (f) openFeature(x.id); else openGroup(k, x); }}}, [el('span', {'class':'ft-yr', text:x.date.slice(0, 4)}), el('b', {text:x.title}), el('span', {'class':'muted', text:shortDate(x.date) + (x.date > TODAY ? ' · coming' : '')})])]); })),
       el('div', {style:'display:flex;gap:8px;flex-wrap:wrap'}, [el('button', {type:'button', 'class':'btn sm', text:'All ' + LINEDEF[k].n + ' launches', on:{click:function(){ openGroup(k, g); }}}), el('button', {type:'button', 'class':'btn sm', text:LINEDEF[k].n + ' line page', on:{click:function(){ openLine(k); }}})])]));
+    var toc = el('nav', {'class':'ft-toc', 'aria-label':'Chapters'}); out.forEach(function(sec){ if (!sec.classList || !sec.classList.contains('ft-ch')) return; var n = sec.querySelector('.ft-ch-n').textContent, tt = sec.querySelector('.ft-ch-t').textContent; sec.id = 'ch-' + n; toc.appendChild(el('button', {type:'button', on:{click:function(){ sec.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'}); var h2 = sec.querySelector('.ft-ch-t'); h2.setAttribute('tabindex', '-1'); h2.focus({preventScroll:true}); }}}, [el('b', {text:n}), tt])); });
+    out.splice(tocAt, 0, toc);
     var srcs = []; g.models.forEach(function(m){ if (m.specs && safe(m.specs[1]) && !srcs.some(function(s){ return s[1] === m.specs[1]; })) srcs.push(m.specs); });
     cov.forEach(function(x){ if (safe(x.link) && !srcs.some(function(s){ return s[1] === x.link; })) srcs.push([x.source + ': ' + x.title, x.link]); });
     if (srcs.length) out.push(el('section', {'class':'sec ft-src', style:'gap:6px'}, [el('h2', {'class':'h-md', text:'Sources'}), el('ul', {'class':'src-list'}, srcs.map(function(s){ return el('li', null, [el('a', {href:s[1], target:'_blank', rel:'noopener', text:s[0] + ' ↗'})]); }))]));
@@ -3750,7 +3920,9 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     return function(label){ if (/List of Apple products|Buyer/.test(label)) return true; if (lineRx && !lineRx.test(label.replace(/MacRumors/g, ''))) return false;
       var m = label.match(/(iPhone|iPad) (Duo|mini|\d+\w*(?: Pro(?: Max)?)?)/); if (m && !/List of/.test(label) && joined.indexOf(m[0]) < 0 && !(/compatible|price/i.test(label))) return false; return true; };
   }
-  function specTable(rows){ var t = el('dl', {'class':'facts'}); rows.forEach(function(r){ if (!r[1]) return; t.appendChild(el('dt', {text:r[0]})); t.appendChild(el('dd', {text:r[1]})); }); return t; }
+  var SWATCH = {'Black':'#111111','Blue':'#3A6FD8','Blush':'#F2C9C4','Burgundy':'#6E1E2E','Citrus':'#E8E15A','Cloud White':'#F1F0EC','Cosmic Orange':'#F07A2C','Deep Blue':'#233A6B','Desert Titanium':'#C8A98A','Glacier':'#DCEAF0','Green':'#7BB36A','Indigo':'#3B3F8F','Lavender':'#C9B8E8','Light Gold':'#E8D7B0','Midnight':'#1E2430','Mist Blue':'#A9BFD6','Natural':'#C9C2B6','Night Sky':'#1B2333','Orange':'#F28C38','Pink':'#F3B6C8','Purple':'#A58BD8','Rose Pink':'#F0A8B8','Sage':'#A9B89A','Silver':'#D8D9DB','Sky Blue':'#A8CBEA','Soft Pink':'#F4C9D4','Space Black':'#2A2A2C','Space Gray':'#6E6F73','Star White':'#F4F2EC','Starlight':'#ECE3D3','Teal':'#4FA7A0','Ultramarine':'#3D4FD8','White':'#F5F5F2','Yellow':'#F5D34B','Gold':'#E3C98F','Graphite':'#3C3D40','Red':'#C8202F','Jet Black':'#0B0B0C','Rose Gold':'#E7B9A7','Space Grey':'#6E6F73'};
+  function colourDd(v){ if (/\(/.test(v)) return el('dd', {text:v}); var cs = v.split(/,\s*|\s+and\s+/).map(function(x){ return x.trim(); }).filter(Boolean); return el('dd', null, [el('span', {'class':'swatches'}, cs.map(function(c){ var hx = SWATCH[c]; return el('span', {'class':'swatch'}, [el('i', {'class':hx ? null : 'unk', style:hx ? '--sw:' + hx : null, 'aria-hidden':'true'}), c]); }))]); }
+  function specTable(rows){ var t = el('dl', {'class':'facts fx'}); rows.forEach(function(r){ if (!r[1]) return; var v = String(r[1]); t.appendChild(el('div', {'class':v.length > 58 ? 'wide' : null}, [el('dt', {text:r[0]}), /^Colou?rs$/.test(r[0]) ? colourDd(v) : el('dd', {text:v})])); }); return t; }
   function lineSeg(skip){
     var LN = S.dline || 'iphone';
     var lseg = el('div', {'class':'ffilter dfilter', role:'group', 'aria-label':'Product line'});
@@ -4270,7 +4442,16 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
   }
   function pulse(){ var sp = $('spread'); sp.classList.remove('busy'); void sp.offsetWidth; sp.classList.add('busy'); setTimeout(function(){ sp.classList.remove('busy'); }, 700); }
   var NAVOF = {feature:'more', launches:'more', buy:'more', week:'more', calendar:'more', story:'updates', line:'devices', home:'home', apps:'apps', updates:'updates', events:'more', devices:'devices', collections:'apps', compare:'apps', suggest:'apps', icons:'apps', wanted:'home', about:'more'};
+  function ticker(){
+    var t = $('tick'); if (!t || t.childElementCount) return;
+    var ns = (state.news || []).filter(function(x){ return x.kind === 'news' || x.kind === 'rumor'; }).sort(function(a, b){ return b.date.localeCompare(a.date); }).slice(0, 8);
+    if (!ns.length) return;
+    var tr = el('div', {'class':'tick-track'});
+    [0, 1].forEach(function(copy){ var g = el('span', copy ? {'aria-hidden':'true'} : null); ns.forEach(function(x){ g.appendChild(el('button', {type:'button', tabindex:copy ? '-1' : null, text:(x.kind === 'rumor' ? 'Rumor: ' : '') + x.title, on:{click:function(){ openStory(x.id); }}})); g.appendChild(el('i', {'aria-hidden':'true', text:'■'})); }); tr.appendChild(g); });
+    t.appendChild(tr);
+  }
   function dateline(){
+    ticker();
     var d = $('dateline'); if (!d) return;
     var iosNow = latestRel('iOS', 'release'), nextEv = (state.events || []).filter(function(e){ return e.date >= TODAY; }).sort(function(a, b){ return a.date.localeCompare(b.date); })[0];
     var dn = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(TODAY + 'T12:00:00').getDay()];
@@ -4410,7 +4591,7 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + RESET + '</style></head><body>' + page + '</body></html>';
   }
   function note(msg, err){ document.querySelectorAll('[data-note]').forEach(function(n){ n.textContent = msg; n.classList.toggle('err', !!err); }); }
-  function restore(){ try { state = JSON.parse(document.getElementById('state').textContent); ['apps','posts','releases','collections'].forEach(function(k){ state[k] = state[k] || []; }); } catch(e){} }
+  function restore(){ try { var keepApps = state.apps; state = JSON.parse(document.getElementById('state').textContent); if (!state.apps) state.apps = keepApps; ['apps','posts','releases','collections'].forEach(function(k){ state[k] = state[k] || []; }); } catch(e){} }
   function readOnly(){ canEdit = false; assetsNS = null; S.editing = null; render(false); }
   function save(trigger){
     if (!artifactNS) return Promise.resolve();
@@ -4525,6 +4706,7 @@ body[data-view="feature"] .page.left,body[data-view="launches"] .page.left{paddi
     else if (['apps','updates','events','collections','about','wanted','suggest','compare','icons'].indexOf(h) >= 0){ if (h === 'compare') openCompare(); else { S.view = h; S.ctx = null; if (h === 'apps') S.app = null; if (h === 'events') S.event = null; render(true); } }
     else { S.view = 'home'; S.app = null; render(true); }
   }
+  window.__appsReady = function(){ var hh = (location.hash || '').slice(1); HP = null; if (hh && S.view === 'home') route(hh); else render(false); };
   route(h);
   window.addEventListener('hashchange', function(){ navStack = []; route((location.hash || '').slice(1)); scrollTopAll(); });
 
