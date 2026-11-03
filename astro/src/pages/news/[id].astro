@@ -9,5 +9,5 @@ const ld = { '@context': 'https://schema.org', '@type': 'NewsArticle', headline:
 <Base title={n.title} desc={trim(n.body)} path={`/news/${n.id}`} type="article" ld={ld}>
 <p class="k">{n.date}</p><h1>{n.title}</h1><p>{n.body}</p>
 {srcs.length > 0 && <><h2>Sources</h2><ul>{srcs.map(([t, u]) => <li><a href={u} rel="noopener">{t}</a></li>)}</ul></>}
-<a class="btn" href={`/#${n.id}`}>See it in Orchard</a>
+<a class="btn" href={`/app#${n.id}`}>See it in Orchard</a>
 </Base>

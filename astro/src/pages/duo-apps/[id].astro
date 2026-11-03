@@ -17,5 +17,5 @@ const ld = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', n
 </ul>
 {a.history && a.history.length > 0 && <><h2>History</h2><ul>{a.history.slice(0, 8).map(h => <li>{h.date}: {h.text}</li>)}</ul></>}
 <p>{a.link && <a href={a.link} rel="noopener">Source</a>}{a.link && a.appStore && ' · '}{a.appStore && <a href={a.appStore} rel="noopener">App Store</a>}</p>
-<a class="btn" href={`/#${a.id}`}>See it in Orchard</a>
+<a class="btn" href={`/app#${a.id}`}>See it in Orchard</a>
 </Base>

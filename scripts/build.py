@@ -21,7 +21,7 @@ head = f'''<!doctype html>
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://orchard-mu-snowy.vercel.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://orchard-mu-snowy.vercel.app/">
+<link rel="canonical" href="https://orchard-mu-snowy.vercel.app/app">
 <link rel="alternate" type="application/rss+xml" title="Orchard" href="/feed.xml">
 <meta name="theme-color" content="#F2F0EB" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)">
@@ -44,7 +44,7 @@ if _m:
         _enc = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
         body = body[:_m.start(2)] + _enc(_st) + body[_m.end(2):]
         tail = '\n<script type="application/json" id="apps-data">' + _enc(_apps) + '</script>'
-(ROOT / 'index.html').write_text(head + body + tail + '\n</body>\n</html>\n')
+(ROOT / 'app.html').write_text(head + body + tail + '\n</body>\n</html>\n')
 
 def ctype(p):
     b = open(p, 'rb').read(12)
@@ -62,8 +62,9 @@ if missing: print('WARNING: images referenced but missing from _blob/:', missing
 short = [{'key': 'Cache-Control', 'value': 'public, max-age=0, must-revalidate'}]
 cfg = {'cleanUrls': True, 'headers': heads + [
  {'source': '/', 'headers': short},
+ {'source': '/app', 'headers': short},
  {'source': '/(duo-apps|news)(/.*)?', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'}]},
  {'source': '/(sitemap.xml|feed.xml|robots.txt)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=300, s-maxage=3600'}]},
  {'source': '/og.png', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=86400'}]}]}
 (ROOT / 'vercel.json').write_text(json.dumps(cfg, indent=1))
-print('built index.html,', len(heads), 'images')
+print('built app.html,', len(heads), 'images')
