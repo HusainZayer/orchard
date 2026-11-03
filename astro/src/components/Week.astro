@@ -6,15 +6,14 @@ const { ws, path } = Astro.props;
 const W = weekData(ws);
 const rank = (a, b) => ((b.major ? 1 : 0) - (a.major ? 1 : 0)) || b.date.localeCompare(a.date);
 const news = W.news.filter(x => x.kind === 'news' || x.kind === 'update').sort(rank), rum = W.news.filter(x => x.kind === 'rumor').sort(rank), other = W.news.filter(x => x.kind === 'review' || x.kind === 'issue').sort(rank);
-const story = x => <li><span class="k">{fmt(x.date)}</span><br><a href={`/news/${x.id}`}>{x.title}</a></li>;
 ---
 <Base title={`This week in Apple: ${weekLabel(ws)}`} desc={`${W.news.length} stories, ${W.launches.length + W.events.length} launches and events and ${W.rels.length} software releases, ${weekLabel(ws)}.`} path={path}>
 <p class="k">{ws === curWeek ? 'This week · so far' : 'Week in review'}</p><h1>This week in Apple</h1><p>{weekLabel(ws)}: {W.news.length} stories, {W.launches.length + W.events.length} launches and events, {W.rels.length} software releases.</p>
 {(W.launches.length > 0 || W.events.length > 0) && <><h2>Launches and events</h2><ul>{W.events.map(e => <li>{e.name} <span class="k">{fmt(e.date)}</span></li>)}{W.launches.map(g => <li><a href={`/devices/${g.line}#${g.id}`}>{g.title}</a> <span class="k">{LN[g.line]} · {fmt(g.date)}</span></li>)}</ul></>}
-{news.length > 0 && <><h2>Top news</h2><ul>{news.slice(0, 8).map(story)}</ul></>}
+{news.length > 0 && <><h2>Top news</h2><ul>{news.slice(0, 8).map(x => <li><span class="k">{fmt(x.date)}</span><br><a href={`/news/${x.id}`}>{x.title}</a></li>)}</ul></>}
 {W.rels.length > 0 && <><h2>Software</h2><ul>{W.rels.map(r => <li>{r.platform} {String(r.version).replace('Golden Gate ', '')}{r.channel === 'rc' ? ' RC' : ''} <span class="k">{fmt(r.date)}</span></li>)}</ul></>}
-{rum.length > 0 && <><h2>New rumors</h2><ul>{rum.slice(0, 6).map(story)}</ul></>}
-{other.length > 0 && <><h2>Reviews and issues</h2><ul>{other.slice(0, 6).map(story)}</ul></>}
+{rum.length > 0 && <><h2>New rumors</h2><ul>{rum.slice(0, 6).map(x => <li><span class="k">{fmt(x.date)}</span><br><a href={`/news/${x.id}`}>{x.title}</a></li>)}</ul></>}
+{other.length > 0 && <><h2>Reviews and issues</h2><ul>{other.slice(0, 6).map(x => <li><span class="k">{fmt(x.date)}</span><br><a href={`/news/${x.id}`}>{x.title}</a></li>)}</ul></>}
 {W.duo.length > 0 && <><h2>iPhone Duo apps</h2><p>{W.duo.length} {W.duo.length === 1 ? 'app' : 'apps'} had an iPhone Duo mention confirmed in release notes this week.</p><ul>{W.duo.slice(0, 8).map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a></li>)}</ul></>}
 {W.news.length + W.rels.length + W.launches.length + W.events.length + W.duo.length === 0 && <p>Nothing recorded for this week yet.</p>}
 <h2>Recent weeks</h2><ul>{weekList.map(w => <li><a href={w === curWeek ? '/week' : `/week/${w}`} aria-current={w === ws ? 'page' : undefined}>{weekLabel(w)}</a></li>)}</ul>
