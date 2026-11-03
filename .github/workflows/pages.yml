@@ -31,4 +31,4 @@ jobs:
           git push origin HEAD:main
       - uses: actions/upload-artifact@v4
         if: github.ref != 'refs/heads/main'
-        with: { name: pages, path: "app.html\nvercel.json\nindex.html\nduo-apps\nnews\npicks\npicks.html\ndevices\ndevices.html\ncalendar\ncalendar.html\nweek\nweek.html\nduo-apps.html\nnews.html\nsitemap.xml\nfeed.xml\nrobots.txt" }
+        with: { name: pages, path: "app.html\nvercel.json\nindex.html\nduo-apps\nnews\npicks\npicks.html\ndevices\ndevices.html\ncalendar\ncalendar.html\nweek\nweek.html\nog\nduo-apps.html\nnews.html\nsitemap.xml\nfeed.xml\nrobots.txt" }
