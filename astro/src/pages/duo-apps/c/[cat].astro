@@ -1,0 +1,13 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { apps, STATUS } from '../../../lib/site.js';
+import { CATS, slug } from '../../../lib/picks.js';
+const cs = [...new Set(apps.map(a => a.category).filter(Boolean))].sort();
+export function getStaticPaths() { return [...new Set(apps.map(a => a.category).filter(Boolean))].map(c => ({ params: { cat: slug(c) }, props: { c } })); }
+const { c } = Astro.props;
+const list = apps.filter(a => a.category === c);
+---
+<Base title={`${c} apps for iPhone Duo`} desc={`${list.length} ${c} apps with their iPhone Duo status, each with its source.`} path={`/duo-apps/c/${slug(c)}`}>
+<p class="k"><a href="/duo-apps">Duo apps</a></p><h1>{c}</h1><p>{list.length} apps.</p>
+<ul>{list.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a> <span class="k">{STATUS[a.status]}</span></li>)}</ul>
+</Base>

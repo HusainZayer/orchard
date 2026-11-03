@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { all, top10, cats, why } from '../../lib/picks.js';
+---
+<Base title="Our picks: top 100 iPhone Duo apps" desc={`The ${all.length} Duo apps we'd install first, ranked by how well they use the fold, with the reason for each.`} path="/picks">
+<h1>Our picks</h1>
+<p>The Duo apps we’d install first, ranked by how well they use the two screens and the hinge. The ranking comes from our own record of each app (fold positions used, fold-only features, release notes), not from a hands-on review.</p>
+<p class="k">Pick a category</p>
+<p>{cats.map(c => <a class="chip" href={`/picks/${c.slug}`}>{c.name} {c.n}</a>)}</p>
+<h2>Top 10</h2>
+<ol class="pk">{top10.map(a => <li><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></li>)}</ol>
+<h2>All {all.length}</h2>
+<ol start="11" class="pk">{all.slice(10).map(a => <li><a href={`/duo-apps/${a.id}`}><b>{a.name}</b></a> <span class="k">{a.category}</span><p>{a.body}</p><ul>{why(a).map(w => <li>{w}</li>)}</ul></li>)}</ol>
+</Base>

@@ -1,9 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { apps, STATUS } from '../../lib/site.js';
+import { slug } from '../../lib/picks.js';
+const cs = [...new Set(apps.map(a => a.category).filter(Boolean))].sort();
 const groups = Object.entries(STATUS).map(([k, label]) => [label, apps.filter(a => a.status === k)]).filter(([, v]) => v.length);
 ---
 <Base title="iPhone Duo apps" desc={`${apps.length} apps with their iPhone Duo status, each with its source.`} path="/duo-apps">
 <h1>iPhone Duo apps</h1><p>{apps.length} apps, each with a status and a source. Apple-listed apps come first; developer-reported ones are labelled as such.</p>
+<p class="k">By category</p><p>{cs.map(c => <a class="chip" href={`/duo-apps/c/${slug(c)}`}>{c} {apps.filter(a => a.category === c).length}</a>)}</p>
+<p><a href="/picks"><b>Our picks: the top 100</b></a></p>
 {groups.map(([label, v]) => <><h2>{label} ({v.length})</h2><ul>{v.map(a => <li><a href={`/duo-apps/${a.id}`}>{a.name}</a> <span class="k">{a.category}</span></li>)}</ul></>)}
 </Base>

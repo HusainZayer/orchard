@@ -24,11 +24,11 @@ jobs:
         run: |
           git config user.name "orchard-bot"
           git config user.email "orchard-bot@users.noreply.github.com"
-          git add app.html vercel.json index.html duo-apps news duo-apps.html news.html sitemap.xml feed.xml robots.txt
+          git add app.html vercel.json index.html duo-apps news picks duo-apps.html news.html picks.html sitemap.xml feed.xml robots.txt
           git diff --cached --quiet && exit 0
           git commit -m "Rebuild static pages"
           git pull --rebase origin main
           git push origin HEAD:main
       - uses: actions/upload-artifact@v4
         if: github.ref != 'refs/heads/main'
-        with: { name: pages, path: "app.html\nvercel.json\nindex.html\nduo-apps\nnews\nduo-apps.html\nnews.html\nsitemap.xml\nfeed.xml\nrobots.txt" }
+        with: { name: pages, path: "app.html\nvercel.json\nindex.html\nduo-apps\nnews\npicks\npicks.html\nduo-apps.html\nnews.html\nsitemap.xml\nfeed.xml\nrobots.txt" }
