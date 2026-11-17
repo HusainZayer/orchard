@@ -19,17 +19,17 @@ const pill = { came: ['opt', '✓', 'Came true'], open: ['soon', '…', 'Open'],
 {c.open > 0 && <div class="p" style={`flex:${c.open} 1 0`}><span aria-hidden="true">…</span> {c.open} open</div>}
 {c.wrong > 0 && <div class="n" style={`flex:${c.wrong} 1 0`}><span aria-hidden="true">×</span> {c.wrong}</div>}
 </div>
-<div class="ol-legend"><span style="color:var(--optimized)"><b>✓ {c.came}</b> came true</span><span><b>… {c.open}</b> still open</span><span style="color:var(--issue)"><b>× {c.wrong}</b> proved wrong</span></div>
+<div class="ol-legend"><span style="color:var(--optimized)"><b>✓ {c.came}</b> came true</span><span><b>… {c.open}</b> still open</span>{c.wrong > 0 ? <span style="color:var(--issue)"><b>× {c.wrong}</b> proved wrong</span> : <span>None has been proved wrong.</span>}</div>
 <div class="ol-cols">
 <div>
-<h2 class="ol-sh">All rumors</h2>
-<ul class="ol-list">{rum.map(n => { const p = pill[st(n)]; return <li><span class="ol-k">{fmt(n.date)}</span><div><div class="t"><a href={`/news/${n.id}`}>{n.title}</a></div><div class="ol-src">{srcLine(n)}</div><div style="margin-block-start:8px"><span class={`ol-pill ${p[0]}`}><span aria-hidden="true">{p[1]}</span>{p[2]}</span>{n.statusNote && <> <span class="ol-sub">{n.statusNote}</span></>}</div></div></li>; })}</ul>
+<h2 class="ol-sh first">All rumors</h2>
+<ul class="ol-list">{rum.map(n => { const p = pill[st(n)]; return <li><span class="ol-date">{fmt(n.date)}</span><div><div class="t"><a class="ol-go" href={`/news/${n.id}`}>{n.title}</a></div><div class="ol-src">{srcLine(n)}</div><div style="margin-block-start:8px"><span class={`ol-badge ${p[0]}`}><span aria-hidden="true">{p[1]}</span>{p[2]}</span>{n.statusNote && <> <span class="ol-sub">{n.statusNote}</span></>}</div></div></li>; })}</ul>
 </div>
 <aside>
 <h2 class="ol-sh first">Scorecard by source</h2>
 <div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl">
-<thead><tr><th scope="col">Source</th><th scope="col">True</th><th scope="col">Open</th><th scope="col">Wrong</th></tr></thead>
-<tbody>{rows.map(([k, v]) => <tr><td class="p w">{k}</td><td class="n">{v.came}</td><td class="n">{v.open}</td><td class="n">{v.wrong}</td></tr>)}</tbody></table></div>
+<thead><tr><th scope="col">Source</th><th scope="col">True</th><th scope="col">Open</th>{c.wrong > 0 && <th scope="col">Wrong</th>}</tr></thead>
+<tbody>{rows.map(([k, v]) => <tr><td class="p w">{k}</td><td class="n">{v.came}</td><td class="n">{v.open}</td>{c.wrong > 0 && <td class="n">{v.wrong}</td>}</tr>)}</tbody></table></div>
 <p class="ol-sub" style="margin-block-start:8px">A rumor is counted under the first source named. Open rumors are not counted as misses.</p>
 </aside>
 </div>

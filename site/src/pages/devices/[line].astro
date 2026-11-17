@@ -20,6 +20,6 @@ const first = gs[0];
 <tbody>{cur.map(r => <tr><td class="p">{r.name}</td><td class="n">{r.price}</td><td class="n">{dash(r.m && r.m.chip) || '—'}</td><td>{dash(r.m && r.m.display) || '—'}</td><td class="n">{dash(r.m && r.m.ios0) || '—'}</td></tr>)}</tbody></table></div></>}
 <p><a class="ol-btn" href={`/devices/compare?line=${k}`}>Compare {LN[k]} models</a>{k === 'iphone' && <a class="ol-btn ghost" href="/guides/iphone">Choosing an iPhone</a>}</p>
 <h2 class="ol-sh">Generations</h2>
-<ul class="ol-gens">{gs.map((g, i) => <li id={g.id}><div><span class="ol-k">{fmt(g.date)}</span></div><div><h3><a href={`/launches/${g.id}`}>{g.title}</a>{i === 0 && <span class="ol-cur">Newest</span>}</h3><p>{g.intro}</p>
+<ul class="ol-gens">{gs.map((g, i) => <li id={g.id}><div><span class="ol-date">{fmt(g.date)}</span></div><div><h3><a class="ol-go" href={`/launches/${g.id}`}>{g.title}</a>{i === 0 && <span class="ol-cur">Newest</span>}</h3><p>{g.intro}</p>
 {(g.models || []).length > 0 && <p class="ol-src">{g.models.map(m => [m.name, m.price, dash(m.chip), dash(m.display)].filter(Boolean).join(' · ')).join(' / ')}</p>}</div></li>)}</ul>
 </Base>

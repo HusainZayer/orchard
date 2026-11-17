@@ -1,0 +1,8 @@
+---
+const { page, pages, href } = Astro.props;
+---
+{pages > 1 && <nav class="ol-pager" aria-label="Pages">
+{page > 1 ? <a class="ol-btn ghost" rel="prev" href={href(page - 1)}>Newer</a> : <span class="ol-btn ghost off" aria-hidden="true">Newer</span>}
+<span class="ol-pg" aria-current="page">Page {page} of {pages}</span>
+{page < pages ? <a class="ol-btn ghost" rel="next" href={href(page + 1)}>Older</a> : <span class="ol-btn ghost off" aria-hidden="true">Older</span>}
+</nav>}

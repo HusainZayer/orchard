@@ -1,0 +1,7 @@
+---
+import NewsIndex from '../../../components/NewsIndex.astro';
+import { TYPES, pagesFor } from '../../../lib/newsindex.js';
+export function getStaticPaths() { return Array.from({ length: pagesFor(TYPES[0]) - 1 }, (_, i) => ({ params: { n: String(i + 2) } })); }
+const { n } = Astro.params;
+---
+<NewsIndex t={TYPES[0]} page={+n} />

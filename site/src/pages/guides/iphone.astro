@@ -27,5 +27,5 @@ const facts = [
 <tbody>{rows.map(r => <tr><td class="p">{r.name}</td><td class="n">{r.p}</td><td class="n">{dash(r.m && r.m.chip) || '—'}</td><td>{dash(r.m && r.m.display) || '—'}</td><td class="n">{dash(r.m && r.m.ios0) || '—'}</td></tr>)}</tbody></table></div>
 <p><a class="ol-btn" href="/devices/compare?line=iphone">Compare models</a><a class="ol-btn ghost" href="/devices/iphone">Every iPhone generation</a></p>
 <h2 class="ol-sh" id="how">Where the numbers come from</h2>
-<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a href={u} rel="noopener">{t}</a></div></li>)}</ul>
+<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a class="ol-go" href={u} rel="noopener">{t}</a></div></li>)}</ul>
 </Base>

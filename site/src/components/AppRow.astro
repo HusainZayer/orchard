@@ -1,14 +1,13 @@
 ---
 import Pill from './Pill.astro';
 import { icon, letter } from '../lib/ui.js';
-import { POST } from '../lib/site.js';
 const { a, rank } = Astro.props;
 const ic = icon(a, 128);
-const pos = (a.postures || []).map(p => POST[p]).filter(Boolean).join(' · ');
+const price = a.price || (a.store && a.store.p);
 ---
 <li class="ol-app">
 {rank && <span class="ol-rank" aria-label={`Rank ${rank}`}>{rank}</span>}
-{ic ? <span class="ol-tile img"><img src={ic} width="40" height="40" alt="" loading="lazy" decoding="async" /></span> : <span class="ol-tile" aria-hidden="true">{letter(a)}</span>}
-<div><a href={`/duo-apps/${a.id}`}>{a.name}</a><div class="c">{a.category}{(a.price || (a.store && a.store.p)) ? ` · ${a.price || a.store.p}` : ''}</div></div>
-<div class="e">{pos && <span class="ol-sub">{pos}</span>}<Pill status={a.status} /></div>
+<span class="ol-tile" aria-hidden="true">{letter(a)}{ic && <img src={ic} width="40" height="40" alt="" loading="lazy" decoding="async" />}</span>
+<div class="g"><a class="ol-go" href={`/duo-apps/${a.id}`}>{a.name}</a><div class="c">{a.category}{price ? ` · ${price}` : ''}</div></div>
+<div class="e"><Pill status={a.status} /></div>
 </li>

@@ -13,5 +13,5 @@ import { fmt } from '../../lib/ui.js';
 {D.lineup.map(([fam, rows], i) => <div><h2 class="ol-sh">{fam}</h2><div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">US price</th></tr></thead><tbody>{rows.map(([n, p]) => <tr><td class="p">{n}</td><td class="n">{p}</td></tr>)}</tbody></table></div></div>)}
 </div>
 <h2 class="ol-sh">Sources</h2>
-<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a href={u} rel="noopener">{t}</a></div></li>)}</ul>
+<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a class="ol-go" href={u} rel="noopener">{t}</a></div></li>)}</ul>
 </Base>

@@ -2,17 +2,16 @@
 import '@fontsource/newsreader/latin-400.css';
 import '@fontsource/newsreader/latin-600.css';
 import '@fontsource/ibm-plex-sans/latin-400.css';
-import '@fontsource/ibm-plex-sans/latin-500.css';
 import '@fontsource/ibm-plex-sans/latin-600.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
-import '@fontsource/ibm-plex-mono/latin-500.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-400.css';
 import '@fontsource/ibm-plex-sans-arabic/arabic-600.css';
 import '../styles/ledger.css';
 import { SITE } from '../lib/site.js';
 const { title, desc = '', path, type = 'website', ld, image, lang = 'en', dir = 'ltr', noindex = false, nav: navKey, home = false } = Astro.props;
 const url = SITE + (path === '/' ? '' : path);
-const nav = [['news', '/news', 'News'], ['rumors', '/rumors', 'Rumors'], ['devices', '/devices', 'Devices'], ['duo-apps', '/duo-apps', 'Duo apps'], ['calendar', '/calendar', 'Calendar']];
+const nav = [['news', '/news', 'News', false], ['rumors', '/rumors', 'Rumors', false], ['devices', '/devices', 'Devices', false], ['duo-apps', '/duo-apps', 'Duo apps', false], ['picks', '/picks', 'Picks', true], ['calendar', '/calendar', 'Calendar', true]];
+const menu = [['picks', '/picks', 'Picks'], ['calendar', '/calendar', 'Calendar'], ['week', '/week', 'This week'], ['about', '/about', 'About']];
 const cur = navKey || (path === '/' ? '' : path.split('/')[1]);
 const full = home ? title : `${title} · Orchard`;
 ---
@@ -23,19 +22,25 @@ const full = home ? title : `${title} · Orchard`;
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F7F4EE" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Orchard" href="/feed.xml">
-<script is:inline>try{var t=localStorage.getItem('orchard-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script is:inline>document.documentElement.classList.add('js');try{var t=localStorage.getItem('orchard-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 {ld && <script type="application/ld+json" set:html={JSON.stringify(ld).replace(/</g, '\\u003c')} />}
 </head><body>
 <div class="ol" dir={dir} lang={lang}>
 <a class="ol-skip" href="#main">Skip to content</a>
 <header class="ol-h"><div class="ol-w">
 <a class="ol-logo" href="/" aria-label="Orchard, home"><svg viewBox="0 0 30 28" aria-hidden="true"><circle class="ol-dot" cx="5" cy="5" r="3"/><circle class="ol-dot" cx="13" cy="5" r="3"/><circle class="ol-leaf" cx="21" cy="5" r="3.5"/><circle class="ol-dot" cx="9" cy="14" r="3"/><circle class="ol-dot" cx="17" cy="14" r="3"/><circle class="ol-dot" cx="25" cy="14" r="3"/><circle class="ol-dot" cx="5" cy="23" r="3"/><circle class="ol-dot" cx="13" cy="23" r="3"/><circle class="ol-dot" cx="21" cy="23" r="3"/></svg><b>Orchard</b></a>
-<nav class="ol-nav" aria-label="Main">{nav.map(([k, h, l]) => <a href={h} aria-current={k === cur ? 'page' : undefined}>{l}</a>)}</nav>
-<a class="ol-search" href="/search" role="search" aria-label="Search Orchard"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="2"/></svg><span class="ol-st">Search Orchard</span></a>
-<button type="button" class="ol-theme" id="theme" aria-label="Colour theme">Theme: System</button>
+<nav class="ol-nav" aria-label="Main">{nav.map(([k, h, l, x]) => <a class={x ? 'x' : undefined} href={h} aria-current={k === cur ? 'page' : undefined}>{l}</a>)}<button type="button" class="ol-morebtn" id="morebtn" aria-expanded="false" aria-controls="menu">More<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button></nav>
+<a class="ol-search" href="/search" aria-label="Search Orchard"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="2"/></svg><span class="ol-st">Search Orchard</span></a>
+<a class="ol-iconbtn" href="#theme" aria-label="Colour theme settings"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></a>
+<nav class="ol-menu" id="menu" aria-label="More pages">{menu.map(([k, h, l]) => <a href={h} aria-current={k === cur ? 'page' : undefined}>{l}</a>)}</nav>
 </div></header>
 <main id="main" class="ol-main" tabindex="-1"><div class="ol-w"><slot /></div></main>
-<footer class="ol-foot"><div class="ol-w">An independent site about Apple, not affiliated with Apple. · <a href="/feed.xml">RSS</a> · <a href="/about">About</a> · <a href="/about#how">How we work</a></div></footer>
+<footer class="ol-foot"><div class="ol-w">
+<p>An independent site about Apple, not affiliated with Apple.</p>
+<nav class="ol-fl" aria-label="Footer"><a href="/feed.xml">RSS</a><a href="/about">About</a><a href="/about#how">How we work</a><a href="/week">This week</a><a href="/search">Search</a></nav>
+<div class="ol-th" id="theme" tabindex="-1"><span id="theme-l">Theme</span><div class="ol-seg" role="group" aria-labelledby="theme-l"><button type="button" data-t="system" aria-pressed="true">System</button><button type="button" data-t="light" aria-pressed="false">Light</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div></div>
+</div></footer>
 </div>
-<script is:inline>(function(){var b=document.getElementById('theme');if(!b)return;var o=['system','light','dark'],L={system:'System',light:'Light',dark:'Dark'};function get(){try{var t=localStorage.getItem('orchard-theme');return t==='light'||t==='dark'?t:'system'}catch(e){return 'system'}}function show(t){b.textContent='Theme: '+L[t]}function apply(t){var r=document.documentElement;if(t==='system')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);try{if(t==='system')localStorage.removeItem('orchard-theme');else localStorage.setItem('orchard-theme',t)}catch(e){}show(t)}show(get());b.addEventListener('click',function(){apply(o[(o.indexOf(get())+1)%3])})})()</script>
+<script is:inline>(function(){var bs=document.querySelectorAll('.ol-seg button');function get(){try{var t=localStorage.getItem('orchard-theme');return t==='light'||t==='dark'?t:'system'}catch(e){return 'system'}}function show(t){bs.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-t')===t?'true':'false')})}function apply(t){var r=document.documentElement;if(t==='system')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);try{if(t==='system')localStorage.removeItem('orchard-theme');else localStorage.setItem('orchard-theme',t)}catch(e){}show(t)}show(get());bs.forEach(function(b){b.addEventListener('click',function(){apply(b.getAttribute('data-t'))})});
+var mb=document.getElementById('morebtn'),mn=document.getElementById('menu');if(mb&&mn)mb.addEventListener('click',function(){var o=mn.classList.toggle('open');mb.setAttribute('aria-expanded',o?'true':'false')})})()</script>
 </body></html>

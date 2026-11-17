@@ -3,4 +3,4 @@ import { PILL } from '../lib/ui.js';
 const { status } = Astro.props;
 const p = PILL[status] || PILL.reported;
 ---
-<span class={`ol-pill ${p[0]}`}><span aria-hidden="true">{p[1]}</span>{p[2]}</span>
+<span class={`ol-badge ${p[0]}`}><span aria-hidden="true">{p[1]}</span>{p[2]}</span>

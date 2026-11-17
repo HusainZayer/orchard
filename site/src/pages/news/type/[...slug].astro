@@ -1,0 +1,9 @@
+---
+import NewsIndex from '../../../components/NewsIndex.astro';
+import { TYPES, pagesFor } from '../../../lib/newsindex.js';
+export function getStaticPaths() {
+  return TYPES.filter(t => t.slug).flatMap(t => Array.from({ length: pagesFor(t) }, (_, i) => ({ params: { slug: i ? `${t.slug}/${i + 1}` : t.slug }, props: { t, page: i + 1 } })));
+}
+const { t, page } = Astro.props;
+---
+<NewsIndex t={t} page={page} />

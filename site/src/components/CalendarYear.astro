@@ -12,6 +12,6 @@ const n = k => list.filter(i => i.k === k).length;
 <p class="ol-lead">{n('Event')} events, {n('Software')} software release days and {n('Launch')} product launches. Software releases are tracked from 2026 on.</p>
 <div class="ol-chips" role="group" aria-label="Year">{[...years].reverse().map(yy => <a class="ol-chip" href={`/calendar/${yy}`} aria-current={yy === y ? 'page' : undefined}>{yy}</a>)}</div>
 <p style="margin-block-start:16px"><a class="ol-btn ghost" href="/week">This week in Apple</a></p>
-{Object.keys(byM).map(Number).sort((a, b) => a - b).map(m => <><h2 class="ol-sh">{MONTHS[m]}</h2><ul class="ol-list">{byM[m].map(it => <li><span class="ol-k">{fmt(it.d)}</span><div><div class="t">{it.href ? <a href={it.href}>{it.t}</a> : it.t}{it.d > TODAY && <span class="ol-tag">Upcoming</span>}</div><div class="ol-src">{it.sub}</div></div></li>)}</ul></>)}
+{Object.keys(byM).map(Number).sort((a, b) => a - b).map(m => <><h2 class="ol-sh">{MONTHS[m]}</h2><ul class="ol-list">{byM[m].map(it => <li><span class="ol-date">{fmt(it.d)}</span><div><div class="t">{it.href ? <a class="ol-go" href={it.href}>{it.t}</a> : it.t}{it.d > TODAY && <span class="ol-tag">Upcoming</span>}</div><div class="ol-src">{it.sub}</div></div></li>)}</ul></>)}
 {list.length === 0 && <p>Nothing recorded for {y}.</p>}
 </Base>

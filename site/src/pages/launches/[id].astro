@@ -20,6 +20,6 @@ const stories = items.filter(n => n.date === g.date && (n.dev || []).includes(g.
 <div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">Price</th><th scope="col">Chip</th><th scope="col">Display</th><th scope="col">Camera</th><th scope="col">Software</th></tr></thead>
 <tbody>{g.models.map(m => <tr><td class="p">{m.name}</td><td class="n">{m.price || '—'}{m.priceNote ? ` (${m.priceNote})` : ''}</td><td class="n">{dash(m.chip) || '—'}</td><td>{dash(m.display) || '—'}</td><td class="n">{dash(m.cam) || '—'}</td><td class="n">{dash(m.ios0) || '—'}</td></tr>)}</tbody></table></div></>}
 {g.road && <><h2 class="ol-sh">What came next</h2><p class="ol-body">{g.road}</p></>}
-{stories.length > 0 && <><h2 class="ol-sh">Stories from launch day</h2><ul class="ol-list">{stories.map(n => <li><span class="ol-k">{fmt(n.date)}</span><div class="t"><a href={`/news/${n.id}`}>{n.title}</a></div></li>)}</ul></>}
+{stories.length > 0 && <><h2 class="ol-sh">Stories from launch day</h2><ul class="ol-list">{stories.map(n => <li><span class="ol-date">{fmt(n.date)}</span><div class="t"><a class="ol-go" href={`/news/${n.id}`}>{n.title}</a></div></li>)}</ul></>}
 <div class="ol-pager">{newer && <a class="ol-btn ghost" href={`/launches/${newer.id}`}>Newer: {newer.title}</a>}{older && <a class="ol-btn ghost" href={`/launches/${older.id}`}>Older: {older.title}</a>}</div>
 </Base>

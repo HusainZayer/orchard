@@ -18,16 +18,16 @@ const hist = (a.history || []).slice().sort((x, y) => (y.date || '').localeCompa
 <Base title={`${a.name} on iPhone Duo`} desc={trim(`${lab}. ${a.body}`)} path={`/duo-apps/${a.id}`} ld={ld} image={picked.includes(a) ? `/og/app/${a.id}.png` : undefined} nav="duo-apps">
 <p class="ol-crumb"><a href="/duo-apps">Duo apps</a> / <a href={`/duo-apps/c/${a.category ? a.category.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : ''}`}>{a.category}</a> / {a.name}</p>
 <div class="ol-apphead">
-{ic ? <span class="ol-tile lg img"><img src={ic} width="80" height="80" alt="" decoding="async" /></span> : <span class="ol-tile lg" aria-hidden="true">{letter(a)}</span>}
+<span class="ol-tile lg" aria-hidden="true">{letter(a)}{ic && <img src={ic} width="80" height="80" alt="" decoding="async" />}</span>
 <div><h1 class="ol-title" style="margin:0">{a.name}</h1><p class="ol-k" style="margin-block:4px 12px">{[a.developer, a.category].filter(Boolean).join(' · ')}</p><Pill status={a.status} /></div>
 </div>
 <div class="ol-cols" style="margin-block-start:40px">
 <div>
 <h2 class="ol-sh first">What it does on iPhone Duo</h2>
 <p class="ol-lead" style="margin-block-start:8px">{a.body}</p>
-{pos.length > 0 && <><h2 class="ol-sh">Fold positions</h2><div class="ol-chips">{pos.map(p => <span class="ol-chip">{p}</span>)}</div></>}
+{pos.length > 0 && <><h2 class="ol-sh">Fold positions</h2><div class="ol-chips">{pos.map(p => <span class="ol-badge n">{p}</span>)}</div></>}
 {c && <p class="ol-note">Release notes mention iPhone Duo: version {c.v}, {fmt(c.d)}.</p>}
-{hist.length > 0 && <><h2 class="ol-sh">History</h2><ul class="ol-hist">{hist.map(h => <li><span class="ol-k">{fmt(h.date)}</span><br>{h.text}{h.link && <div class="ol-src"><a href={h.link} rel="noopener">Source</a></div>}</li>)}</ul></>}
+{hist.length > 0 && <><h2 class="ol-sh">History</h2><ul class="ol-hist">{hist.map(h => <li><span class="ol-date">{fmt(h.date)}</span><br>{h.text}{h.link && <div class="ol-src"><a href={h.link} rel="noopener">Source</a></div>}</li>)}</ul></>}
 </div>
 <aside>
 {facts.length > 0 && <><h2 class="ol-sh first">App Store</h2><dl class="ol-facts">{facts.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}</dl></>}

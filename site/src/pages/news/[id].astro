@@ -21,17 +21,17 @@ const ld = { '@context': 'https://schema.org', '@type': 'NewsArticle', headline:
 <p class="ol-crumb"><a href="/news">News</a> / {kind}</p>
 <p class="ol-k">{fmt(n.date)} · {kind}</p>
 <h1 class="ol-title">{n.title}</h1>
-{outcome && <p><span class={`ol-pill ${outcome[0]}`}><span aria-hidden="true">{outcome[1]}</span>{outcome[2]}</span></p>}
+{outcome && <p><span class={`ol-badge ${outcome[0]}`}><span aria-hidden="true">{outcome[1]}</span>{outcome[2]}</span></p>}
 {n.statusNote && <p class="ol-note">{n.statusNote}</p>}
 <div class="ol-body ol-lead" style="margin-block-start:16px">{n.body.split(/\n\n+/).map(p => <p>{p}</p>)}</div>
 {srcs.length > 0 && <><h2 class="ol-sh">Sources</h2>
-<ul class="ol-list">{srcs.map(([t, u]) => <li><span class="ol-k">{isApple(u) ? 'Apple first' : 'Report'}</span><div><a href={u} rel="noopener">{t}</a><div class="ol-src">{host(u)}</div></div></li>)}</ul></>}
+<ul class="ol-list">{srcs.map(([t, u]) => <li><span class="ol-date">{isApple(u) ? 'Apple first' : 'Report'}</span><div><a class="ol-go" href={u} rel="noopener">{t}</a><div class="ol-src">{host(u)}</div></div></li>)}</ul></>}
 <p class="ol-sub" style="margin-block-start:16px">{n.kind === 'rumor' ? 'This is a rumor. Orchard reports what named sources say; Apple has not confirmed it unless the label above says so.' : 'Orchard reports what Apple and named sources say. Figures are quoted from the sources above.'}</p>
 <a class="ol-btn ghost" href="/news">Back to all news</a>
 </article>
 <aside>
-{devs.length > 0 && <><h2 class="ol-sh first">Devices</h2><ul class="ol-list">{devs.map(k => <li style="grid-template-columns:1fr"><div><a href={`/devices/${k}`}>{LN[k]}</a></div></li>)}</ul></>}
-{related.length > 0 && <><h2 class={`ol-sh${devs.length ? '' : ' first'}`}>Related</h2><ul class="ol-list">{related.map(x => <li style="grid-template-columns:1fr"><div><span class="ol-k">{fmt(x.date)}</span><div class="t"><a href={`/news/${x.id}`}>{x.title}</a></div></div></li>)}</ul></>}
+{devs.length > 0 && <><h2 class="ol-sh first">Devices</h2><ul class="ol-list">{devs.map(k => <li style="grid-template-columns:1fr"><div><a class="ol-go" href={`/devices/${k}`}>{LN[k]}</a></div></li>)}</ul></>}
+{related.length > 0 && <><h2 class={`ol-sh${devs.length ? '' : ' first'}`}>Related stories</h2><ul class="ol-list">{related.map(x => <li style="grid-template-columns:1fr"><div><span class="ol-date">{fmt(x.date)}</span><div class="t"><a class="ol-go" href={`/news/${x.id}`}>{x.title}</a></div></div></li>)}</ul></>}
 {(n.dev || []).includes('duo') && <><h2 class="ol-sh">iPhone Duo apps</h2><p><a href="/duo-apps">Browse the Duo apps</a> by status, category and fold position.</p></>}
 </aside>
 </div>

@@ -1,7 +1,7 @@
 import data from '../data/state.json';
 export const SITE = 'https://orchard-mu-snowy.vercel.app';
 export const STATUS = { optimized: 'Optimized for iPhone Duo', coming: 'Coming soon to iPhone Duo', announced: 'Announced for iPhone Duo', reported: 'Developer-reported iPhone Duo support' };
-export const POST = { folded: 'Folded', open: 'Open', laptop: 'Laptop', tent: 'Tent', stand: 'Stand', tabletop: 'Tabletop' };
+export const POST = { folded: 'Folded', open: 'Open', laptop: 'Laptop', tent: 'Tent', stand: 'Stand', tabletop: 'Tabletop', split: 'Split' };
 export const apps = [...data.apps].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 export const items = [...data.news, ...data.posts].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 export const updated = data.updated;

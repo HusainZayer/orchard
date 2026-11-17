@@ -1,5 +1,5 @@
 ---
-import { fmt, srcLine, KIND } from '../lib/ui.js';
+import { fmt, srcLine } from '../lib/ui.js';
 const { list, showKind = true } = Astro.props;
 ---
-<ul class="ol-list">{list.map(n => <li><span class="ol-k">{fmt(n.date)}</span><div><div class="t"><a href={`/news/${n.id}`}>{n.title}</a>{showKind && n.kind === 'rumor' && <span class="ol-tag">Rumor</span>}</div><div class="ol-src">{srcLine(n)}</div></div></li>)}</ul>
+<ul class="ol-list">{list.map(n => <li><span class="ol-date">{fmt(n.date)}</span><div><div class="t"><a class="ol-go" href={`/news/${n.id}`}>{n.title}</a>{showKind && n.kind === 'rumor' && <span class="ol-tag">Rumor</span>}</div><div class="ol-src">{srcLine(n)}</div></div></li>)}</ul>

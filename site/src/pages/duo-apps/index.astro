@@ -1,28 +1,70 @@
 ---
 import Base from '../../layouts/Base.astro';
 import AppRow from '../../components/AppRow.astro';
-import { apps, STATUS } from '../../lib/site.js';
+import { apps, POST } from '../../lib/site.js';
 import { slug } from '../../lib/picks.js';
-import { PILL } from '../../lib/ui.js';
 const cs = [...new Set(apps.map(a => a.category).filter(Boolean))].sort();
 const opt = apps.filter(a => a.status === 'optimized').length, soon = apps.filter(a => a.status === 'coming' || a.status === 'announced').length, rep = apps.filter(a => a.status === 'reported').length;
-const fresh = apps.filter(a => a.status === 'optimized' && a.featured).sort((a, b) => (b.edited || '').localeCompare(a.edited || '')).slice(0, 12);
-const groups = Object.entries(STATUS).map(([k, label]) => [k, label, apps.filter(a => a.status === k)]).filter(([, , v]) => v.length);
+const fresh = apps.filter(a => a.status === 'optimized' && a.featured).sort((a, b) => (b.edited || '').localeCompare(a.edited || '')).slice(0, 6);
+const order = { optimized: 0, coming: 1, announced: 1, reported: 2 };
+const first = [...apps].sort((a, b) => (order[a.status] - order[b.status]) || a.name.toLowerCase().localeCompare(b.name.toLowerCase())).slice(0, 48);
 const n = x => x.toLocaleString('en-US');
+const pos = Object.entries(POST).filter(([k]) => apps.some(a => (a.postures || []).includes(k)));
 ---
 <Base title="iPhone Duo apps" desc={`${n(apps.length)} apps with their iPhone Duo status, each with its source.`} path="/duo-apps" nav="duo-apps">
 <p class="ol-k">Duo apps · {n(apps.length)} apps</p>
 <h1 class="ol-title">Apps for iPhone Duo</h1>
 <p class="ol-lead">{n(opt)} are optimized for the fold, {n(soon)} are on the way and {n(rep)} are developer-reported. Apple-listed apps come first; developer-reported ones are labelled as such.</p>
-<div class="ol-stats" style="max-inline-size:480px">
-<div class="ol-stat opt"><b class="ol-count">{n(opt)}</b><span><span aria-hidden="true">✓</span> Optimized</span></div>
-<div class="ol-stat soon"><b class="ol-count">{n(soon)}</b><span><span aria-hidden="true">…</span> Coming</span></div>
-<div class="ol-stat rep"><b class="ol-count">{n(rep)}</b><span><span aria-hidden="true">?</span> Reported</span></div>
+<p><a class="ol-btn" href="/picks">Our picks: the top 100</a></p>
+
+<h2 class="ol-sh" id="find">Find an app</h2>
+<form class="ol-filters" id="ff" role="search" aria-label="Filter Duo apps" action="/search" onsubmit="return false">
+<div class="ol-controls">
+<div class="full"><label class="ol-lbl" for="fq">Name or developer</label><input id="fq" class="ol-input" type="search" autocomplete="off" placeholder="For example Notes or Adobe"></div>
+<div><label class="ol-lbl" for="fc">Category</label><select id="fc" class="ol-input"><option value="">All categories</option>{cs.map(c => <option value={c}>{c}</option>)}</select></div>
+<div><label class="ol-lbl" for="fo">Sort by</label><select id="fo" class="ol-input"><option value="s">Status, then name</option><option value="n">Name A to Z</option><option value="e">Recently updated</option></select></div>
 </div>
-<p style="margin-block-start:16px"><a class="ol-btn" href="/picks">Our picks: the top 100</a><a class="ol-btn ghost" href="/search">Search apps</a></p>
+<div class="ol-chips" role="group" aria-label="Status" id="fs">
+<button type="button" class="ol-chip" data-s="" aria-pressed="true">All {n(apps.length)}</button>
+<button type="button" class="ol-chip" data-s="optimized" aria-pressed="false">Optimized {n(opt)}</button>
+<button type="button" class="ol-chip" data-s="soon" aria-pressed="false">Coming {n(soon)}</button>
+<button type="button" class="ol-chip" data-s="reported" aria-pressed="false">Reported {n(rep)}</button>
+</div>
+<div class="ol-chips" role="group" aria-label="Works in these poses" id="fp" style="margin-block-start:8px">{pos.map(([k, l]) => <button type="button" class="ol-chip" data-p={k} aria-pressed="false">{l}</button>)}</div>
+</form>
+<p class="ol-sub" id="fst" role="status" aria-live="polite">Showing the first 48 of {n(apps.length)}.</p>
+<ul class="ol-grid" id="dir">{first.map(a => <AppRow a={a} />)}</ul>
+<div class="ol-more-row"><button type="button" class="ol-btn ghost" id="more" hidden>Show 48 more</button></div>
+
+<noscript><p class="ol-sub">Filters need JavaScript. Browse every app by category below instead.</p></noscript>
 <h2 class="ol-sh">By category</h2>
 <div class="ol-chips">{cs.map(c => <a class="ol-chip" href={`/duo-apps/c/${slug(c)}`}>{c} <span class="ol-count">&nbsp;{apps.filter(a => a.category === c).length}</span></a>)}</div>
 <h2 class="ol-sh">Recently updated, featured</h2>
 <ul class="ol-grid">{fresh.map(a => <AppRow a={a} />)}</ul>
-{groups.map(([k, label, v]) => <><h2 class="ol-sh">{label} ({n(v.length)})</h2><ul class="ol-grid">{v.map(a => <li class="ol-app"><div><a href={`/duo-apps/${a.id}`}>{a.name}</a><div class="c">{a.category}</div></div></li>)}</ul></>)}
+
+<script is:inline>
+(function(){
+var f=document.getElementById('ff');if(!f||!window.fetch)return;
+var q=document.getElementById('fq'),c=document.getElementById('fc'),o=document.getElementById('fo'),st=document.getElementById('fst'),dir=document.getElementById('dir'),more=document.getElementById('more');
+var data=null,PAGE=48,shown=PAGE,S='',P={},ORD={optimized:0,coming:1,announced:1,reported:2};
+var BADGE={optimized:['opt','✓','Optimized'],coming:['soon','…','Coming'],announced:['soon','…','Announced'],reported:['rep','?','Reported']};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})}
+function pressed(g,fn){Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',fn(b)?'true':'false')})}
+function url(){var p=new URLSearchParams();if(q.value.trim())p.set('q',q.value.trim());if(S)p.set('status',S);if(c.value)p.set('cat',c.value);var ps=Object.keys(P).filter(function(k){return P[k]});if(ps.length)p.set('pose',ps.join(','));if(o.value!=='s')p.set('sort',o.value);var s=p.toString();try{history.replaceState(null,'',location.pathname+(s?'?'+s:'')+'#find')}catch(e){}}
+function read(){var p=new URLSearchParams(location.search);q.value=p.get('q')||'';S=p.get('status')||'';c.value=p.get('cat')||'';o.value=p.get('sort')||'s';P={};(p.get('pose')||'').split(',').forEach(function(k){if(k)P[k]=1});if(c.selectedIndex<0)c.value='';if(o.selectedIndex<0)o.value='s'}
+function match(a){var v=q.value.trim().toLowerCase();if(v&&(a.n+' '+(a.d||'')).toLowerCase().indexOf(v)<0)return false;if(S==='soon'){if(a.s!=='coming'&&a.s!=='announced')return false}else if(S&&a.s!==S)return false;if(c.value&&a.c!==c.value)return false;for(var k in P){if(P[k]&&a.p.indexOf(k)<0)return false}return true}
+function row(a){var b=BADGE[a.s]||BADGE.reported,l=(a.n.match(/[A-Za-z0-9]/)||['•'])[0].toUpperCase();return '<li class="ol-app"><span class="ol-tile" aria-hidden="true">'+esc(l)+(a.m?'<img src="'+esc(a.m)+'" width="40" height="40" alt="" loading="lazy" decoding="async">':'')+'</span><div class="g"><a class="ol-go" href="/duo-apps/'+esc(a.i)+'">'+esc(a.n)+'</a><div class="c">'+esc(a.c)+(a.$?' · '+esc(a.$):'')+'</div></div><div class="e"><span class="ol-badge '+b[0]+'"><span aria-hidden="true">'+b[1]+'</span>'+b[2]+'</span></div></li>'}
+function sorted(list){var k=o.value;return list.slice().sort(function(a,b){if(k==='e')return (b.e||'').localeCompare(a.e||'')||a.n.localeCompare(b.n);if(k==='n')return a.n.toLowerCase().localeCompare(b.n.toLowerCase());return (ORD[a.s]-ORD[b.s])||a.n.toLowerCase().localeCompare(b.n.toLowerCase())})}
+function render(){if(!data)return;var r=sorted(data.filter(match)),n=r.length,vis=r.slice(0,shown);
+dir.innerHTML=vis.length?vis.map(row).join(''):'<li class="ol-empty">No apps match. Clear a filter or try another word.</li>';
+st.textContent=n?('Showing '+vis.length.toLocaleString('en-US')+' of '+n.toLocaleString('en-US')+(n===1?' app.':' apps.')):'No apps match.';
+more.hidden=vis.length>=n;more.textContent='Show '+Math.min(PAGE,n-vis.length)+' more'}
+function change(){shown=PAGE;url();render()}
+q.addEventListener('input',change);c.addEventListener('change',change);o.addEventListener('change',change);
+document.getElementById('fs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S=b.getAttribute('data-s');pressed(this,function(x){return x.getAttribute('data-s')===S});change()});
+document.getElementById('fp').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.getAttribute('data-p');P[k]=!P[k];pressed(this,function(x){return !!P[x.getAttribute('data-p')]});change()});
+more.addEventListener('click',function(){var before=dir.children.length;shown+=PAGE;render();var t=dir.children[before];if(t){var a=t.querySelector('a');if(a)a.focus({preventScroll:false})}});
+fetch('/apps-index.json').then(function(r){return r.json()}).then(function(j){data=j;read();pressed(document.getElementById('fs'),function(x){return x.getAttribute('data-s')===S});pressed(document.getElementById('fp'),function(x){return !!P[x.getAttribute('data-p')]});render()}).catch(function(){st.textContent='Filters could not load. Browse by category below instead.'});
+})();
+</script>
 </Base>

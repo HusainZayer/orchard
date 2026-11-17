@@ -15,14 +15,14 @@ const total = W.news.length + W.rels.length + W.launches.length + W.events.lengt
 <h1 class="ol-title">This week in Apple</h1>
 <p class="ol-lead">{weekLabel(ws)}: {W.news.length} stories, {W.launches.length + W.events.length} launches and events, {W.rels.length} software releases.</p>
 <div class="ol-cols"><div>
-{(W.launches.length > 0 || W.events.length > 0) && <><h2 class="ol-sh first">Launches and events</h2><ul class="ol-list">{W.events.map(e => <li><span class="ol-k">{fmt(e.date)}</span><div class="t"><a href={`/events/${e.id}`}>{e.name}</a></div></li>)}{W.launches.map(g => <li><span class="ol-k">{fmt(g.date)}</span><div><div class="t"><a href={`/launches/${g.id}`}>{g.title}</a></div><div class="ol-src">{LN[g.line]}</div></div></li>)}</ul></>}
+{(W.launches.length > 0 || W.events.length > 0) && <><h2 class="ol-sh first">Launches and events</h2><ul class="ol-list">{W.events.map(e => <li><span class="ol-date">{fmt(e.date)}</span><div class="t"><a class="ol-go" href={`/events/${e.id}`}>{e.name}</a></div></li>)}{W.launches.map(g => <li><span class="ol-date">{fmt(g.date)}</span><div><div class="t"><a class="ol-go" href={`/launches/${g.id}`}>{g.title}</a></div><div class="ol-src">{LN[g.line]}</div></div></li>)}</ul></>}
 {news.length > 0 && <><h2 class="ol-sh">Top news</h2><NewsList list={news.slice(0, 8)} /></>}
 {rum.length > 0 && <><h2 class="ol-sh">New rumors</h2><NewsList list={rum.slice(0, 6)} /></>}
 {other.length > 0 && <><h2 class="ol-sh">Reviews and issues</h2><NewsList list={other.slice(0, 6)} /></>}
 {total === 0 && <p>Nothing recorded for this week yet.</p>}
 </div><aside>
-{W.rels.length > 0 && <><h2 class="ol-sh first">Software</h2><ul class="ol-list">{W.rels.map(r => <li style="grid-template-columns:1fr"><div>{r.platform} {String(r.version).replace('Golden Gate ', '')}{r.channel === 'rc' ? ' RC' : ''} <span class="ol-k">{fmt(r.date)}</span></div></li>)}</ul></>}
-{W.duo.length > 0 && <><h2 class={`ol-sh${W.rels.length ? '' : ' first'}`}>iPhone Duo apps</h2><p>{W.duo.length} {W.duo.length === 1 ? 'app' : 'apps'} had an iPhone Duo mention confirmed in release notes this week.</p><ul class="ol-list">{W.duo.slice(0, 8).map(a => <li style="grid-template-columns:1fr"><div><a href={`/duo-apps/${a.id}`}>{a.name}</a></div></li>)}</ul></>}
-<h2 class={`ol-sh${W.rels.length || W.duo.length ? '' : ' first'}`}>Recent weeks</h2><ul class="ol-list">{weekList.map(w => <li style="grid-template-columns:1fr"><div><a href={w === curWeek ? '/week' : `/week/${w}`} aria-current={w === ws ? 'page' : undefined}>{weekLabel(w)}</a></div></li>)}</ul>
+{W.rels.length > 0 && <><h2 class="ol-sh first">Software</h2><ul class="ol-list">{W.rels.map(r => <li style="grid-template-columns:1fr"><div>{r.platform} {String(r.version).replace('Golden Gate ', '')}{r.channel === 'rc' ? ' RC' : ''} <span class="ol-date">{fmt(r.date)}</span></div></li>)}</ul></>}
+{W.duo.length > 0 && <><h2 class={`ol-sh${W.rels.length ? '' : ' first'}`}>iPhone Duo apps</h2><p>{W.duo.length} {W.duo.length === 1 ? 'app' : 'apps'} had an iPhone Duo mention confirmed in release notes this week.</p><ul class="ol-list">{W.duo.slice(0, 8).map(a => <li style="grid-template-columns:1fr"><div><a class="ol-go" href={`/duo-apps/${a.id}`}>{a.name}</a></div></li>)}</ul></>}
+<h2 class={`ol-sh${W.rels.length || W.duo.length ? '' : ' first'}`}>Recent weeks</h2><ul class="ol-list">{weekList.map(w => <li style="grid-template-columns:1fr"><div><a class="ol-go" href={w === curWeek ? '/week' : `/week/${w}`} aria-current={w === ws ? 'page' : undefined}>{weekLabel(w)}</a></div></li>)}</ul>
 </aside></div>
 </Base>

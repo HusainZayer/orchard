@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsList from './NewsList.astro';
+import Pager from './Pager.astro';
+import { PER, TYPES, listFor, pagesFor, hrefFor } from '../lib/newsindex.js';
+const { t, page } = Astro.props;
+const all = listFor(t), pages = pagesFor(t);
+const list = all.slice((page - 1) * PER, page * PER);
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const by = new Map();
+list.forEach(n => { const k = (n.date || '').slice(0, 7); if (!by.has(k)) by.set(k, []); by.get(k).push(n); });
+const label = t.slug ? t.label : 'News';
+const title = `${t.slug ? `Apple ${t.label.toLowerCase()}` : 'Apple news and rumors'}${page > 1 ? `, page ${page}` : ''}`;
+---
+<Base title={title} desc="Apple news, rumors and updates, each with its sources, newest first." path={hrefFor(t, page)} nav="news">
+<p class="ol-k">News · {all.length} {t.slug ? t.label.toLowerCase() : 'stories'}</p>
+<h1 class="ol-title">{label}</h1>
+<p class="ol-lead">Every story names its source, Apple first. Rumors carry a Rumor label until Apple confirms them; see the <a href="/rumors">rumor tracker</a>.</p>
+<div class="ol-chips" role="group" aria-label="Filter by type">{TYPES.map(x => <a class="ol-chip" href={hrefFor(x, 1)} aria-current={x.slug === t.slug ? 'page' : undefined}>{x.label} <span class="ol-count">&nbsp;{listFor(x).length}</span></a>)}</div>
+{[...by].map(([k, l], i) => <><h2 class={`ol-sh${i === 0 ? ' first' : ''}`}>{MONTHS[+k.slice(5, 7) - 1]} {k.slice(0, 4)}</h2><NewsList list={l} /></>)}
+<Pager page={page} pages={pages} href={p => hrefFor(t, p)} />
+</Base>
