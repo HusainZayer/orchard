@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import AppRow from '../../components/AppRow.astro';
+import { all, cats, why } from '../../lib/picks.js';
+export function getStaticPaths() { return cats.map(c => ({ params: { cat: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const list = all.filter(a => a.category === c.name);
+---
+<Base title={`Our picks: ${c.name} apps for iPhone Duo`} desc={`${list.length} ${c.name} apps we'd install first on iPhone Duo, each with the reason.`} path={`/picks/${c.slug}`} nav="duo-apps">
+<p class="ol-crumb"><a href="/picks">Our picks</a> / {c.name}</p>
+<h1 class="ol-title">{c.name}</h1>
+<div class="ol-chips" role="group" aria-label="Categories">{cats.map(x => <a class="ol-chip" href={`/picks/${x.slug}`} aria-current={x.slug === c.slug ? 'page' : undefined}>{x.name} <span class="ol-count">&nbsp;{x.n}</span></a>)}</div>
+<ol style="list-style:none;margin-block-start:24px">{list.map(a => <AppRow a={a} rank={all.indexOf(a) + 1} />)}</ol>
+<h2 class="ol-sh">Why these</h2>
+<ul class="ol-list">{list.map(a => <li><div class="t"><a href={`/duo-apps/${a.id}`}>{a.name}</a></div><div class="ol-src">{why(a).join('. ') || a.body}</div></li>)}</ul>
+</Base>

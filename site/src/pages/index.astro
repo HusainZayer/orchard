@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsList from '../components/NewsList.astro';
+import AppRow from '../components/AppRow.astro';
+import data from '../data/state.json';
+import { SITE, items, apps, trim } from '../lib/site.js';
+import { fmt, srcLine } from '../lib/ui.js';
+const TODAY = new Date().toISOString().slice(0, 10);
+const news = data.news.filter(n => n.kind === 'news' || n.kind === 'rumor').sort((a, b) => b.date.localeCompare(a.date));
+const lead = news[0], rest = news.slice(1, 9);
+const opt = apps.filter(a => a.status === 'optimized').length, soon = apps.filter(a => a.status === 'coming' || a.status === 'announced').length, rep = apps.filter(a => a.status === 'reported').length;
+const fresh = apps.filter(a => a.status === 'optimized' && a.featured).sort((a, b) => (b.edited || '').localeCompare(a.edited || '')).slice(0, 6);
+const rum = data.news.filter(n => n.kind === 'rumor');
+const came = rum.filter(n => n.status === 'confirmed').length, open = rum.filter(n => n.status === 'pending').length, wrong = rum.length - came - open;
+const up = (data.dates || []).filter(d => d.date >= TODAY).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 4);
+const desc = 'News, rumors, devices, events and iPhone Duo apps, each with its source. An independent site about Apple, not affiliated with Apple.';
+const ld = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Orchard', url: SITE, description: desc };
+---
+<Base title="Orchard: everything Apple, neatly in rows" desc={desc} path="/" ld={ld} home>
+<div class="ol-cols">
+<div>
+{lead && <>
+<p class="ol-k">Top story · {fmt(lead.date)}</p>
+<article>
+<span class="ol-hl ol-k" style="color:var(--on-leaf)">{srcLine(lead)}</span>
+<h1 class="ol-title xl"><a href={`/news/${lead.id}`} style="color:inherit;text-decoration:none">{lead.title}</a></h1>
+<p class="ol-lead">{trim(lead.body, 300)}</p>
+<a class="ol-btn" href={`/news/${lead.id}`}>Read the story</a><a class="ol-btn ghost" href="/news">All news</a>
+</article></>}
+<h2 class="ol-sh">Latest news</h2>
+<NewsList list={rest} />
+<a class="ol-btn ghost" href="/news">All news</a>
+</div>
+<aside>
+{up.length > 0 && <><h2 class="ol-sh first">Coming up</h2><ul class="ol-list">{up.map(d => <li style="grid-template-columns:1fr"><div><span class="ol-k">{fmt(d.date)}</span><div class="t">{d.story ? <a href={`/news/${d.story}`}>{d.title}</a> : d.title}</div><div class="ol-src">{d.sub}</div></div></li>)}</ul></>}
+<h2 class={`ol-sh${up.length ? '' : ' first'}`}>iPhone Duo apps</h2>
+<div class="ol-stats">
+<div class="ol-stat opt"><b class="ol-count">{opt}</b><span><span aria-hidden="true">✓</span> Optimized</span></div>
+<div class="ol-stat soon"><b class="ol-count">{soon}</b><span><span aria-hidden="true">…</span> Coming</span></div>
+<div class="ol-stat rep"><b class="ol-count">{rep}</b><span><span aria-hidden="true">?</span> Reported</span></div>
+</div>
+<ul>{fresh.map(a => <AppRow a={a} />)}</ul>
+<a class="ol-btn" href="/duo-apps">All {apps.length.toLocaleString('en-US')} Duo apps</a><a class="ol-btn ghost" href="/picks">Our picks</a>
+<h2 class="ol-sh">Rumor tracker</h2>
+<p>{came} {came === 1 ? 'rumor' : 'rumors'} came true, {open} {open === 1 ? 'is' : 'are'} still open, {wrong === 0 ? 'none has been proved wrong' : `${wrong} proved wrong`}. <a href="/rumors">See the scorecard</a></p>
+<h2 class="ol-sh">Tools</h2>
+<ul class="ol-list">
+<li style="grid-template-columns:1fr"><div><a href="/devices">Devices and line-ups</a></div></li>
+<li style="grid-template-columns:1fr"><div><a href="/devices/compare">Compare devices</a></div></li>
+<li style="grid-template-columns:1fr"><div><a href="/week">This week in Apple</a></div></li>
+<li style="grid-template-columns:1fr"><div><a href="/calendar">Calendar</a></div></li>
+</ul>
+</aside>
+</div>
+</Base>

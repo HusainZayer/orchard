@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import AppRow from '../../components/AppRow.astro';
+import { apps, STATUS } from '../../lib/site.js';
+import { slug } from '../../lib/picks.js';
+import { PILL } from '../../lib/ui.js';
+const cs = [...new Set(apps.map(a => a.category).filter(Boolean))].sort();
+const opt = apps.filter(a => a.status === 'optimized').length, soon = apps.filter(a => a.status === 'coming' || a.status === 'announced').length, rep = apps.filter(a => a.status === 'reported').length;
+const fresh = apps.filter(a => a.status === 'optimized' && a.featured).sort((a, b) => (b.edited || '').localeCompare(a.edited || '')).slice(0, 12);
+const groups = Object.entries(STATUS).map(([k, label]) => [k, label, apps.filter(a => a.status === k)]).filter(([, , v]) => v.length);
+const n = x => x.toLocaleString('en-US');
+---
+<Base title="iPhone Duo apps" desc={`${n(apps.length)} apps with their iPhone Duo status, each with its source.`} path="/duo-apps" nav="duo-apps">
+<p class="ol-k">Duo apps · {n(apps.length)} apps</p>
+<h1 class="ol-title">Apps for iPhone Duo</h1>
+<p class="ol-lead">{n(opt)} are optimized for the fold, {n(soon)} are on the way and {n(rep)} are developer-reported. Apple-listed apps come first; developer-reported ones are labelled as such.</p>
+<div class="ol-stats" style="max-inline-size:480px">
+<div class="ol-stat opt"><b class="ol-count">{n(opt)}</b><span><span aria-hidden="true">✓</span> Optimized</span></div>
+<div class="ol-stat soon"><b class="ol-count">{n(soon)}</b><span><span aria-hidden="true">…</span> Coming</span></div>
+<div class="ol-stat rep"><b class="ol-count">{n(rep)}</b><span><span aria-hidden="true">?</span> Reported</span></div>
+</div>
+<p style="margin-block-start:16px"><a class="ol-btn" href="/picks">Our picks: the top 100</a><a class="ol-btn ghost" href="/search">Search apps</a></p>
+<h2 class="ol-sh">By category</h2>
+<div class="ol-chips">{cs.map(c => <a class="ol-chip" href={`/duo-apps/c/${slug(c)}`}>{c} <span class="ol-count">&nbsp;{apps.filter(a => a.category === c).length}</span></a>)}</div>
+<h2 class="ol-sh">Recently updated, featured</h2>
+<ul class="ol-grid">{fresh.map(a => <AppRow a={a} />)}</ul>
+{groups.map(([k, label, v]) => <><h2 class="ol-sh">{label} ({n(v.length)})</h2><ul class="ol-grid">{v.map(a => <li class="ol-app"><div><a href={`/duo-apps/${a.id}`}>{a.name}</a><div class="c">{a.category}</div></div></li>)}</ul></>)}
+</Base>

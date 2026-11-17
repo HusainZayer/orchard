@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import data from '../../data/state.json';
+import { lines, LN, groupsOf } from '../../lib/devices.js';
+import { items } from '../../lib/site.js';
+import { fmt } from '../../lib/ui.js';
+export function getStaticPaths() { return (data.events || []).map(e => ({ params: { id: e.id }, props: { e } })); }
+const { e } = Astro.props;
+const TODAY = new Date().toISOString().slice(0, 10);
+const upcoming = e.date > TODAY;
+const launches = lines.flatMap(k => groupsOf(k).filter(g => g.date === e.date).map(g => ({ ...g, line: k })));
+const rels = data.releases.filter(r => r.date === e.date && r.channel === 'release');
+const stories = items.filter(n => n.date === e.date).slice(0, 6);
+const sibs = (data.events || []).slice().sort((a, b) => a.date.localeCompare(b.date)); const i = sibs.findIndex(x => x.id === e.id);
+---
+<Base title={`${e.name}: Apple ${e.format || 'event'}, ${fmt(e.date)}`} desc={`${e.name}, an Apple ${e.format || 'event'} on ${fmt(e.date)}, with what Apple released that day.`} path={`/events/${e.id}`} nav="calendar">
+<p class="ol-crumb"><a href="/calendar">Calendar</a> / <a href={`/calendar/${e.date.slice(0, 4)}`}>{e.date.slice(0, 4)}</a> / {e.name}</p>
+<p class="ol-k">{e.format || 'Event'} · {fmt(e.date)}</p>
+<h1 class="ol-title">{e.name}</h1>
+<p><span class={`ol-pill ${upcoming ? 'soon' : 'opt'}`}><span aria-hidden="true">{upcoming ? '…' : '✓'}</span>{upcoming ? 'Upcoming' : 'Held'}</span></p>
+{launches.length > 0 && <><h2 class="ol-sh">Launches that day</h2><ul class="ol-list">{launches.map(g => <li><span class="ol-k">{LN[g.line]}</span><div class="t"><a href={`/launches/${g.id}`}>{g.title}</a></div></li>)}</ul></>}
+{rels.length > 0 && <><h2 class="ol-sh">Software released that day</h2><ul class="ol-list">{rels.map(r => <li style="grid-template-columns:1fr"><div>{r.platform} {String(r.version).replace('Golden Gate ', '')}</div></li>)}</ul></>}
+{stories.length > 0 && <><h2 class="ol-sh">Stories from that day</h2><ul class="ol-list">{stories.map(n => <li><span class="ol-k">{fmt(n.date)}</span><div class="t"><a href={`/news/${n.id}`}>{n.title}</a></div></li>)}</ul></>}
+{launches.length + rels.length + stories.length === 0 && <p class="ol-sub" style="margin-block-start:16px">Orchard has no recorded launches, releases or stories for this date yet.</p>}
+<div class="ol-pager">{sibs[i - 1] && <a class="ol-btn ghost" href={`/events/${sibs[i - 1].id}`}>Earlier: {sibs[i - 1].name}</a>}{sibs[i + 1] && <a class="ol-btn ghost" href={`/events/${sibs[i + 1].id}`}>Later: {sibs[i + 1].name}</a>}</div>
+</Base>

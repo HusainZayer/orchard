@@ -1,0 +1,19 @@
+{
+  "name": "orchard-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "python3 ../scripts/export_data.py && cp ../astro/src/data/state.json src/data/state.json",
+    "build": "astro build",
+    "dev": "astro dev"
+  },
+  "dependencies": {
+    "astro": "5.14.1",
+    "satori": "^0.12.0",
+    "@resvg/resvg-js": "^2.6.0",
+    "@fontsource/newsreader": "^5.2.0",
+    "@fontsource/ibm-plex-sans": "^5.2.0",
+    "@fontsource/ibm-plex-mono": "^5.2.0",
+    "@fontsource/ibm-plex-sans-arabic": "^5.2.0"
+  }
+}

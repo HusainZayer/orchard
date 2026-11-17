@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Search Orchard" desc="Search Apple news, rumors, devices, events and iPhone Duo apps." path="/search" noindex>
+<p class="ol-k">Search</p>
+<h1 class="ol-title">Search Orchard</h1>
+<div role="search"><label class="ol-lbl" for="q">News, rumors, devices, events and Duo apps</label>
+<input id="q" class="ol-input" type="search" placeholder="Name, device or topic" autocomplete="off" disabled></div>
+<p class="ol-sub" id="st" role="status">Search needs JavaScript. Use the menu above to browse instead.</p>
+<div class="ol-chips" id="kinds" style="margin-block-start:16px" hidden></div>
+<ul class="ol-hits" id="hits"></ul>
+<script is:inline>
+(function(){var q=document.getElementById('q'),st=document.getElementById('st'),hits=document.getElementById('hits'),kinds=document.getElementById('kinds'),idx=null,kind='';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function run(){var v=q.value.trim().toLowerCase();hits.innerHTML='';if(v.length<2){st.textContent='Type at least two letters.';kinds.hidden=true;return}
+var ws=v.split(/\s+/),r=idx.filter(function(x){var h=(x.t+' '+x.s+' '+x.k).toLowerCase();return ws.every(function(w){return h.indexOf(w)>-1})});
+r.sort(function(a,b){var at=a.t.toLowerCase().indexOf(v)===0?0:1,bt=b.t.toLowerCase().indexOf(v)===0?0:1;return at-bt||(b.d||'').localeCompare(a.d||'')});
+var ks={};r.forEach(function(x){ks[x.k]=(ks[x.k]||0)+1});kinds.innerHTML='';Object.keys(ks).forEach(function(k){var b=document.createElement('button');b.type='button';b.className='ol-chip';b.setAttribute('aria-pressed',kind===k?'true':'false');b.textContent=k+' '+ks[k];b.onclick=function(){kind=kind===k?'':k;run()};kinds.appendChild(b)});kinds.hidden=!r.length;
+var shown=kind?r.filter(function(x){return x.k===kind}):r;st.textContent=shown.length+' result'+(shown.length===1?'':'s');
+shown.slice(0,60).forEach(function(x){var li=document.createElement('li');li.innerHTML='<div class="t"><a href="'+esc(x.u)+'">'+esc(x.t)+'</a></div><div class="ol-src">'+esc(x.k)+(x.s?' · '+esc(x.s):'')+'</div>';hits.appendChild(li)})}
+fetch('/search-index.json').then(function(r){return r.json()}).then(function(j){idx=j;q.disabled=false;st.textContent='Type to search '+j.length.toLocaleString('en-US')+' pages.';var p=new URLSearchParams(location.search).get('q');if(p){q.value=p;run()}q.addEventListener('input',function(){kind='';run()})}).catch(function(){st.textContent='Search could not load. Use the menu above to browse instead.'})})();
+</script>
+</Base>

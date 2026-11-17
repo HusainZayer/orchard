@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { D, LN, lines, groupsOf } from '../../lib/devices.js';
+import { find, dash } from '../../lib/models.js';
+import { fmt } from '../../lib/ui.js';
+export function getStaticPaths() { return lines.map(k => ({ params: { line: k }, props: { k } })); }
+const { k } = Astro.props;
+const gs = groupsOf(k);
+const fam = D.lineup.find(([f]) => f.toLowerCase() === LN[k].toLowerCase() || (k === 'vision' && /vision/i.test(f)) || (k === 'home' && /home/i.test(f)));
+const cur = fam ? fam[1].map(([name, price]) => ({ name, price, m: find(k, name) })) : [];
+const first = gs[0];
+---
+<Base title={`${LN[k]}: every generation`} desc={`${gs.length} releases of ${LN[k]}, newest first, with prices and what changed.`} path={`/devices/${k}`} nav="devices">
+<p class="ol-crumb"><a href="/devices">Devices</a> / {LN[k]}</p>
+<p class="ol-k">{LN[k]} · {gs.length} releases{gs.length ? ` since ${gs[gs.length - 1].date.slice(0, 4)}` : ''}</p>
+<h1 class="ol-title">{LN[k]}</h1>
+<div class="ol-chips" role="group" aria-label="Product lines">{lines.map(x => <a class="ol-chip" href={`/devices/${x}`} aria-current={x === k ? 'page' : undefined}>{LN[x]}</a>)}</div>
+{cur.length > 0 && <><h2 class="ol-sh">Current line-up</h2>
+<div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">US price</th><th scope="col">Chip</th><th scope="col">Display</th><th scope="col">Launched with</th></tr></thead>
+<tbody>{cur.map(r => <tr><td class="p">{r.name}</td><td class="n">{r.price}</td><td class="n">{dash(r.m && r.m.chip) || '—'}</td><td>{dash(r.m && r.m.display) || '—'}</td><td class="n">{dash(r.m && r.m.ios0) || '—'}</td></tr>)}</tbody></table></div></>}
+<p><a class="ol-btn" href={`/devices/compare?line=${k}`}>Compare {LN[k]} models</a>{k === 'iphone' && <a class="ol-btn ghost" href="/guides/iphone">Choosing an iPhone</a>}</p>
+<h2 class="ol-sh">Generations</h2>
+<ul class="ol-gens">{gs.map((g, i) => <li id={g.id}><div><span class="ol-k">{fmt(g.date)}</span></div><div><h3><a href={`/launches/${g.id}`}>{g.title}</a>{i === 0 && <span class="ol-cur">Newest</span>}</h3><p>{g.intro}</p>
+{(g.models || []).length > 0 && <p class="ol-src">{g.models.map(m => [m.name, m.price, dash(m.chip), dash(m.display)].filter(Boolean).join(' · ')).join(' / ')}</p>}</div></li>)}</ul>
+</Base>

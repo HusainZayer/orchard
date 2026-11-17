@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { D } from '../../lib/devices.js';
+import { find, price, dash } from '../../lib/models.js';
+import { fmt } from '../../lib/ui.js';
+const fam = D.lineup.find(([f]) => f === 'iPhone');
+const rows = fam[1].map(([name, p]) => ({ name, p, n: price(p), m: find('iphone', name) })).sort((a, b) => (a.n ?? 1e9) - (b.n ?? 1e9));
+const priced = rows.filter(r => r.n !== null);
+const low = priced[0], high = priced[priced.length - 1];
+const newest = rows.filter(r => r.m).sort((a, b) => b.m.date.localeCompare(a.m.date))[0];
+const fold = rows.filter(r => r.m && /fold|outer|inner/i.test(r.m.display || ''));
+const facts = [
+  ['Lowest US price', low && `${low.name}, ${low.p}`],
+  ['Highest US price', high && `${high.name}, ${high.p}`],
+  ['Most recent launch', newest && `${newest.name}, ${fmt(newest.m.date)}`],
+  ['Foldable display', fold.length ? fold.map(r => r.name).join(', ') : ''],
+].filter(([, v]) => v);
+---
+<Base title="Choosing an iPhone: the current line-up side by side" desc={`Every iPhone Apple sells now, side by side by price, chip and display, as of ${fmt(D.lineupAsOf)}.`} path="/guides/iphone" nav="devices">
+<p class="ol-crumb"><a href="/devices">Devices</a> / <a href="/devices/iphone">iPhone</a> / Choosing</p>
+<p class="ol-k">Buying guide · prices as of {fmt(D.lineupAsOf)}</p>
+<h1 class="ol-title">Choosing an iPhone</h1>
+<p class="ol-lead">Every iPhone Apple sells now, side by side. This guide lists facts from Apple’s line-up and does not rank models by opinion.</p>
+<dl class="ol-facts" style="max-inline-size:640px">{facts.map(([k, v]) => <><dt>{k}</dt><dd style="font-family:var(--f-sans)">{v}</dd></>)}</dl>
+<h2 class="ol-sh">Line-up by price</h2>
+<div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">US price</th><th scope="col">Chip</th><th scope="col">Display</th><th scope="col">Launched with</th></tr></thead>
+<tbody>{rows.map(r => <tr><td class="p">{r.name}</td><td class="n">{r.p}</td><td class="n">{dash(r.m && r.m.chip) || '—'}</td><td>{dash(r.m && r.m.display) || '—'}</td><td class="n">{dash(r.m && r.m.ios0) || '—'}</td></tr>)}</tbody></table></div>
+<p><a class="ol-btn" href="/devices/compare?line=iphone">Compare models</a><a class="ol-btn ghost" href="/devices/iphone">Every iPhone generation</a></p>
+<h2 class="ol-sh" id="how">Where the numbers come from</h2>
+<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a href={u} rel="noopener">{t}</a></div></li>)}</ul>
+</Base>

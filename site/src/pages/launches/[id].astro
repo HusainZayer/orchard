@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { lines, LN, groupsOf } from '../../lib/devices.js';
+import { dash } from '../../lib/models.js';
+import { items } from '../../lib/site.js';
+import { fmt } from '../../lib/ui.js';
+const all = lines.flatMap(k => groupsOf(k).map(g => ({ ...g, line: k })));
+export function getStaticPaths() { return lines.flatMap(k => groupsOf(k).map(g => ({ params: { id: g.id }, props: { g: { ...g, line: k } } }))); }
+const { g } = Astro.props;
+const sibs = groupsOf(g.line); const i = sibs.findIndex(x => x.id === g.id);
+const newer = sibs[i - 1], older = sibs[i + 1];
+const stories = items.filter(n => n.date === g.date && (n.dev || []).includes(g.line)).slice(0, 5);
+---
+<Base title={`${g.title}: ${LN[g.line]} launch, ${fmt(g.date)}`} desc={`${g.title}, ${fmt(g.date)}. ${g.intro}`} path={`/launches/${g.id}`} nav="devices">
+<p class="ol-crumb"><a href="/devices">Devices</a> / <a href={`/devices/${g.line}`}>{LN[g.line]}</a> / {g.title}</p>
+<p class="ol-k">{LN[g.line]} launch · {fmt(g.date)}</p>
+<h1 class="ol-title">{g.title}</h1>
+<p class="ol-lead">{g.intro}</p>
+{(g.models || []).length > 0 && <><h2 class="ol-sh">Models</h2>
+<div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">Price</th><th scope="col">Chip</th><th scope="col">Display</th><th scope="col">Camera</th><th scope="col">Software</th></tr></thead>
+<tbody>{g.models.map(m => <tr><td class="p">{m.name}</td><td class="n">{m.price || '—'}{m.priceNote ? ` (${m.priceNote})` : ''}</td><td class="n">{dash(m.chip) || '—'}</td><td>{dash(m.display) || '—'}</td><td class="n">{dash(m.cam) || '—'}</td><td class="n">{dash(m.ios0) || '—'}</td></tr>)}</tbody></table></div></>}
+{g.road && <><h2 class="ol-sh">What came next</h2><p class="ol-body">{g.road}</p></>}
+{stories.length > 0 && <><h2 class="ol-sh">Stories from launch day</h2><ul class="ol-list">{stories.map(n => <li><span class="ol-k">{fmt(n.date)}</span><div class="t"><a href={`/news/${n.id}`}>{n.title}</a></div></li>)}</ul></>}
+<div class="ol-pager">{newer && <a class="ol-btn ghost" href={`/launches/${newer.id}`}>Newer: {newer.title}</a>}{older && <a class="ol-btn ghost" href={`/launches/${older.id}`}>Older: {older.title}</a>}</div>
+</Base>

@@ -1,0 +1,14 @@
+import data from '../data/state.json';
+import { SITE, apps, items, updated } from '../lib/site.js';
+import { years, weekList, curWeek } from '../lib/time.js';
+import { lines, groupsOf } from '../lib/devices.js';
+import { cats, slug } from '../lib/picks.js';
+const u = (p, d) => `<url><loc>${SITE}${p}</loc>${d ? `<lastmod>${String(d).slice(0, 10)}</lastmod>` : ''}</url>`;
+const fixed = ['/', '/news', '/rumors', '/devices', '/devices/compare', '/guides/iphone', '/duo-apps', '/picks', '/calendar', '/week', '/about'];
+export const GET = () => new Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+  + fixed.map(p => u(p, updated)).join('')
+  + years.map(y => u(`/calendar/${y}`, updated)).join('') + weekList.filter(w => w !== curWeek).map(w => u(`/week/${w}`)).join('')
+  + lines.map(k => u(`/devices/${k}`, updated)).join('') + lines.flatMap(k => groupsOf(k).map(g => u(`/launches/${g.id}`, g.date))).join('')
+  + (data.events || []).map(e => u(`/events/${e.id}`, e.date)).join('')
+  + cats.map(c => u(`/picks/${c.slug}`, updated)).join('') + [...new Set(apps.map(a => a.category).filter(Boolean))].map(c => u(`/duo-apps/c/${slug(c)}`, updated)).join('')
+  + apps.map(a => u(`/duo-apps/${a.id}`, a.edited || a.added)).join('') + items.map(n => u(`/news/${n.id}`, n.date)).join('') + '</urlset>', { headers: { 'Content-Type': 'application/xml' } });

@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { LN, lines } from '../../lib/devices.js';
+import { allModels, dash } from '../../lib/models.js';
+const slim = allModels.map(m => ({ l: m.line, n: m.name, p: m.price || '', c: dash(m.chip), d: dash(m.display), b: dash(m.bio), a: dash(m.cam), s: dash(m.ios0), y: m.date.slice(0, 4) }));
+---
+<Base title="Compare Apple devices side by side" desc="Pick two or three Apple models and compare price, chip, display, camera and launch software." path="/devices/compare" nav="devices">
+<p class="ol-crumb"><a href="/devices">Devices</a> / Compare</p>
+<p class="ol-k">Compare</p>
+<h1 class="ol-title">Compare models</h1>
+<p class="ol-lead">Pick up to three models from one product line.</p>
+<noscript><p class="ol-note">Comparing needs JavaScript. Without it, each product line page lists every model.</p></noscript>
+<div id="cmp" hidden>
+<label class="ol-lbl" for="cl">Product line</label>
+<select id="cl" class="ol-input" style="max-inline-size:320px">{lines.map(k => <option value={k}>{LN[k]}</option>)}</select>
+<div class="ol-filters" style="margin-block-start:16px" id="slots"></div>
+<div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl" id="out" aria-live="polite"></table></div>
+</div>
+<script is:inline type="application/json" id="models" set:html={JSON.stringify(slim).replace(/</g, '\\u003c')}></script>
+<script is:inline>
+(function(){var M=JSON.parse(document.getElementById('models').textContent),root=document.getElementById('cmp'),cl=document.getElementById('cl'),slots=document.getElementById('slots'),out=document.getElementById('out');root.hidden=false;
+var q=new URLSearchParams(location.search),sel=[q.get('a'),q.get('b'),q.get('c')];if(q.get('line'))cl.value=q.get('line');
+function names(){return M.filter(function(m){return m.l===cl.value}).sort(function(a,b){return b.y-a.y||a.n.localeCompare(b.n)})}
+function build(){var list=names(),seen={},opts=list.filter(function(m){return seen[m.n]?0:seen[m.n]=1});slots.innerHTML='';for(var i=0;i<3;i++){(function(i){var w=document.createElement('div'),l=document.createElement('label'),s=document.createElement('select');l.className='ol-lbl';l.textContent='Model '+(i+1);l.htmlFor='s'+i;s.id='s'+i;s.className='ol-input';s.style.minInlineSize='220px';var o=document.createElement('option');o.value='';o.textContent=i?'None':'Choose a model';s.appendChild(o);opts.forEach(function(m){var x=document.createElement('option');x.value=m.n;x.textContent=m.n+' ('+m.y+')';s.appendChild(x)});if(sel[i]&&opts.some(function(m){return m.n===sel[i]}))s.value=sel[i];s.addEventListener('change',function(){sel[i]=s.value;draw();url()});w.appendChild(l);w.appendChild(s);slots.appendChild(w)})(i)}draw()}
+function url(){var p=new URLSearchParams();p.set('line',cl.value);['a','b','c'].forEach(function(k,i){if(sel[i])p.set(k,sel[i])});history.replaceState(null,'','?'+p)}
+var F=[['US price','p'],['Chip','c'],['Display','d'],['Biometrics','b'],['Camera','a'],['Launched with','s'],['Year','y']];
+function draw(){var picks=[0,1,2].map(function(i){var v=document.getElementById('s'+i);return v&&v.value?M.find(function(m){return m.l===cl.value&&m.n===v.value}):null}).filter(Boolean);if(!picks.length){out.innerHTML='<tbody><tr><td>Choose a model to start.</td></tr></tbody>';return}
+var h='<thead><tr><th scope="col">Spec</th>'+picks.map(function(m){return '<th scope="col">'+esc(m.n)+'</th>'}).join('')+'</tr></thead><tbody>';F.forEach(function(f){h+='<tr><td class="p">'+f[0]+'</td>'+picks.map(function(m){return '<td>'+(esc(m[f[1]])||'—')+'</td>'}).join('')+'</tr>'});out.innerHTML=h+'</tbody>'}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+cl.addEventListener('change',function(){sel=[null,null,null];build();url()});build()})();
+</script>
+</Base>

@@ -1,0 +1,18 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AppRow from '../../../components/AppRow.astro';
+import { apps } from '../../../lib/site.js';
+import { slug } from '../../../lib/picks.js';
+export function getStaticPaths() { return [...new Set(apps.map(a => a.category).filter(Boolean))].map(c => ({ params: { cat: slug(c) }, props: { c } })); }
+const { c } = Astro.props;
+const cs = [...new Set(apps.map(a => a.category).filter(Boolean))].sort();
+const order = { optimized: 0, coming: 1, announced: 1, reported: 2 };
+const list = apps.filter(a => a.category === c).sort((a, b) => (order[a.status] - order[b.status]) || a.name.localeCompare(b.name));
+---
+<Base title={`${c} apps for iPhone Duo`} desc={`${list.length} ${c} apps with their iPhone Duo status, each with its source.`} path={`/duo-apps/c/${slug(c)}`} nav="duo-apps">
+<p class="ol-crumb"><a href="/duo-apps">Duo apps</a> / {c}</p>
+<p class="ol-k">Category · {list.length} apps</p>
+<h1 class="ol-title">{c}</h1>
+<div class="ol-chips" role="group" aria-label="Categories">{cs.map(x => <a class="ol-chip" href={`/duo-apps/c/${slug(x)}`} aria-current={x === c ? 'page' : undefined}>{x}</a>)}</div>
+<ul style="margin-block-start:24px">{list.map(a => <AppRow a={a} />)}</ul>
+</Base>

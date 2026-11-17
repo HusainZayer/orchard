@@ -1,0 +1,7 @@
+---
+import CalendarYear from '../../components/CalendarYear.astro';
+import { years } from '../../lib/time.js';
+export function getStaticPaths() { return years.map(y => ({ params: { year: y }, props: { y } })); }
+const { y } = Astro.props;
+---
+<CalendarYear y={y} path={`/calendar/${y}`} />

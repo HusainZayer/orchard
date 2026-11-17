@@ -1,0 +1,4 @@
+import { SITE, items, trim } from '../lib/site.js';
+const x = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+export const GET = () => new Response('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Orchard</title><link>' + SITE + '</link><description>Apple news, rumors and iPhone Duo apps, each with its source. An independent site, not affiliated with Apple.</description>'
+  + items.slice(0, 40).map(n => `<item><title>${x(n.title)}</title><link>${SITE}/news/${n.id}</link><guid>${SITE}/news/${n.id}</guid><pubDate>${new Date((n.date || '1970-01-01') + 'T00:00:00Z').toUTCString()}</pubDate><description>${x(trim(n.body, 300))}</description></item>`).join('') + '</channel></rss>', { headers: { 'Content-Type': 'application/xml' } });

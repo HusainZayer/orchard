@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import NewsList from '../../components/NewsList.astro';
+import { items } from '../../lib/site.js';
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const by = new Map();
+items.forEach(n => { const k = (n.date || '').slice(0, 7); if (!by.has(k)) by.set(k, []); by.get(k).push(n); });
+---
+<Base title="Apple news and rumors" desc="Apple news, rumors and updates, each with its sources, newest first." path="/news">
+<p class="ol-k">News · {items.length} stories</p>
+<h1 class="ol-title">News</h1>
+<p class="ol-lead">Every story names its source, Apple first. Rumors carry a Rumor label until Apple confirms them; see the <a href="/rumors">rumor tracker</a>.</p>
+{[...by].map(([k, list], i) => <><h2 class={`ol-sh${i === 0 ? ' first' : ''}`}>{MONTHS[+k.slice(5, 7) - 1]} {k.slice(0, 4)}</h2><NewsList list={list} /></>)}
+</Base>

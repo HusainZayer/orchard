@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { D, LN, lines, groupsOf } from '../../lib/devices.js';
+import { fmt } from '../../lib/ui.js';
+---
+<Base title="Apple devices: the current line-up and every generation" desc="Apple's current line-up with prices, and the history of each product line, from the sources listed on each page." path="/devices" nav="devices">
+<p class="ol-k">Devices</p>
+<h1 class="ol-title">Apple devices</h1>
+<p class="ol-lead">The current line-up with US prices as of {fmt(D.lineupAsOf)}, and the history of each product line.</p>
+<div class="ol-chips" role="group" aria-label="Product lines">{lines.map(k => <a class="ol-chip" href={`/devices/${k}`}>{LN[k]} <span class="ol-count">&nbsp;{groupsOf(k).length}</span></a>)}</div>
+<p><a class="ol-btn" href="/devices/compare">Compare models</a><a class="ol-btn ghost" href="/guides/iphone">Choosing an iPhone</a></p>
+<div class="ol-grid">
+{D.lineup.map(([fam, rows], i) => <div><h2 class="ol-sh">{fam}</h2><div class="ol-scroll" tabindex="0" role="region" aria-label="Table: scrolls sideways if needed"><table class="ol-tbl"><thead><tr><th scope="col">Model</th><th scope="col">US price</th></tr></thead><tbody>{rows.map(([n, p]) => <tr><td class="p">{n}</td><td class="n">{p}</td></tr>)}</tbody></table></div></div>)}
+</div>
+<h2 class="ol-sh">Sources</h2>
+<ul class="ol-list">{D.sources.map(([t, u]) => <li style="grid-template-columns:1fr"><div><a href={u} rel="noopener">{t}</a></div></li>)}</ul>
+</Base>
